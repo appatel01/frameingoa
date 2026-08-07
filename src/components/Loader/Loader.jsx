@@ -1,48 +1,59 @@
 import { motion } from "framer-motion";
-import { ScanFace } from "lucide-react";
 
 function Loader() {
-    return (
-    <div className="relative flex items-center justify-center w-36 h-36">
+    const steps = [
+        "Detecting Face",
+        "Cropping Portrait",
+        "Generating Builder Card",
+        "Preparing Your Identity",
+    ];
 
-      {/* Outer Ring */}
+    return (
+        <div className="flex flex-col items-center">
+
         <motion.div
             animate={{ rotate: 360 }}
             transition={{
             repeat: Infinity,
-            duration: 6,
+            duration: 1,
             ease: "linear",
             }}
-            className="absolute w-36 h-36 rounded-full border-[3px] border-cyan-400 border-t-transparent"
+            className="
+            w-24
+            h-24
+            rounded-full
+            border-4
+            border-cyan-500
+            border-t-fuchsia-500
+            "
         />
 
-        {/* Middle Ring */}
-        <motion.div
-            animate={{ rotate: -360 }}
-            transition={{
-            repeat: Infinity,
-            duration: 4,
-            ease: "linear",
-            }}
-            className="absolute w-28 h-28 rounded-full border-[3px] border-pink-500 border-b-transparent"
-        />
+        <h2 className="mt-8 text-2xl font-bold text-white">
+            Creating your Identity...
+        </h2>
 
-        {/* Pulse */}
-        <motion.div
-            animate={{
-            scale: [1, 1.15, 1],
-            }}
-            transition={{
-            repeat: Infinity,
-            duration: 2,
-            }}
-            className="w-16 h-16 rounded-full bg-[#112133] flex items-center justify-center"
-        >
-            <ScanFace className="text-cyan-400" size={30} />
-        </motion.div>
+        <div className="mt-8 space-y-4">
+
+            {steps.map((step, index) => (
+            <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                delay: index * 0.6,
+                }}
+                className="flex items-center gap-3 text-gray-300"
+            >
+                <span className="text-green-400">✔</span>
+
+                {step}
+            </motion.div>
+            ))}
+
+        </div>
 
         </div>
     );
-    }
+}
 
-    export default Loader;
+export default Loader;

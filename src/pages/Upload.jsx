@@ -19,7 +19,9 @@ function Upload() {
       {/* Main Content */}
       <div className="relative z-10 pt-32">
 
-        <ProgressBar />
+        <ProgressBar 
+        step={1}
+        title="Upload Headshot" />
 
         <div className="max-w-3xl mx-auto mt-10 px-6">
 

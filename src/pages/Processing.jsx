@@ -1,33 +1,45 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import Navbar from "../components/Navbar/Navbar";
+import ProgressBar from "../components/ProgressBar/ProgressBar";
+import Loader from "../components/Loader/Loader";
+
 function Processing() {
   const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
       navigate("/identity");
-    }, 5000);
+    }, 3500);
 
     return () => clearTimeout(timer);
   }, [navigate]);
 
   return (
-    <div className="min-h-screen bg-[#050816] flex flex-col justify-center items-center">
+    <div className="relative min-h-screen bg-[#050816] overflow-hidden">
 
-      {/* Spinner */}
-      <div className="w-24 h-24 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+      {/* Background Glow */}
+      <div className="absolute top-0 left-0 w-[450px] h-[450px] bg-purple-600/20 blur-[170px] rounded-full"></div>
 
-      <h1 className="text-white text-3xl font-bold mt-8">
-        AI is creating your Builder Identity...
-      </h1>
+      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-cyan-500/20 blur-[170px] rounded-full"></div>
 
-      <div className="mt-8 space-y-3 text-gray-300">
+      {/* Navbar */}
+      <Navbar />
 
-        <p>✅ Detecting Face</p>
-        <p>✅ Auto Cropping</p>
-        <p>⏳ Generating Builder Title</p>
-        <p>⏳ Creating Builder Card</p>
+      {/* Main Content */}
+      <div className="relative z-10 pt-32">
+
+        <ProgressBar
+          step={3}
+          title="Generating Identity"
+        />
+
+        <div className="mt-20 flex justify-center">
+
+          <Loader />
+
+        </div>
 
       </div>
 

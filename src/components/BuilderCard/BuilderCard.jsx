@@ -1,132 +1,136 @@
-import { motion } from "framer-motion";
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 
 function BuilderCard() {
+    const { photo, user } = useContext(AppContext);
 
     return (
-
-        <motion.div
-
-        initial={{ opacity:0, scale:.8 }}
-
-        animate={{ opacity:1, scale:1 }}
-
-        transition={{ duration:.6 }}
-
+        <div
         className="
-        w-[380px]
-        rounded-3xl
-        bg-[#1A1D33]
+        relative
+        overflow-hidden
+        rounded-[32px]
         border
-        border-[#8B5CF6]
-        shadow-[0_0_40px_rgba(139,92,246,.35)]
-        p-6
+        border-cyan-500/30
+        bg-gradient-to-br
+        from-[#0B1022]
+        via-[#141C34]
+        to-[#1E293B]
+        p-10
+        shadow-[0_0_60px_rgba(34,211,238,0.15)]
         "
-
         >
+        {/* Background Glow */}
+        <div className="absolute -top-20 -right-20 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-fuchsia-600/10 rounded-full blur-3xl"></div>
 
-        <div className="flex justify-between">
-
-            <p className="text-cyan-400 text-xs">
-            HH GOA 2026
-            </p>
-
-            <span className="bg-pink-500 px-3 py-1 rounded-full text-xs text-white">
-            EPIC BUILDER
-            </span>
-
-        </div>
-
-        <div className="flex justify-center mt-5">
-
-            <div className="w-28 h-28 rounded-full border-[3px] border-pink-500 overflow-hidden">
-
-            <img
-                src="https://i.pravatar.cc/300"
-                alt=""
-                className="w-full h-full object-cover"
-            />
-
-            </div>
-
-        </div>
-
-        <h2 className="text-center mt-5 text-2xl font-bold text-white">
-
-            Anushka Patel
-
-        </h2>
-
-        <p className="text-center text-gray-400">
-
-            Full Stack Developer
-
-        </p>
-
-        <div className="flex justify-center gap-2 mt-5 flex-wrap">
-
-            {["React","Node.js","MongoDB","Java"].map((tech)=>(
-
-            <span
-                key={tech}
-                className="px-3 py-1 rounded-full bg-[#252A3D] text-gray-300 text-xs"
-            >
-                {tech}
-            </span>
-
-            ))}
-
-        </div>
-
-        <div className="mt-8">
-
-            <div className="flex justify-between text-sm">
-
-            <span className="text-gray-400">
-
-                Builder Power
-
-            </span>
-
-            <span className="text-pink-400">
-
-                92/100
-
-            </span>
-
-            </div>
-
-            <div className="w-full bg-[#252A3D] rounded-full h-3 mt-2">
-
-            <div className="w-[92%] rounded-full h-3 bg-gradient-to-r from-pink-500 to-purple-500"></div>
-
-            </div>
-
-        </div>
-
-        <div className="flex justify-between mt-8">
+        {/* Header */}
+        <div className="relative flex justify-between items-center">
 
             <div>
-
-            <p className="text-xs text-gray-500">
-
-                CARD NO.
-
+            <p className="text-cyan-400 text-sm font-semibold uppercase tracking-widest">
+                Hacker House Goa
             </p>
 
-            <p className="text-white">
-
-                HH-GOA-2026-092
-
-            </p>
-
+            <h1 className="text-3xl font-bold text-white mt-2">
+                Builder Card
+            </h1>
             </div>
 
-            <div className="w-16 h-16 bg-white rounded-lg"></div>
+            <div className="px-4 py-2 rounded-full bg-cyan-500/20 border border-cyan-400/30">
+            <span className="text-cyan-300 text-sm font-semibold">
+                #FrameInGoa
+            </span>
+            </div>
 
         </div>
 
-        </motion.div>
+        {/* Profile */}
+        <div className="relative flex flex-col items-center mt-10">
 
+            <img
+            src={photo}
+            alt="Profile"
+            className="
+                w-40
+                h-40
+                rounded-full
+                object-cover
+                border-4
+                border-cyan-400
+                shadow-lg
+            "
+            />
+
+            <h2 className="mt-6 text-4xl font-bold text-white text-center">
+            {user.fullName || "Your Name"}
+            </h2>
+
+            <p className="mt-2 text-cyan-400 text-lg">
+            {user.role || "Your Role"}
+            </p>
+
+            <p className="text-gray-400 mt-1">
+            {user.college || "College"}
+            </p>
+
+        </div>
+
+        {/* Stats */}
+        <div className="relative grid grid-cols-3 gap-4 mt-10">
+
+            <div className="rounded-2xl bg-white/5 border border-white/10 p-5 text-center">
+            <p className="text-3xl">⚡</p>
+
+            <p className="text-gray-400 text-sm mt-2">
+                Builder Score
+            </p>
+
+            <h3 className="text-white text-2xl font-bold mt-2">
+                93
+            </h3>
+            </div>
+
+            <div className="rounded-2xl bg-white/5 border border-white/10 p-5 text-center">
+            <p className="text-3xl">🦊</p>
+
+            <p className="text-gray-400 text-sm mt-2">
+                Spirit Animal
+            </p>
+
+            <h3 className="text-white text-xl font-bold mt-2">
+                Fox
+            </h3>
+            </div>
+
+            <div className="rounded-2xl bg-white/5 border border-white/10 p-5 text-center">
+            <p className="text-3xl">💻</p>
+
+            <p className="text-gray-400 text-sm mt-2">
+                Builder Title
+            </p>
+
+            <h3 className="text-white text-lg font-bold mt-2">
+                Prompt Wizard
+            </h3>
+            </div>
+
+        </div>
+
+        {/* Footer */}
+        <div className="relative mt-10 pt-6 border-t border-white/10 flex justify-between items-center">
+
+            <span className="text-gray-400 text-sm">
+            Built with ❤️ at Hacker House Goa
+            </span>
+
+            <span className="text-cyan-400 font-semibold">
+            #FrameInGoa
+            </span>
+
+        </div>
+
+        </div>
     );
 }
 

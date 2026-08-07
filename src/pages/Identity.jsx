@@ -1,54 +1,111 @@
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import Navbar from "../components/Navbar/Navbar";
+import ProgressBar from "../components/ProgressBar/ProgressBar";
+import BuilderCard from "../components/BuilderCard/BuilderCard";
+import * as htmlToImage from "html-to-image";
 
 function Identity() {
+  const downloadBuilderCard = async () => {
+  const card = document.getElementById("builder-card");
 
-  const { photo, user } = useContext(AppContext);
+  if (!card) return;
 
+  const dataUrl = await htmlToImage.toPng(card);
+
+  const link = document.createElement("a");
+  link.download = "builder-card.png";
+  link.href = dataUrl;
+  link.click();
+};
   return (
+    <div className="relative min-h-screen bg-[#050816] overflow-hidden">
 
-    <div className="min-h-screen bg-[#050816] flex justify-center items-center">
+      {/* Background Glow */}
+      <div className="absolute top-0 left-0 w-[450px] h-[450px] bg-purple-600/20 blur-[170px] rounded-full"></div>
 
-      <div className="bg-[#111827] rounded-3xl p-8 w-[400px]">
+      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-cyan-500/20 blur-[170px] rounded-full"></div>
 
-        <div className="flex justify-center">
+      {/* Navbar */}
+      <Navbar />
 
-          <img
-            src={photo}
-            alt="Profile"
-            className="w-36 h-36 rounded-full object-cover border-4 border-fuchsia-500"
-          />
+      {/* Main Content */}
+      <div className="relative z-10 pt-32">
 
-        </div>
+        <ProgressBar
+          step={4}
+          title="Your Identity"
+        />
 
-        <h1 className="text-white text-3xl font-bold text-center mt-6">
-          {user.fullName}
-        </h1>
+        {/* Builder Card */}
+        <div className="max-w-3xl mx-auto mt-12 px-6">
 
-        <p className="text-cyan-400 text-center mt-2">
-          {user.role}
-        </p>
+          <BuilderCard />
 
-        <p className="text-gray-400 text-center mt-2">
-          {user.college}
-        </p>
+          {/* Action Buttons */}
 
-        <div className="mt-8 space-y-2">
+          <div className="flex flex-col md:flex-row justify-center gap-4 mt-10">
 
-          <p className="text-white">
-            GitHub: {user.github}
-          </p>
+            <button
+                onClick={downloadBuilderCard}
+                className="
+                  px-6
+                  py-3
+                  rounded-xl
+                  bg-gradient-to-r
+                  from-cyan-500
+                  to-blue-500
+                  text-white
+                  font-semibold
+                  hover:scale-105
+                  transition
+                "
+            >
+                Download Builder Card
+            </button>
 
-          <p className="text-white">
-            X: {user.twitter}
-          </p>
+            <button
+              className="
+                px-6
+                py-3
+                rounded-xl
+                bg-gradient-to-r
+                from-fuchsia-600
+                to-purple-600
+                text-white
+                font-semibold
+                hover:scale-105
+                transition
+              "
+            >
+              Download PFP Frame
+            </button>
+
+          </div>
+
+          <div className="flex justify-center mt-5">
+
+            <button
+              className="
+                px-8
+                py-3
+                rounded-xl
+                border
+                border-cyan-400
+                text-cyan-400
+                hover:bg-cyan-400
+                hover:text-black
+                transition
+              "
+            >
+              Share on X
+            </button>
+
+          </div>
 
         </div>
 
       </div>
 
     </div>
-
   );
 }
 
