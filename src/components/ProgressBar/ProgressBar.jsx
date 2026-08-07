@@ -2,9 +2,9 @@ function ProgressBar() {
     return (
     <div className="flex flex-col items-center mb-8">
 
-        <p className="text-xs tracking-[3px] text-purple-400 uppercase font-semibold">
-            Step 1 of 4
-        </p>
+        <h2 className="text-center text-cyan-400 text-xl">
+            STEP 1 OF 4
+        </h2>
 
         <div className="flex items-center mt-4">
 

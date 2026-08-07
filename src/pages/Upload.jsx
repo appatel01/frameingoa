@@ -1,24 +1,33 @@
 import Navbar from "../components/Navbar/Navbar";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import UploadBox from "../components/UploadBox/UploadBox";
+import PreviewCard from "../components/PreviewCard/PreviewCard";
+import ContinueButton from "../components/ContinueButton/ContinueButton";
 
 function Upload() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#070A16] via-[#0B1020] to-[#03060F]">
+    <div className="relative min-h-screen overflow-hidden bg-[#050816]">
 
+      {/* Background Glow */}
+      <div className="absolute top-0 left-0 w-[450px] h-[450px] bg-purple-600/20 blur-[170px] rounded-full"></div>
+
+      <div className="absolute bottom-0 right-0 w-[450px] h-[450px] bg-cyan-500/20 blur-[170px] rounded-full"></div>
+
+      {/* Navbar */}
       <Navbar />
 
-      <div className="flex justify-center items-center min-h-[85vh] px-6">
+      {/* Main Content */}
+      <div className="relative z-10 pt-32">
 
-        <div className="w-full max-w-5xl">
+        <ProgressBar />
 
-          <ProgressBar />
+        <div className="max-w-3xl mx-auto mt-10 px-6">
 
-          <div className="flex justify-center">
+          <UploadBox />
 
-            <UploadBox />
+          <PreviewCard />
 
-          </div>
+          <ContinueButton />
 
         </div>
 
