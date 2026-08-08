@@ -1,16 +1,45 @@
-# React + Vite
+# 🚀 FrameInGoa
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### AI-Powered Builder Identity & Profile Frame Generator
 
-Currently, two official plugins are available:
+FrameInGoa is a web application that helps developers create personalized
+Builder Cards and PFP Frames using their profile information and photo.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- 📸 Upload profile photo
+- 👤 Create developer profile
+- 🎨 Generate Builder Card
+- 🖼️ Generate PFP Frame
+- 📥 Download generated cards
+- 𝕏 Share identity on X
+- 📱 Responsive design
+- 🚀 Vercel deployment
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- React.js
+- React Router
+- Tailwind CSS
+- Vite
+- React Dropzone
+- Lucide React
+- html-to-image
+- Git & GitHub
+- Vercel
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🔄 Workflow
+
+Landing → Upload → Details → Processing → Identity → Success
+
+## 🌐 Live Demo
+
+https://frameingoa-omega.vercel.app/
+
+## 👩‍💻 Built For
+
+Hacker House Goa
+
+## ❤️ Built With
+
+React + Tailwind CSS + Creativity
