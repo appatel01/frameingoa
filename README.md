@@ -1,15 +1,4 @@
 # 🚀 FrameInGoa
-<p align="center">
-  <img src="screenshots/builder-card.png" alt="FrameInGoa Builder Card" width="700"/>
-</p>
-
-<p align="center">
-  <b>AI-Powered Builder Identity & Profile Frame Generator</b>
-</p>
-
-<p align="center">
-  <a href="https://frameingoa-omega.vercel.app/">🌐 Live Demo</a>
-</p>
 
 ### AI-Powered Builder Identity & Profile Frame Generator
 
