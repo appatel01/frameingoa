@@ -1,119 +1,102 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
-import { AppContext } from "../../context/AppContext";
-
-import InputField from "../InputField/InputField";
-import SocialInput from "../SocialInput/SocialInput";
-import Button from "../Button/Button";
-
-function DetailsForm() {
-    const { user, setUser } = useContext(AppContext);
-    const navigate = useNavigate();
-
-    function handleChange(e) {
-        setUser({
-        ...user,
-        [e.target.name]: e.target.value,
-        });
-    }
-
-    function handleSubmit(e) {
-        e.preventDefault();
-
-        if (
-        !user.fullName.trim() ||
-        !user.role.trim() ||
-        !user.college.trim()
-        ) {
-        alert("Please fill all required fields.");
-        return;
-        }
-
-        navigate("/processing");
-    }
-
+function FeatureCard({ icon, number, title, description }) {
     return (
-        <form
-        onSubmit={handleSubmit}
-        className="
-            w-full
-            bg-white/5
-            border
-            border-white/10
-            rounded-3xl
-            px-12
-            py-10
-            backdrop-blur-xl
-            shadow-2xl
-        "
+        <motion.div
+            whileHover={{ y: -8, scale: 1.02 }}
+            transition={{ duration: 0.25 }}
+            className="
+                group
+                relative
+                overflow-hidden
+                rounded-3xl
+                border
+                border-white/10
+                bg-white/5
+                p-8
+                backdrop-blur-xl
+                shadow-xl
+                hover:border-fuchsia-500/40
+                transition-all
+                duration-300
+            "
         >
-        {/* Step */}
-        <p className="text-center text-sm font-semibold uppercase tracking-widest text-fuchsia-400">
-            STEP 2 OF 4 • Builder Information
-        </p>
 
-        {/* Title */}
-        <h1 className="mt-4 text-5xl font-bold text-white text-center">
-            Hacker Profile
-        </h1>
+            {/* Glow */}
+            <div
+                className="
+                    absolute
+                    -top-16
+                    -right-16
+                    w-40
+                    h-40
+                    rounded-full
+                    bg-fuchsia-500/10
+                    blur-3xl
+                    opacity-0
+                    group-hover:opacity-100
+                    transition-opacity
+                "
+            ></div>
 
-        {/* Subtitle */}
-        <p className="text-center text-gray-400 mt-3 mb-10 leading-relaxed">
-            Tell us what you build. We'll generate a personalized power tier.
-        </p>
+            {/* Top */}
+            <div className="relative flex items-center justify-between">
 
-        <div className="space-y-6">
-            <InputField
-            label="FULL NAME"
-            name="fullName"
-            placeholder="Anushka Patel"
-            value={user.fullName}
-            onChange={handleChange}
-            />
+                {/* Number */}
+                <span className="
+                    text-sm
+                    font-bold
+                    tracking-widest
+                    text-fuchsia-400
+                ">
+                    {number}
+                </span>
 
-            <InputField
-            label="PRIMARY ROLE / STACK"
-            name="role"
-            placeholder="Full Stack Developer"
-            value={user.role}
-            onChange={handleChange}
-            />
+                {/* Icon */}
+                <div className="
+                    w-12
+                    h-12
+                    flex
+                    items-center
+                    justify-center
+                    rounded-xl
+                    bg-gradient-to-br
+                    from-fuchsia-600/20
+                    to-cyan-500/20
+                    border
+                    border-white/10
+                    text-cyan-400
+                    group-hover:text-fuchsia-400
+                    transition-colors
+                ">
+                    {icon}
+                </div>
 
-            <InputField
-            label="COLLEGE OR ORGANIZATION"
-            name="college"
-            placeholder="Ramdeobaba University"
-            value={user.college}
-            onChange={handleChange}
-            />
-        </div>
+            </div>
 
-        <div className="grid grid-cols-2 gap-5 mt-6">
-            <SocialInput
-            label="GITHUB"
-            name="github"
-            placeholder="anushka-patel"
-            value={user.github}
-            onChange={handleChange}
-            />
+            {/* Title */}
+            <h3 className="
+                relative
+                mt-8
+                text-2xl
+                font-bold
+                text-white
+            ">
+                {title}
+            </h3>
 
-            <SocialInput
-            label="X (TWITTER)"
-            name="twitter"
-            placeholder="@anushka_codes"
-            value={user.twitter}
-            onChange={handleChange}
-            />
-        </div>
+            {/* Description */}
+            <p className="
+                relative
+                mt-3
+                text-gray-400
+                leading-relaxed
+            ">
+                {description}
+            </p>
 
-        <div className="mt-10">
-            <Button fullWidth>
-            Generate Identity
-            </Button>
-        </div>
-        </form>
+        </motion.div>
     );
 }
 
-export default DetailsForm;
+export default FeatureCard;
