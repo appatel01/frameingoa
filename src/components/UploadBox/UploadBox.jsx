@@ -1,45 +1,61 @@
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { UploadCloud } from "lucide-react";
+
 import { AppContext } from "../../context/AppContext";
 import CameraButton from "../CameraButton/CameraButton";
 
 function UploadBox() {
     const { setPhoto } = useContext(AppContext);
+    const [error, setError] = useState("");
 
-    const onDrop = useCallback((acceptedFiles) => {
+    const onDrop = useCallback(
+        (acceptedFiles) => {
+        setError("");
+
         const file = acceptedFiles[0];
 
-        console.log("Selected file:", file);
-
-        if (!file) return;
-
-        // Check file size - max 10MB
-        if (file.size > 10 * 1024 * 1024) {
-            alert("File size must be less than 10MB.");
+        if (!file) {
+            setError("Please select a valid image file.");
             return;
         }
 
-        const reader = new FileReader();
+        // 10 MB limit
+        const maxSize = 10 * 1024 * 1024;
 
-        reader.onload = () => {
-            console.log("Image converted successfully");
+        if (file.size > maxSize) {
+            setError("File is too large. Please upload an image under 10 MB.");
+            return;
+        }
 
-            setPhoto(reader.result);
-        };
+        // Allowed file types
+        const allowedTypes = [
+            "image/jpeg",
+            "image/jpg",
+            "image/png",
+            "image/heic",
+        ];
 
-        reader.onerror = () => {
-            console.error("Failed to read image");
-            alert("Unable to read the image.");
-        };
+        if (!allowedTypes.includes(file.type)) {
+            setError("Only JPG, JPEG, PNG and HEIC images are allowed.");
+            return;
+        }
 
-        reader.readAsDataURL(file);
-        }, [setPhoto]);
+        console.log("Uploaded file:", file);
 
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop, // <-- THIS WAS MISSING
+        const imageUrl = URL.createObjectURL(file);
+
+        setPhoto(imageUrl);
+        },
+        [setPhoto]
+    );
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
         accept: {
-            "image/*": [".jpg", ".jpeg", ".png", ".heic"],
+        "image/jpeg": [".jpg", ".jpeg"],
+        "image/png": [".png"],
+        "image/heic": [".heic"],
         },
         multiple: false,
     });
@@ -57,7 +73,23 @@ function UploadBox() {
 
         <div
             {...getRootProps()}
-            className="mt-8 border-2 border-dashed border-cyan-500 rounded-3xl py-20 flex flex-col items-center cursor-pointer hover:bg-cyan-500/5 transition"
+            className={`
+            mt-8
+            border-2
+            border-dashed
+            rounded-3xl
+            py-20
+            flex
+            flex-col
+            items-center
+            cursor-pointer
+            transition
+            ${
+                isDragActive
+                ? "border-cyan-400 bg-cyan-500/10"
+                : "border-cyan-500 hover:bg-cyan-500/5"
+            }
+            `}
         >
             <input {...getInputProps()} />
 
@@ -65,21 +97,30 @@ function UploadBox() {
             <UploadCloud size={32} className="text-cyan-400" />
             </div>
 
-            <h3 className="mt-6 text-white text-xl font-semibold">
-            Drag & Drop your photo here
+            <h3 className="mt-6 text-white text-xl font-semibold text-center">
+            {isDragActive
+                ? "Drop your photo here"
+                : "Drag & Drop your photo here"}
             </h3>
 
             <p className="text-gray-400 mt-2">
             or click to browse
             </p>
 
-            <div className="flex gap-3 mt-5 text-sm text-gray-500">
+            <div className="flex flex-wrap justify-center gap-3 mt-5 text-sm text-gray-500">
             <span>JPG</span>
             <span>PNG</span>
             <span>HEIC</span>
             <span>Max 10MB</span>
             </div>
         </div>
+
+        {/* Error Message */}
+        {error && (
+            <div className="mt-4 px-4 py-3 rounded-xl border border-red-500/30 bg-red-500/10 text-red-400 text-sm text-center">
+            {error}
+            </div>
+        )}
 
         <CameraButton />
 

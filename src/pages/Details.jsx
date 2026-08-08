@@ -14,13 +14,13 @@ function Details() {
 
             <Navbar />
 
-            <div className="relative z-10 pt-32">
+            <div className="relative z-10 pt-24 md:pt-32">
 
                 <ProgressBar 
                 step={2}
                 title="Builder Information"/>
 
-                <div className="w-full max-w-[650px] mx-auto mt-10 px-6">
+                <div className="w-full max-w-[680px] mx-auto mt-6 md:mt-10 px-4 md:px-6">
 
                     <DetailsForm />
 

@@ -50,33 +50,135 @@ function Identity() {
   // Download PFP Frame
   // ==============================
   const downloadPFPFrame = async () => {
-    const card = document.getElementById("builder-card");
+  if (!photo) {
+    alert("Please upload a photo first.");
+    return;
+  }
 
-    if (!card) {
-      console.error("Builder card not found");
-      return;
+  try {
+    const canvas = document.createElement("canvas");
+
+    const size = 1000;
+
+    canvas.width = size;
+    canvas.height = size;
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      throw new Error("Canvas is not supported.");
     }
 
-    try {
-      const dataUrl = await htmlToImage.toPng(card, {
-        pixelRatio: 2,
-        cacheBust: true,
-      });
+    // Background
+    ctx.fillStyle = "#050816";
+    ctx.fillRect(0, 0, size, size);
 
-      const link = document.createElement("a");
+    // Load uploaded photo
+    const image = new Image();
 
-      link.download = "frameingoa-pfp-frame.png";
-      link.href = dataUrl;
+    image.crossOrigin = "anonymous";
 
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+    image.onload = () => {
+      // Circular photo area
+      const center = size / 2;
+      const radius = 360;
 
-    } catch (error) {
-      console.error("PFP Frame download failed:", error);
-      alert("Unable to download the PFP Frame.");
-    }
-  };
+      ctx.save();
+
+      ctx.beginPath();
+      ctx.arc(center, center, radius, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.clip();
+
+      // Cover image inside circle
+      const imageRatio = image.width / image.height;
+
+      let drawWidth;
+      let drawHeight;
+      let offsetX;
+      let offsetY;
+
+      if (imageRatio > 1) {
+        drawHeight = radius * 2;
+        drawWidth = drawHeight * imageRatio;
+
+        offsetX = center - drawWidth / 2;
+        offsetY = center - drawHeight / 2;
+      } else {
+        drawWidth = radius * 2;
+        drawHeight = drawWidth / imageRatio;
+
+        offsetX = center - drawWidth / 2;
+        offsetY = center - drawHeight / 2;
+      }
+
+      ctx.drawImage(
+        image,
+        offsetX,
+        offsetY,
+        drawWidth,
+        drawHeight
+      );
+
+      ctx.restore();
+
+      // Cyan outer frame
+      ctx.beginPath();
+      ctx.arc(center, center, radius + 15, 0, Math.PI * 2);
+
+      ctx.lineWidth = 30;
+      ctx.strokeStyle = "#22D3EE";
+      ctx.stroke();
+
+      // Purple outer glow
+      ctx.beginPath();
+      ctx.arc(center, center, radius + 32, 0, Math.PI * 2);
+
+      ctx.lineWidth = 8;
+      ctx.strokeStyle = "#A855F7";
+      ctx.stroke();
+
+      // FrameInGoa text
+      ctx.font = "bold 55px Arial";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#FFFFFF";
+
+      ctx.fillText("FrameInGoa", center, 900);
+
+      // Download
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          throw new Error("Could not create PFP frame.");
+        }
+
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+
+        link.href = url;
+        link.download = "frameingoa-pfp-frame.png";
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 1000);
+      }, "image/png");
+    };
+
+    image.onerror = () => {
+      throw new Error("Could not load profile image.");
+    };
+
+    image.src = photo;
+
+  } catch (error) {
+    console.error("PFP Frame download failed:", error);
+    alert("Unable to download the PFP Frame.");
+  }
+};
 
   const shareOnX = () => {
       const text = `🚀 I just created my Builder Card on FrameInGoa!
@@ -169,7 +271,19 @@ function Identity() {
           <div className="flex justify-center mt-5">
 
             <button
-              onClick={shareOnX}
+              onClick={() => {
+                const text = encodeURIComponent(
+                  `Just created my FrameInGoa Builder Card! 🚀\n\nI'm ${user.fullName || "a builder"} — ${user.role || "building cool things"}.\n\n#FrameInGoa #HackerHouseGoa`
+                );
+
+                const url = encodeURIComponent(window.location.origin);
+
+                window.open(
+                  `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+                  "_blank",
+                  "noopener,noreferrer"
+                );
+              }}
               className="
                 px-8
                 py-3

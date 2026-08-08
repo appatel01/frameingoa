@@ -9,7 +9,6 @@ import Button from "../Button/Button";
 
 function DetailsForm() {
     const { user, setUser } = useContext(AppContext);
-
     const navigate = useNavigate();
 
     function handleChange(e) {
@@ -22,9 +21,27 @@ function DetailsForm() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        console.log("Button Clicked");
-        console.log(user);
-        console.log("USER SAVED:", user);
+        const fullName = user.fullName.trim();
+        const role = user.role.trim();
+        const college = user.college.trim();
+
+        // Required fields validation
+        if (!fullName || !role || !college) {
+        alert(
+            "Please fill Full Name, Primary Role / Stack and College."
+        );
+        return;
+        }
+
+        // Save cleaned values
+        setUser({
+        ...user,
+        fullName,
+        role,
+        college,
+        });
+
+        // Go to processing only after validation passes
         navigate("/processing");
     }
 
@@ -37,7 +54,9 @@ function DetailsForm() {
             border
             border-white/10
             rounded-3xl
-            p-10
+            p-5
+            sm:p-8
+            md:p-10
             backdrop-blur-xl
         "
         >
@@ -73,7 +92,7 @@ function DetailsForm() {
             onChange={handleChange}
         />
 
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <SocialInput
             label="GitHub"
             name="github"
@@ -92,10 +111,7 @@ function DetailsForm() {
         </div>
 
         <div className="mt-8">
-            <Button
-            type="submit"
-            className="w-full py-4 rounded-xl bg-purple-600 text-white"
-            >
+            <Button type="submit" fullWidth>
             Generate Identity
             </Button>
         </div>

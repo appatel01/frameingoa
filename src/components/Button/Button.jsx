@@ -5,7 +5,6 @@ function Button({
     onClick,
     type = "button",
     fullWidth = false,
-
     }) {
     return (
         <motion.button

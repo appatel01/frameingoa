@@ -101,7 +101,7 @@ function BuilderCard() {
         </div>
 
         {/* Stats */}
-        <div className="relative grid grid-cols-3 gap-4 mt-10">
+        <div className="relative grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
 
             <div className="rounded-2xl bg-white/5 border border-white/10 p-5 text-center">
             <p className="text-3xl">⚡</p>
