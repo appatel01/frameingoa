@@ -4,29 +4,34 @@ import { AppContext } from "../../context/AppContext";
 function BuilderCard() {
     const { photo, user } = useContext(AppContext);
 
+    // Debugging
+    console.log("PHOTO =", photo);
+    console.log("USER =", user);
+
     return (
         <div
+        id="builder-card"
         className="
-        relative
-        overflow-hidden
-        rounded-[32px]
-        border
-        border-cyan-500/30
-        bg-gradient-to-br
-        from-[#0B1022]
-        via-[#141C34]
-        to-[#1E293B]
-        p-10
-        shadow-[0_0_60px_rgba(34,211,238,0.15)]
+            relative
+            overflow-hidden
+            rounded-[32px]
+            border
+            border-cyan-500/30
+            bg-gradient-to-br
+            from-[#0B1022]
+            via-[#141C34]
+            to-[#1E293B]
+            p-10
+            shadow-[0_0_60px_rgba(34,211,238,0.15)]
         "
         >
         {/* Background Glow */}
         <div className="absolute -top-20 -right-20 w-60 h-60 bg-cyan-500/10 rounded-full blur-3xl"></div>
+
         <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-fuchsia-600/10 rounded-full blur-3xl"></div>
 
         {/* Header */}
         <div className="relative flex justify-between items-center">
-
             <div>
             <p className="text-cyan-400 text-sm font-semibold uppercase tracking-widest">
                 Hacker House Goa
@@ -42,16 +47,16 @@ function BuilderCard() {
                 #FrameInGoa
             </span>
             </div>
-
         </div>
 
         {/* Profile */}
         <div className="relative flex flex-col items-center mt-10">
 
+            {photo ? (
             <img
-            src={photo}
-            alt="Profile"
-            className="
+                src={photo}
+                alt="Profile"
+                className="
                 w-40
                 h-40
                 rounded-full
@@ -59,8 +64,27 @@ function BuilderCard() {
                 border-4
                 border-cyan-400
                 shadow-lg
-            "
+                "
             />
+            ) : (
+            <div
+                className="
+                w-40
+                h-40
+                rounded-full
+                border-4
+                border-cyan-400
+                flex
+                items-center
+                justify-center
+                text-white
+                text-xl
+                bg-[#111827]
+                "
+            >
+                No Photo
+            </div>
+            )}
 
             <h2 className="mt-6 text-4xl font-bold text-white text-center">
             {user.fullName || "Your Name"}
@@ -129,7 +153,6 @@ function BuilderCard() {
             </span>
 
         </div>
-
         </div>
     );
 }

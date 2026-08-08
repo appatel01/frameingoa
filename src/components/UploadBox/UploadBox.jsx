@@ -10,13 +10,30 @@ function UploadBox() {
     const onDrop = useCallback((acceptedFiles) => {
         const file = acceptedFiles[0];
 
-        console.log(file);
+        console.log("Selected file:", file);
 
         if (!file) return;
 
-        const imageUrl = URL.createObjectURL(file);
+        // Check file size - max 10MB
+        if (file.size > 10 * 1024 * 1024) {
+            alert("File size must be less than 10MB.");
+            return;
+        }
 
-        setPhoto(imageUrl);
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            console.log("Image converted successfully");
+
+            setPhoto(reader.result);
+        };
+
+        reader.onerror = () => {
+            console.error("Failed to read image");
+            alert("Unable to read the image.");
+        };
+
+        reader.readAsDataURL(file);
         }, [setPhoto]);
 
     const { getRootProps, getInputProps } = useDropzone({

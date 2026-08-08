@@ -36,9 +36,7 @@ function Processing() {
         />
 
         <div className="mt-20 flex justify-center">
-
           <Loader />
-
         </div>
 
       </div>
