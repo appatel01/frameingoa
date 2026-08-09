@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar/Navbar";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BuilderCard from "../components/BuilderCard/BuilderCard";
 
-import * as htmlToImage from "html-to-image";
+import html2canvas from "html2canvas-pro";
 
 function Identity() {
   const { photo, user } = useContext(AppContext);
@@ -25,12 +25,16 @@ function Identity() {
     }
 
     try {
-      console.log("Creating Builder Card image...");
+      console.log("Starting Builder Card download...");
 
-      // Wait for React/photo rendering
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // Wait for React to finish rendering
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(resolve);
+        });
+      });
 
-      // Make sure all images are loaded
+      // Wait for images
       const images = card.querySelectorAll("img");
 
       await Promise.all(
@@ -46,43 +50,33 @@ function Identity() {
         })
       );
 
-      // ======================================
-      // CREATE PNG
-      // ======================================
+      // Small delay
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
-      const dataUrl = await htmlToImage.toPng(card, {
-        quality: 1,
-        pixelRatio: 2,
-        cacheBust: true,
+      console.log("Capturing Builder Card...");
 
+      const canvas = await html2canvas(card, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
         backgroundColor: "#101321",
-
-        // Make sure the complete card is captured
-        width: card.scrollWidth,
-        height: card.scrollHeight,
-
-        style: {
-          transform: "none",
-        },
+        logging: false,
       });
 
-      // ======================================
-      // DOWNLOAD
-      // ======================================
+      console.log("Canvas created successfully.");
+
+      const image = canvas.toDataURL("image/png");
 
       const link = document.createElement("a");
 
       link.download = "frameingoa-builder-card.png";
-      link.href = dataUrl;
+      link.href = image;
 
       document.body.appendChild(link);
-
       link.click();
-
       document.body.removeChild(link);
 
       console.log("Builder Card downloaded successfully!");
-
     } catch (error) {
       console.error("BUILDER CARD DOWNLOAD ERROR:", error);
 
@@ -91,7 +85,6 @@ function Identity() {
       );
     }
   };
-
 
   // ==========================================
   // DOWNLOAD PFP FRAME
@@ -117,11 +110,9 @@ function Identity() {
         throw new Error("Canvas is not supported.");
       }
 
-      // Background
       ctx.fillStyle = "#050816";
       ctx.fillRect(0, 0, size, size);
 
-      // Create photo URL
       const photoUrl =
         typeof photo === "string"
           ? photo
@@ -129,14 +120,13 @@ function Identity() {
 
       const image = new Image();
 
+      image.crossOrigin = "anonymous";
+
       image.onload = () => {
         const center = size / 2;
         const radius = 360;
 
-        // ======================================
-        // CIRCULAR PHOTO
-        // ======================================
-
+        // Circular photo
         ctx.save();
 
         ctx.beginPath();
@@ -150,15 +140,10 @@ function Identity() {
         );
 
         ctx.closePath();
-
         ctx.clip();
 
-        // ======================================
-        // COVER IMAGE
-        // ======================================
-
-        const imageRatio =
-          image.width / image.height;
+        // Cover image
+        const imageRatio = image.width / image.height;
 
         let drawWidth;
         let drawHeight;
@@ -169,20 +154,14 @@ function Identity() {
           drawHeight = radius * 2;
           drawWidth = drawHeight * imageRatio;
 
-          offsetX =
-            center - drawWidth / 2;
-
-          offsetY =
-            center - drawHeight / 2;
+          offsetX = center - drawWidth / 2;
+          offsetY = center - drawHeight / 2;
         } else {
           drawWidth = radius * 2;
           drawHeight = drawWidth / imageRatio;
 
-          offsetX =
-            center - drawWidth / 2;
-
-          offsetY =
-            center - drawHeight / 2;
+          offsetX = center - drawWidth / 2;
+          offsetY = center - drawHeight / 2;
         }
 
         ctx.drawImage(
@@ -195,10 +174,7 @@ function Identity() {
 
         ctx.restore();
 
-        // ======================================
-        // CYAN FRAME
-        // ======================================
-
+        // Cyan frame
         ctx.beginPath();
 
         ctx.arc(
@@ -211,13 +187,9 @@ function Identity() {
 
         ctx.lineWidth = 30;
         ctx.strokeStyle = "#22D3EE";
-
         ctx.stroke();
 
-        // ======================================
-        // PURPLE FRAME
-        // ======================================
-
+        // Purple frame
         ctx.beginPath();
 
         ctx.arc(
@@ -230,13 +202,9 @@ function Identity() {
 
         ctx.lineWidth = 8;
         ctx.strokeStyle = "#A855F7";
-
         ctx.stroke();
 
-        // ======================================
-        // TEXT
-        // ======================================
-
+        // Text
         ctx.font = "bold 55px Arial";
         ctx.textAlign = "center";
         ctx.fillStyle = "#FFFFFF";
@@ -247,31 +215,22 @@ function Identity() {
           900
         );
 
-        // ======================================
-        // DOWNLOAD
-        // ======================================
-
+        // Download
         canvas.toBlob((blob) => {
           if (!blob) {
             alert("Could not create PFP frame.");
             return;
           }
 
-          const url =
-            URL.createObjectURL(blob);
+          const url = URL.createObjectURL(blob);
 
-          const link =
-            document.createElement("a");
+          const link = document.createElement("a");
 
           link.href = url;
-
-          link.download =
-            "frameingoa-pfp-frame.png";
+          link.download = "frameingoa-pfp-frame.png";
 
           document.body.appendChild(link);
-
           link.click();
-
           document.body.removeChild(link);
 
           setTimeout(() => {
@@ -279,7 +238,7 @@ function Identity() {
           }, 1000);
         }, "image/png");
 
-        // Cleanup temporary URL
+        // Cleanup temporary File URL
         if (typeof photo !== "string") {
           URL.revokeObjectURL(photoUrl);
         }
@@ -294,7 +253,6 @@ function Identity() {
       };
 
       image.src = photoUrl;
-
     } catch (error) {
       console.error(
         "PFP Frame download failed:",
@@ -305,7 +263,6 @@ function Identity() {
     }
   };
 
-
   // ==========================================
   // SHARE ON X
   // ==========================================
@@ -314,9 +271,7 @@ function Identity() {
     const text = encodeURIComponent(
       `Just created my FrameInGoa Builder Card! 🚀
 
-I'm ${
-        user?.fullName || "a builder"
-      } — ${
+I'm ${user?.fullName || "a builder"} — ${
         user?.role || "building cool things"
       }.
 
@@ -334,9 +289,8 @@ I'm ${
     );
   };
 
-
   // ==========================================
-  // PAGE
+  // RETURN
   // ==========================================
 
   return (
@@ -376,7 +330,7 @@ I'm ${
 
       <Navbar />
 
-      {/* Main */}
+      {/* Main Content */}
 
       <main
         className="
@@ -407,7 +361,7 @@ I'm ${
 
           <BuilderCard />
 
-          {/* Buttons */}
+          {/* Action Buttons */}
 
           <div
             className="
@@ -436,15 +390,12 @@ I'm ${
                 font-semibold
                 hover:scale-[1.02]
                 transition
-                shadow-lg
-                shadow-cyan-500/10
               "
             >
               ↓ Download Builder Card
             </button>
 
-
-            {/* Download PFP */}
+            {/* Download PFP Frame */}
 
             <button
               type="button"
@@ -460,15 +411,12 @@ I'm ${
                 font-semibold
                 hover:scale-[1.02]
                 transition
-                shadow-lg
-                shadow-fuchsia-500/10
               "
             >
               ✦ Download PFP Frame
             </button>
 
           </div>
-
 
           {/* Share */}
 
@@ -491,7 +439,6 @@ I'm ${
             ↗ Share on X
           </button>
 
-
           {/* Finish */}
 
           <div className="flex justify-center mt-4">
@@ -511,8 +458,6 @@ I'm ${
                 font-semibold
                 hover:scale-[1.03]
                 transition
-                shadow-lg
-                shadow-purple-500/20
               "
             >
               Finish & Continue →
