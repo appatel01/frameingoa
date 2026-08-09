@@ -6,6 +6,7 @@ import Details from "./pages/Details";
 import Processing from "./pages/Processing";
 import Identity from "./pages/Identity";
 import Success from "./pages/Success";
+import BuilderCardPage from "./pages/BuilderCard";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/processing" element={<Processing />} />
       <Route path="/identity" element={<Identity />} />
       <Route path="/success" element={<Success />} />
+      <Route path="/builder-card" element={<BuilderCardPage />} />
     </Routes>
   );
 }

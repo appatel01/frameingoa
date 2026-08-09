@@ -5,7 +5,7 @@ import {
     Laptop,
     } from "lucide-react";
     import { useContext, useEffect, useState } from "react";
-    import { AppContext } from "../../context/AppContext";
+    import { AppContext } from "../context/AppContext";
 
     function BuilderCard() {
     const { photo, user } = useContext(AppContext);
@@ -16,9 +16,9 @@ import {
         college = "",
     } = user || {};
 
-    // ==========================================
+    // =====================================
     // CREATE PHOTO URL
-    // ==========================================
+    // =====================================
 
     const [photoUrl, setPhotoUrl] = useState(null);
 
@@ -28,7 +28,7 @@ import {
         return;
         }
 
-        // If photo is already a URL
+        // If photo is already a URL/string
         if (typeof photo === "string") {
         setPhotoUrl(photo);
         return;
@@ -39,6 +39,7 @@ import {
 
         setPhotoUrl(url);
 
+        // Cleanup old URL
         return () => {
         URL.revokeObjectURL(url);
         };
@@ -49,12 +50,12 @@ import {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
-        className="w-full max-w-xl mx-auto"
+        className="w-full"
         >
 
-        {/* ==========================================
+        {/* =====================================
             BUILDER CARD
-        ========================================== */}
+        ===================================== */}
 
         <div
             id="builder-card"
@@ -74,7 +75,9 @@ import {
             "
         >
 
-            {/* Background Glow */}
+            {/* =====================================
+                BACKGROUND GLOW
+            ===================================== */}
 
             <div
             className="
@@ -104,13 +107,14 @@ import {
             "
             />
 
-            {/* ==========================================
+            {/* =====================================
                 HEADER
-            ========================================== */}
+            ===================================== */}
 
-            <div className="relative flex items-start justify-between gap-4">
+            <div className="relative flex items-center justify-between gap-4">
 
             <div>
+
                 <p
                 className="
                     text-xs
@@ -124,15 +128,16 @@ import {
 
                 <h2
                 className="
-                    mt-2
-                    text-3xl
-                    sm:text-4xl
+                    mt-1
+                    text-2xl
+                    sm:text-3xl
                     font-extrabold
                     text-white
                 "
                 >
                 Builder Card
                 </h2>
+
             </div>
 
             <div
@@ -154,9 +159,9 @@ import {
 
             </div>
 
-            {/* ==========================================
+            {/* =====================================
                 PROFILE
-            ========================================== */}
+            ===================================== */}
 
             <div className="relative mt-8 text-center">
 
@@ -191,6 +196,7 @@ import {
                 >
 
                 {photoUrl ? (
+
                     <img
                     src={photoUrl}
                     alt={fullName || "Builder"}
@@ -200,10 +206,13 @@ import {
                         object-cover
                     "
                     />
+
                 ) : (
+
                     <div className="text-gray-500 text-sm">
                     No Photo
                     </div>
+
                 )}
 
                 </div>
@@ -249,9 +258,9 @@ import {
 
             </div>
 
-            {/* ==========================================
+            {/* =====================================
                 STATS
-            ========================================== */}
+            ===================================== */}
 
             <div
             className="
@@ -263,7 +272,7 @@ import {
             "
             >
 
-            {/* SCORE */}
+            {/* BUILDER SCORE */}
 
             <div
                 className="
@@ -273,8 +282,11 @@ import {
                 bg-white/[0.04]
                 p-4
                 text-center
+                hover:border-yellow-400/30
+                transition
                 "
             >
+
                 <Zap
                 size={20}
                 className="mx-auto text-yellow-400"
@@ -287,9 +299,10 @@ import {
                 <p className="mt-1 text-xl font-bold text-white">
                 93
                 </p>
+
             </div>
 
-            {/* ANIMAL */}
+            {/* SPIRIT ANIMAL */}
 
             <div
                 className="
@@ -299,8 +312,11 @@ import {
                 bg-white/[0.04]
                 p-4
                 text-center
+                hover:border-orange-400/30
+                transition
                 "
             >
+
                 <PawPrint
                 size={20}
                 className="mx-auto text-orange-400"
@@ -313,9 +329,10 @@ import {
                 <p className="mt-1 text-xl font-bold text-white">
                 Fox
                 </p>
+
             </div>
 
-            {/* TITLE */}
+            {/* BUILDER TITLE */}
 
             <div
                 className="
@@ -325,8 +342,11 @@ import {
                 bg-white/[0.04]
                 p-4
                 text-center
+                hover:border-cyan-400/30
+                transition
                 "
             >
+
                 <Laptop
                 size={20}
                 className="mx-auto text-cyan-400"
@@ -339,15 +359,20 @@ import {
                 <p className="mt-1 text-sm font-bold text-white">
                 Prompt Wizard
                 </p>
-            </div>
 
             </div>
 
-            {/* DIVIDER */}
+            </div>
+
+            {/* =====================================
+                DIVIDER
+            ===================================== */}
 
             <div className="relative h-px bg-white/10 my-7" />
 
-            {/* FOOTER */}
+            {/* =====================================
+                FOOTER
+            ===================================== */}
 
             <div
             className="
@@ -358,6 +383,7 @@ import {
                 text-xs
             "
             >
+
             <span className="text-gray-400">
                 Built with 💗 at Hacker House Goa
             </span>
@@ -365,6 +391,7 @@ import {
             <span className="text-cyan-400 font-semibold">
                 #FrameInGoa
             </span>
+
             </div>
 
         </div>
