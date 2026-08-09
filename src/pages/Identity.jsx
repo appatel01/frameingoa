@@ -6,7 +6,7 @@ import Navbar from "../components/Navbar/Navbar";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BuilderCard from "../components/BuilderCard/BuilderCard";
 
-import html2canvas from "html2canvas-pro";
+import { domToPng } from "modern-screenshot";
 
 function Identity() {
   const { photo, user } = useContext(AppContext);
@@ -17,74 +17,75 @@ function Identity() {
   // ==========================================
 
   const downloadBuilderCard = async () => {
-    const card = document.getElementById("builder-card");
+  const card = document.getElementById("builder-card");
 
-    if (!card) {
-      alert("Builder Card not found.");
-      return;
-    }
+  if (!card) {
+    alert("Builder Card not found.");
+    return;
+  }
 
-    try {
-      console.log("Starting Builder Card download...");
+  try {
+    console.log("Preparing Builder Card...");
 
-      // Wait for React to finish rendering
-      await new Promise((resolve) => {
-        requestAnimationFrame(() => {
-          requestAnimationFrame(resolve);
+    // Wait for React rendering
+    await new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resolve);
+      });
+    });
+
+    // Wait for images
+    const images = card.querySelectorAll("img");
+
+    await Promise.all(
+      Array.from(images).map((img) => {
+        if (img.complete) {
+          return Promise.resolve();
+        }
+
+        return new Promise((resolve) => {
+          img.onload = resolve;
+          img.onerror = resolve;
         });
-      });
+      })
+    );
 
-      // Wait for images
-      const images = card.querySelectorAll("img");
+    // Small delay
+    await new Promise((resolve) =>
+      setTimeout(resolve, 500)
+    );
 
-      await Promise.all(
-        Array.from(images).map((img) => {
-          if (img.complete) {
-            return Promise.resolve();
-          }
+    console.log("Generating Builder Card PNG...");
 
-          return new Promise((resolve) => {
-            img.onload = resolve;
-            img.onerror = resolve;
-          });
-        })
-      );
+    const dataUrl = await domToPng(card, {
+      scale: 2,
+      backgroundColor: "#101321",
+      debug: true,
+    });
 
-      // Small delay
-      await new Promise((resolve) => setTimeout(resolve, 300));
+    console.log("PNG generated successfully.");
 
-      console.log("Capturing Builder Card...");
+    const link = document.createElement("a");
 
-      const canvas = await html2canvas(card, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: false,
-        backgroundColor: "#101321",
-        logging: false,
-      });
+    link.download = "frameingoa-builder-card.png";
+    link.href = dataUrl;
 
-      console.log("Canvas created successfully.");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
-      const image = canvas.toDataURL("image/png");
+    console.log("Builder Card downloaded successfully!");
+  } catch (error) {
+    console.error(
+      "BUILDER CARD DOWNLOAD ERROR:",
+      error
+    );
 
-      const link = document.createElement("a");
-
-      link.download = "frameingoa-builder-card.png";
-      link.href = image;
-
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      console.log("Builder Card downloaded successfully!");
-    } catch (error) {
-      console.error("BUILDER CARD DOWNLOAD ERROR:", error);
-
-      alert(
-        "Unable to download the Builder Card. Please check the browser console."
-      );
-    }
-  };
+    alert(
+      "Unable to download the Builder Card. Please check the browser console."
+    );
+  }
+};
 
   // ==========================================
   // DOWNLOAD PFP FRAME
