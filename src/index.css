@@ -1,117 +1,5093 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;800&display=swap");
 @import "tailwindcss";
-:root {
-    --text: #6b6375;
-    --text-h: #08060d;
-    --bg: #fff;
-    --border: #e5e4e7;
-    --code-bg: #f4f3ec;
-    --accent: #aa3bff;
-    --accent-bg: rgba(170, 59, 255, 0.1);
-    --accent-border: rgba(170, 59, 255, 0.5);
-    --social-bg: rgba(244, 243, 236, 0.5);
-    --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-    --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-    --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-    --mono: ui-monospace, Consolas, monospace;
-    font: 18px/145% var(--sans);
-    letter-spacing: 0.18px;
-    color-scheme: light dark;
-    color: var(--text);
-    background: var(--bg);
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    @media (max-width: 1024px) {
-        font-size: 16px;
-    }
-}
 
-@media (prefers-color-scheme: dark) {
-     :root {
-        --text: #9ca3af;
-        --text-h: #f3f4f6;
-        --bg: #16171d;
-        --border: #2e303a;
-        --code-bg: #1f2028;
-        --accent: #c084fc;
-        --accent-bg: rgba(192, 132, 252, 0.15);
-        --accent-border: rgba(192, 132, 252, 0.5);
-        --social-bg: rgba(47, 48, 58, 0.5);
-        --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-    }
-    #social .button-icon {
-        filter: invert(1) brightness(2);
-    }
-}
+/* =========================================================
+    GLOBAL
+========================================================= */
 
-body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    background: #050816;
-    color: white;
-    overflow-x: hidden;
-    background: radial-gradient(circle at top left, #5B21B655, transparent 35%), radial-gradient(circle at bottom right, #06B6D455, transparent 30%), #050816;
-}
-
+html,
+body,
 #root {
-    width: 1126px;
-    max-width: 100%;
-    margin: 0 auto;
-    text-align: center;
-    border-inline: 1px solid var(--border);
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-}
-
-h1,
-h2 {
-    font-family: var(--heading);
-    font-weight: 500;
-    color: var(--text-h);
-}
-
-h1 {
-    font-size: 56px;
-    letter-spacing: -1.68px;
-    margin: 32px 0;
-    @media (max-width: 1024px) {
-        font-size: 36px;
-        margin: 20px 0;
-    }
-}
-
-h2 {
-    font-size: 24px;
-    line-height: 118%;
-    letter-spacing: -0.24px;
-    margin: 0 0 8px;
-    @media (max-width: 1024px) {
-        font-size: 20px;
-    }
-}
-
-p {
     margin: 0;
+    min-height: 100%;
+    width: 100%;
 }
 
-code,
-.counter {
-    font-family: var(--mono);
-    display: inline-flex;
-    border-radius: 4px;
-    color: var(--text-h);
+:root {
+    font-family: "DM Sans", sans-serif;
+    --goa-green: #075c36;
+    --goa-dark: #064d2e;
+    --goa-deep: #043c25;
+    --goa-yellow: #ffd900;
+    --goa-pink: #ff0080;
+    --goa-cream: #fff7d6;
+    --camera-brown: #765027;
+    --camera-dark: #4b321b;
+    --camera-gold: #b88b45;
+    --camera-light-gold: #d2ad61;
+    --camera-black: #171717;
 }
 
-code {
-    font-size: 15px;
-    line-height: 135%;
-    padding: 4px 8px;
-    background: var(--code-bg);
+* {
+    box-sizing: border-box;
 }
 
 html {
     scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background: var(--goa-green);
+    color: var(--goa-cream);
+}
+
+button,
+a,
+input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+}
+
+::selection {
+    background: var(--goa-pink);
+    color: var(--goa-cream);
+}
+
+
+/* =========================================================
+   RETRO TYPOGRAPHY
+========================================================= */
+
+.goa-section-title {
+    margin-top: 8px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--goa-yellow);
+}
+
+.goa-small-title {
+    font-family: "DM Sans", sans-serif;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    color: var(--goa-pink);
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.goa-nav-link {
+    position: relative;
+    color: var(--goa-cream);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    transition: color 0.2s ease;
+}
+
+.goa-nav-link:hover {
+    color: var(--goa-yellow);
+}
+
+.goa-nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 0;
+    height: 3px;
+    background: var(--goa-pink);
+    transition: width 0.2s ease;
+}
+
+.goa-nav-link:hover::after,
+.goa-nav-link.active::after {
+    width: 100%;
+}
+
+
+/* =========================================================
+   HERO DECORATIONS
+========================================================= */
+
+.goa-palm {
+    position: absolute;
+    z-index: 2;
+    font-size: 120px;
+    opacity: 0.25;
+    filter: saturate(1.5);
+    pointer-events: none;
+}
+
+.left-palm {
+    left: -20px;
+    top: 90px;
+    transform: rotate(-12deg);
+}
+
+.right-palm {
+    right: -15px;
+    top: 80px;
+    transform: scaleX(-1) rotate(-12deg);
+}
+
+.goa-bird {
+    position: absolute;
+    z-index: 3;
+    color: var(--goa-cream);
+    font-size: 34px;
+    transform: rotate(-20deg);
+    opacity: 0.8;
+}
+
+.bird-one {
+    left: 22%;
+    top: 180px;
+}
+
+.bird-two {
+    right: 25%;
+    top: 230px;
+}
+
+.bird-three {
+    right: 18%;
+    top: 150px;
+}
+
+
+/* =========================================================
+   HERO ART
+========================================================= */
+
+.hero-art-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    height: 0;
+    margin: 0 auto;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   FEATURE CARDS
+========================================================= */
+
+.goa-feature-card {
+    position: relative;
+    width: 100%;
+    height: 340px;
+    min-height: 340px;
+    overflow: hidden;
+    border: 3px solid var(--goa-dark);
+    padding: 0;
+    background: var(--goa-dark);
+    box-shadow: 7px 7px 0 var(--goa-dark);
+    isolation: isolate;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.goa-feature-card:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 9px 9px 0 var(--goa-dark);
+}
+
+
+/* =========================================================
+   FEATURE CARD BACKGROUND
+========================================================= */
+
+.goa-card-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    z-index: 0;
+    transition: transform 0.35s ease;
+}
+
+.goa-feature-card:hover .goa-card-background {
+    transform: scale(1.035);
+}
+
+
+/* =========================================================
+   FEATURE CARD OVERLAY
+========================================================= */
+
+.goa-feature-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient( to bottom, rgba(6, 77, 46, 0.04) 0%, rgba(6, 77, 46, 0.02) 45%, rgba(6, 77, 46, 0.10) 100%);
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   CARD INNER
+========================================================= */
+
+.goa-card-inner {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    padding: 18px;
+}
+
+
+/* =========================================================
+   CARD TOP
+========================================================= */
+
+.goa-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+/* =========================================================
+   CARD NUMBER
+========================================================= */
+
+.goa-card-number {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 42px;
+    line-height: 1;
+    color: var(--goa-dark);
+    text-shadow: 1px 1px 0 rgba(255, 247, 214, 0.7), -1px -1px 0 rgba(255, 247, 214, 0.2);
+}
+
+
+/* =========================================================
+   CARD ICON
+========================================================= */
+
+.goa-card-icon {
+    display: flex;
+    width: 55px;
+    height: 55px;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--goa-dark);
+    border-radius: 50%;
+    color: var(--goa-dark);
+    background: rgba(255, 247, 214, 0.35);
+    backdrop-filter: blur(3px);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.goa-card-content {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 105px;
+}
+
+
+/* =========================================================
+   CARD TITLE
+========================================================= */
+
+.goa-card-title {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--goa-dark);
+    text-shadow: 1px 1px 0 rgba(255, 247, 214, 0.5);
+}
+
+
+/* =========================================================
+   CARD DESCRIPTION
+========================================================= */
+
+.goa-card-description {
+    margin-top: 10px;
+    max-width: 230px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.45;
+    color: var(--goa-dark);
+    text-shadow: 0 1px 0 rgba(255, 247, 214, 0.35);
+}
+
+
+/* =========================================================
+   CARD ROPES
+========================================================= */
+
+.goa-rope {
+    position: absolute;
+    top: -5px;
+    width: 3px;
+    height: 28px;
+    background: var(--goa-dark);
+    z-index: 5;
+}
+
+.left-rope {
+    left: 28px;
+}
+
+.right-rope {
+    right: 28px;
+}
+
+
+/* =========================================================
+   OLD CARD DECORATIONS
+========================================================= */
+
+.goa-card-yellow,
+.goa-card-pink,
+.goa-card-palm {
+    background: transparent;
+}
+
+
+/* =========================================================
+   PINK WAVE DIVIDER
+========================================================= */
+
+.goa-wave {
+    width: 100%;
+    height: 18px;
+    background: radial-gradient( ellipse at center, var(--goa-pink) 0, var(--goa-pink) 48%, transparent 50%);
+    background-size: 45px 18px;
+    background-repeat: repeat-x;
+}
+
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.goa-stat {
+    position: relative;
+    display: flex;
+    min-height: 160px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid var(--goa-dark);
+    text-align: center;
+    box-shadow: 7px 7px 0 var(--goa-dark);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.goa-stat:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 9px 9px 0 var(--goa-dark);
+}
+
+.goa-stat.yellow {
+    background: var(--goa-yellow);
+    color: var(--goa-dark);
+}
+
+.goa-stat.pink {
+    background: var(--goa-pink);
+    color: var(--goa-cream);
+}
+
+.goa-stat-number {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(45px, 6vw, 70px);
+    line-height: 0.9;
+}
+
+.goa-stat-label {
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.15em;
+}
+
+
+/* =========================================================
+   BUILDER CTA
+========================================================= */
+
+.goa-builder {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    min-height: 400px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid var(--goa-yellow);
+    padding: 50px 25px;
+    background: var(--goa-pink);
+    text-align: center;
+    box-shadow: 12px 12px 0 var(--goa-yellow);
+}
+
+.goa-builder::before {
+    content: "🌴";
+    position: absolute;
+    left: 20px;
+    bottom: -20px;
+    font-size: 150px;
+    opacity: 0.15;
+}
+
+.goa-builder::after {
+    content: "🌴";
+    position: absolute;
+    right: 20px;
+    top: -20px;
+    font-size: 150px;
+    opacity: 0.15;
+    transform: scaleX(-1);
+}
+
+.goa-builder-decoration {
+    position: absolute;
+    top: 25px;
+    right: 35px;
+    color: var(--goa-yellow);
+    font-size: 40px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.goa-footer {
+    position: relative;
+    min-height: 430px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--goa-green);
+    border-top: 3px solid var(--goa-pink);
+}
+
+.goa-footer-content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 90px;
+}
+
+.goa-footer>.relative {
+    position: relative;
+    z-index: 10;
+}
+
+
+/* =========================================================
+   FOOTER COCONUT TREES
+========================================================= */
+
+.footer-coconut-trees {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: center bottom;
+    z-index: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* =========================================================
+   FOOTER BRAND
+========================================================= */
+
+.footer-brand {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(65px, 13vw, 170px);
+    line-height: 0.8;
+    color: var(--goa-yellow);
+    letter-spacing: -0.02em;
+}
+
+.footer-brand span {
+    color: var(--goa-pink);
+}
+
+
+/* =========================================================
+   TEXTURE
+========================================================= */
+
+.goa-texture {
+    opacity: 0.08;
+    background-image: radial-gradient( rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+    background-size: 8px 8px;
+    mix-blend-mode: screen;
+}
+
+
+/* =========================================================
+   =========================================================
+   UPLOAD PAGE
+   =========================================================
+========================================================= */
+
+.upload-page {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: var(--goa-green);
+    color: var(--goa-cream);
+}
+
+
+/* =========================================================
+   UPLOAD PAGE BACKGROUND
+========================================================= */
+
+.upload-page-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.upload-page-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* =========================================================
+   UPLOAD BACKGROUND OVERLAY
+========================================================= */
+
+.upload-page-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient( to bottom, rgba(4, 60, 37, 0.24), rgba(4, 60, 37, 0.42));
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   UPLOAD MAIN
+========================================================= */
+
+.upload-main {
+    position: relative;
+    z-index: 10;
+    min-height: calc(100vh - 65px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 28px 20px 50px;
+}
+
+
+/* =========================================================
+   UPLOAD HEADING
+========================================================= */
+
+.upload-heading-wrapper {
+    text-align: center;
+    margin-top: 14px;
+    position: relative;
+    z-index: 10;
+}
+
+.upload-main-title {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(42px, 5vw, 62px);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: var(--goa-cream);
+    text-shadow: 3px 3px 0 rgba(6, 77, 46, 0.75);
+}
+
+.upload-main-subtitle {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--goa-cream);
+    opacity: 0.9;
+}
+
+
+/* =========================================================
+   UPLOAD BOX WRAPPER
+========================================================= */
+
+.upload-box-wrapper {
+    width: min(100%, 480px);
+    margin-top: 18px;
+}
+
+.upload-box-container {
+    width: 100%;
+}
+
+
+/* =========================================================
+   VINTAGE CAMERA CARD
+========================================================= */
+
+.goa-camera-card {
+    position: relative;
+    width: min(100%, 480px);
+    height: 360px;
+    margin: 0 auto;
+    padding: 24px 28px 16px;
+    background: var(--camera-brown);
+    border: 4px solid var(--camera-gold);
+    border-radius: 28px;
+    box-shadow: 0 8px 0 var(--camera-dark), 0 14px 25px rgba(0, 0, 0, 0.30);
+    overflow: visible;
+}
+
+
+/* =========================================================
+   CAMERA HEADER
+========================================================= */
+
+.camera-header {
+    position: relative;
+    z-index: 5;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 8px;
+    color: #e9cb83;
+}
+
+.camera-label {
+    font-size: 8px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+}
+
+.camera-secure {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 7px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   CAMERA LENS
+========================================================= */
+
+.camera-lens {
+    position: absolute;
+    z-index: 10;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid var(--camera-light-gold);
+    border-radius: 50%;
+    background: #191919;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.65);
+}
+
+.camera-lens-inner {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid #a6874b;
+    background: radial-gradient( circle at 35% 30%, #b8edf0, #306d7b 30%, #152d38 60%, #090e12 80%);
+}
+
+.camera-lens-shine {
+    position: absolute;
+    top: 6px;
+    left: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.75;
+}
+
+
+/* =========================================================
+   UPLOAD AREA
+========================================================= */
+
+.goa-upload-area {
+    position: relative;
+    height: 220px;
+    border: 2px solid #c6a45c;
+    border-radius: 18px;
+    background: #171717;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.goa-upload-area:hover {
+    border-color: var(--goa-yellow);
+    box-shadow: inset 0 0 30px rgba(255, 217, 0, 0.08);
+}
+
+.upload-cloud-icon {
+    margin-bottom: 7px;
+    color: var(--camera-light-gold);
+}
+
+.goa-upload-area h3 {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 800;
+    color: #e6d49b;
+    text-align: center;
+}
+
+.goa-upload-area p {
+    margin: 4px 0 0;
+    font-size: 9px;
+    color: rgba(255, 247, 214, 0.6);
+}
+
+.goa-upload-area span {
+    margin-top: 8px;
+    font-size: 7px;
+    color: rgba(255, 247, 214, 0.4);
+}
+
+
+/* =========================================================
+   SELECTED IMAGE
+========================================================= */
+
+.goa-selected-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* =========================================================
+   CAMERA FOOTER
+========================================================= */
+
+.camera-footer {
+    position: absolute;
+    z-index: 8;
+    left: 18px;
+    right: 18px;
+    bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.camera-use-button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 0;
+    background: transparent;
+    color: #e5c77d;
+    font-size: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.camera-use-button:hover {
+    color: var(--goa-yellow);
+}
+
+.camera-private {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    color: #c7aa69;
+    font-size: 7px;
+}
+
+
+/* =========================================================
+   GOA CAMERA FLOWERS
+========================================================= */
+
+.camera-flower {
+    position: absolute;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    line-height: 1;
+    pointer-events: none;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.35));
+    animation: flowerFloat 3s ease-in-out infinite;
+}
+
+
+/* TOP LEFT */
+
+.flower-left-top {
+    left: -9px;
+    top: 35px;
+    transform: rotate(-12deg);
+}
+
+
+/* TOP RIGHT */
+
+.flower-right-top {
+    right: -9px;
+    top: 38px;
+    transform: rotate(12deg);
+}
+
+
+/* LEFT MIDDLE */
+
+.flower-left-middle {
+    left: -13px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-15deg);
+    font-size: 27px;
+}
+
+
+/* RIGHT MIDDLE */
+
+.flower-right-middle {
+    right: -13px;
+    top: 50%;
+    transform: translateY(-50%) rotate(15deg);
+    font-size: 27px;
+}
+
+
+/* BOTTOM LEFT */
+
+.flower-left-bottom {
+    left: -8px;
+    bottom: 17px;
+    transform: rotate(-15deg);
+}
+
+
+/* BOTTOM RIGHT */
+
+.flower-right-bottom {
+    right: -8px;
+    bottom: 17px;
+    transform: rotate(15deg);
+}
+
+
+/* EXTRA TOP LEFT */
+
+.flower-top-left-extra {
+    left: 55px;
+    top: -12px;
+    font-size: 19px;
+    transform: rotate(-20deg);
+}
+
+
+/* EXTRA TOP RIGHT */
+
+.flower-top-right-extra {
+    right: 55px;
+    top: -12px;
+    font-size: 19px;
+    transform: rotate(20deg);
+}
+
+
+/* EXTRA BOTTOM LEFT */
+
+.flower-bottom-left-extra {
+    left: 55px;
+    bottom: -13px;
+    font-size: 18px;
+    transform: rotate(-15deg);
+}
+
+
+/* EXTRA BOTTOM RIGHT */
+
+.flower-bottom-right-extra {
+    right: 55px;
+    bottom: -13px;
+    font-size: 18px;
+    transform: rotate(15deg);
+}
+
+
+/* =========================================================
+   FLOWER ANIMATION
+========================================================= */
+
+@keyframes flowerFloat {
+    0% {
+        margin-top: 0;
+    }
+    50% {
+        margin-top: -3px;
+    }
+    100% {
+        margin-top: 0;
+    }
+}
+
+
+/* =========================================================
+    SELECTED FILE
+========================================================= */
+
+.selected-file-info {
+    margin-top: 9px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: min(100%, 480px);
+    padding: 7px 12px;
+    border: 1px solid rgba(255, 217, 0, 0.30);
+    background: rgba(6, 77, 46, 0.78);
+    color: var(--goa-cream);
+    font-size: 10px;
+    border-radius: 5px;
+}
+
+.selected-file-info svg {
+    color: var(--goa-yellow);
+    flex-shrink: 0;
+}
+
+.selected-file-info span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   FACE DETECTION
+========================================================= */
+
+.face-detection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 11px;
+    text-align: center;
+    font-size: 9px;
+    color: rgba(255, 247, 214, 0.8);
+}
+
+.face-detection>span {
+    color: var(--goa-pink);
+}
+
+.face-detection strong:first-of-type {
+    color: var(--goa-pink);
+}
+
+.face-detection strong:last-of-type {
+    color: #65d7d4;
+}
+
+
+/* =========================================================
+   UPLOAD BUTTONS
+========================================================= */
+
+.upload-bottom-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-top: 16px;
+}
+
+.upload-primary-button,
+.upload-secondary-button {
+    height: 37px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 19px;
+    font-size: 9px;
+    font-weight: 900;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.upload-primary-button {
+    border: 2px solid var(--goa-yellow);
+    background: var(--goa-pink);
+    color: white;
+    box-shadow: 5px 5px 0 var(--goa-yellow);
+}
+
+.upload-primary-button:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 var(--goa-yellow);
+}
+
+.upload-primary-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.upload-secondary-button {
+    gap: 8px;
+    border: 2px solid var(--goa-yellow);
+    background: rgba(6, 77, 46, 0.78);
+    color: var(--goa-yellow);
+}
+
+.upload-secondary-button:hover {
+    background: var(--goa-yellow);
+    color: var(--goa-dark);
+}
+
+
+/* =========================================================
+   UPLOAD BOTTOM SPACE
+========================================================= */
+
+.upload-bottom-space {
+    height: 50px;
+}
+
+
+/* =========================================================
+   =========================================================
+   CAMERA MODAL
+   VINTAGE GOA PHOTO BOOTH THEME
+   =========================================================
+========================================================= */
+
+.camera-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(4, 35, 25, 0.76);
+    backdrop-filter: blur(8px);
+}
+
+
+/* =========================================================
+   CAMERA MODAL BODY
+========================================================= */
+
+.camera-modal-content {
+    position: relative;
+    width: min(100%, 500px);
+    padding: 25px 22px 20px;
+    background: var(--camera-brown);
+    border: 3px solid var(--goa-yellow);
+    border-radius: 22px;
+    box-shadow: 10px 10px 0 var(--goa-pink), 0 18px 40px rgba(0, 0, 0, 0.45);
+    overflow: visible;
+}
+
+
+/* Pink offset layer */
+
+.camera-modal-content::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 8px;
+    left: 8px;
+    width: 100%;
+    height: 100%;
+    border-radius: 22px;
+    background: var(--goa-pink);
+}
+
+
+/* =========================================================
+   MODAL HEADER
+========================================================= */
+
+.camera-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.camera-modal-header h2 {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--goa-yellow);
+    text-shadow: 2px 2px 0 rgba(6, 77, 46, 0.7);
+}
+
+.camera-modal-header p {
+    margin-top: 7px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--goa-cream);
+    opacity: 0.8;
+}
+
+
+/* =========================================================
+   MODAL CLOSE
+========================================================= */
+
+.camera-close {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 247, 214, 0.35);
+    border-radius: 50%;
+    background: rgba(6, 77, 46, 0.25);
+    color: var(--goa-cream);
+    font-size: 17px;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+}
+
+.camera-close:hover {
+    background: var(--goa-pink);
+    border-color: var(--goa-pink);
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   CAMERA PREVIEW
+========================================================= */
+
+.camera-preview {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 2px solid var(--goa-pink);
+    border-radius: 15px;
+    background: #171717;
+    box-shadow: inset 0 0 0 3px rgba(198, 164, 92, 0.25);
+}
+
+.camera-preview video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    display: block;
+}
+
+
+/* =========================================================
+   FACE GUIDE
+========================================================= */
+
+.face-guide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 230px;
+    border: 2px solid var(--goa-yellow);
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 217, 0, 0.12);
+    pointer-events: none;
+}
+
+
+/* Face guide corners */
+
+.face-guide::before,
+.face-guide::after {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-color: var(--goa-yellow);
+    border-style: solid;
+}
+
+.face-guide::before {
+    top: -2px;
+    left: -2px;
+    border-width: 3px 0 0 3px;
+    border-radius: 8px 0 0 0;
+}
+
+.face-guide::after {
+    right: -2px;
+    bottom: -2px;
+    border-width: 0 3px 3px 0;
+    border-radius: 0 0 8px 0;
+}
+
+
+/* =========================================================
+   CAMERA STATUS
+========================================================= */
+
+.camera-status {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 7px 13px;
+    border-radius: 20px;
+    background: rgba(23, 23, 23, 0.78);
+    border: 1px solid rgba(255, 247, 214, 0.18);
+    backdrop-filter: blur(5px);
+    color: white;
+    font-size: 9px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   MODAL BUTTONS
+========================================================= */
+
+.camera-modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.camera-cancel,
+.camera-capture {
+    flex: 1;
+    height: 45px;
+    border: 0;
+    font-family: "DM Sans", sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.camera-cancel {
+    background: rgba(6, 77, 46, 0.65);
+    border: 1px solid rgba(255, 247, 214, 0.12);
+    color: var(--goa-cream);
+}
+
+.camera-cancel:hover {
+    background: rgba(6, 77, 46, 0.9);
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TAKE PHOTO BUTTON
+========================================================= */
+
+.camera-capture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: var(--goa-pink);
+    color: white;
+    border: 2px solid var(--goa-yellow);
+    box-shadow: 4px 4px 0 var(--goa-yellow);
+}
+
+.camera-capture:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 var(--goa-yellow);
+    background: #e90073;
+}
+
+
+/* =========================================================
+   CAMERA MODAL DECORATION
+========================================================= */
+
+.camera-modal-content::before {
+    content: "✦";
+    position: absolute;
+    right: 24px;
+    bottom: 72px;
+    z-index: 2;
+    color: var(--goa-yellow);
+    font-size: 20px;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   UPLOAD PAGE MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+    .upload-main {
+        padding: 24px 14px 40px;
+    }
+    .upload-main-title {
+        font-size: 48px;
+    }
+    .upload-main-subtitle {
+        font-size: 11px;
+    }
+    .upload-box-wrapper {
+        width: 100%;
+        max-width: 430px;
+    }
+    .goa-camera-card {
+        height: 340px;
+        padding: 22px 22px 15px;
+    }
+    .goa-upload-area {
+        height: 205px;
+    }
+    .upload-bottom-actions {
+        margin-top: 15px;
+    }
+}
+
+
+/* =========================================================
+   CAMERA MODAL MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+    .camera-modal {
+        padding: 14px;
+    }
+    .camera-modal-content {
+        width: 100%;
+        padding: 20px 16px 17px;
+        border-radius: 20px;
+        box-shadow: 7px 7px 0 var(--goa-pink), 0 15px 35px rgba(0, 0, 0, 0.45);
+    }
+    .camera-modal-header h2 {
+        font-size: 27px;
+    }
+    .camera-modal-header p {
+        font-size: 9px;
+    }
+    .camera-close {
+        width: 33px;
+        height: 33px;
+    }
+    .camera-preview {
+        border-radius: 13px;
+    }
+    .face-guide {
+        width: 145px;
+        height: 190px;
+    }
+    .camera-modal-buttons {
+        gap: 8px;
+    }
+    .camera-cancel,
+    .camera-capture {
+        height: 43px;
+        font-size: 10px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+    .goa-section-title {
+        font-size: 48px;
+    }
+    .goa-small-title {
+        font-size: 9px;
+        letter-spacing: 0.18em;
+    }
+    .goa-stat {
+        min-height: 130px;
+    }
+    .goa-stat-number {
+        font-size: 45px;
+    }
+    .goa-stat-label {
+        font-size: 9px;
+    }
+    .goa-feature-card {
+        min-height: 300px;
+        height: 300px;
+    }
+    .goa-card-number {
+        font-size: 34px;
+    }
+    .goa-card-title {
+        font-size: 28px;
+    }
+    .goa-card-description {
+        font-size: 12px;
+        max-width: 190px;
+    }
+    .goa-card-content {
+        left: 16px;
+        right: 16px;
+        top: 95px;
+    }
+    .goa-card-inner {
+        padding: 15px;
+    }
+    .footer-brand {
+        font-size: 70px;
+    }
+    .goa-footer {
+        min-height: 350px;
+    }
+    .footer-coconut-trees {
+        height: 230px;
+    }
+    .upload-main {
+        padding: 20px 10px 35px;
+    }
+    .upload-main-title {
+        font-size: 42px;
+    }
+    .upload-main-subtitle {
+        font-size: 10px;
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .goa-camera-card {
+        width: 100%;
+        height: 300px;
+        padding: 20px 17px 14px;
+        border-radius: 22px;
+    }
+    .goa-upload-area {
+        height: 175px;
+        border-radius: 15px;
+    }
+    .camera-lens {
+        width: 55px;
+        height: 55px;
+    }
+    .camera-lens-inner {
+        width: 35px;
+        height: 35px;
+    }
+    .camera-flower {
+        font-size: 19px;
+    }
+    .upload-bottom-actions {
+        width: 100%;
+        max-width: 340px;
+        gap: 7px;
+    }
+    .upload-primary-button,
+    .upload-secondary-button {
+        flex: 1;
+        padding: 0 10px;
+        font-size: 8px;
+    }
+    .face-detection {
+        max-width: 340px;
+        font-size: 8px;
+    }
+    .camera-modal-buttons {
+        flex-direction: column;
+    }
+    .camera-cancel,
+    .camera-capture {
+        width: 100%;
+    }
+    .camera-modal-content {
+        padding: 18px 13px 15px;
+    }
+    .camera-modal-header h2 {
+        font-size: 24px;
+    }
+    .face-guide {
+        width: 125px;
+        height: 165px;
+    }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 360px) {
+    .upload-main-title {
+        font-size: 38px;
+    }
+    .goa-camera-card {
+        height: 285px;
+    }
+    .goa-upload-area {
+        height: 165px;
+    }
+    .goa-upload-area h3 {
+        font-size: 10px;
+    }
+    .goa-upload-area p {
+        font-size: 8px;
+    }
+    .goa-upload-area span {
+        font-size: 6px;
+    }
+    .camera-label,
+    .camera-secure {
+        font-size: 6px;
+    }
+    .camera-footer {
+        left: 13px;
+        right: 13px;
+    }
+    .camera-use-button,
+    .camera-private {
+        font-size: 7px;
+    }
+}
+
+
+/* =========================================================
+   🌴 FRAME IN GOA — EXACT UPLOAD CAMERA STYLE
+   Floral Vintage Camera Frame
+========================================================= */
+
+.goa-camera-card {
+    position: relative !important;
+    width: min(100%, 570px) !important;
+    height: 470px !important;
+    margin: 0 auto !important;
+    padding: 34px 48px 24px !important;
+    background: linear-gradient( 135deg, #805528 0%, #70471f 45%, #80562b 100%) !important;
+    border: 5px solid #d5a84e !important;
+    border-radius: 30px !important;
+    box-shadow: 0 7px 0 #3f2816, 0 12px 0 #c48b35, 0 20px 35px rgba(0, 0, 0, 0.35) !important;
+    overflow: visible !important;
+    isolation: isolate;
+}
+
+
+/* =========================================================
+   CAMERA CARD INNER GOLD BORDER
+========================================================= */
+
+.goa-camera-card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 2px solid rgba(255, 215, 112, 0.45);
+    border-radius: 22px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+
+/* =========================================================
+   DECORATIVE VINTAGE PATTERN
+========================================================= */
+
+.goa-camera-card::after {
+    content: "";
+    position: absolute;
+    inset: 15px;
+    border-radius: 20px;
+    background: radial-gradient( circle at 10% 20%, rgba(255, 214, 99, 0.12) 0 3px, transparent 4px), radial-gradient( circle at 90% 30%, rgba(255, 214, 99, 0.10) 0 3px, transparent 4px), radial-gradient( circle at 20% 90%, rgba(255, 214, 99, 0.10) 0 3px, transparent 4px);
+    pointer-events: none;
+    z-index: 0;
+}
+
+
+/* =========================================================
+   CAMERA HEADER
+========================================================= */
+
+.camera-header {
+    position: relative;
+    z-index: 20;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    color: #f5d98c;
+}
+
+.camera-label {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    color: #f3d38b;
+}
+
+.camera-secure {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 215, 112, 0.45);
+    border-radius: 20px;
+    font-size: 8px;
+    font-weight: 800;
+    color: #f4d895;
+    background: rgba(40, 20, 5, 0.22);
+}
+
+
+/* =========================================================
+   BIG CAMERA LENS
+========================================================= */
+
+.camera-lens {
+    position: absolute;
+    z-index: 30;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #e0b85c;
+    border-radius: 50%;
+    background: linear-gradient( 145deg, #1a1a1a, #050505);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7), inset 0 0 0 3px #6d5128;
+}
+
+.camera-lens-inner {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 4px solid #9f7c3b;
+    background: radial-gradient( circle at 32% 25%, #d9ffff 0%, #5ea8b7 14%, #24546a 32%, #112e3b 56%, #05090c 80%);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9), 0 0 8px rgba(255, 214, 103, 0.35);
+}
+
+.camera-lens-shine {
+    position: absolute;
+    top: 9px;
+    left: 13px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.85;
+    box-shadow: 0 0 8px white;
+}
+
+
+/* =========================================================
+   UPLOAD AREA
+========================================================= */
+
+.goa-upload-area {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 280px;
+    border: 4px solid #c8a45b;
+    border-radius: 24px;
+    background: linear-gradient( 145deg, #171717, #0e0e0e);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.goa-upload-area:hover {
+    border-color: #ffd900;
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 35px rgba(255, 217, 0, 0.08), 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   UPLOAD ICON
+========================================================= */
+
+.upload-cloud-icon {
+    margin-bottom: 12px;
+    color: #e4bd58;
+    filter: drop-shadow( 0 0 8px rgba(255, 213, 89, 0.3));
+}
+
+.goa-upload-area h3 {
+    margin: 0;
+    font-family: "DM Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #f4dda2;
+    text-align: center;
+}
+
+.goa-upload-area p {
+    margin: 7px 0 0;
+    font-size: 11px;
+    color: rgba(255, 247, 214, 0.65);
+}
+
+.goa-upload-area span {
+    margin-top: 12px;
+    font-size: 8px;
+    letter-spacing: 0.03em;
+    color: rgba(255, 247, 214, 0.42);
+}
+
+
+/* =========================================================
+   SELECTED PHOTO
+========================================================= */
+
+.goa-selected-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+/* =========================================================
+   CAMERA FOOTER
+========================================================= */
+
+.camera-footer {
+    position: absolute;
+    z-index: 25;
+    left: 45px;
+    right: 45px;
+    bottom: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+
+
+/* Camera button */
+
+.camera-use-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 150px;
+    height: 34px;
+    border: 2px solid #c89a43;
+    border-radius: 18px;
+    background: linear-gradient( 180deg, #553719, #3c2511);
+    color: #f5d68d;
+    font-size: 10px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.camera-use-button:hover {
+    background: #62431f;
+    border-color: #ffd900;
+    transform: translateY(-2px);
+}
+
+
+/* Secure */
+
+.camera-private {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 150px;
+    height: 34px;
+    border: 2px solid #c89a43;
+    border-radius: 18px;
+    background: linear-gradient( 180deg, #553719, #3c2511);
+    color: #f5d68d;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   🌺 MANY FLOWERS
+========================================================= */
+
+.floral-decoration {
+    position: absolute;
+    z-index: 50;
+    pointer-events: none;
+    user-select: none;
+    line-height: 1;
+    filter: drop-shadow( 0 3px 3px rgba(0, 0, 0, 0.35));
+    animation: flowerFloat 4s ease-in-out infinite;
+}
+
+
+/* TOP LEFT */
+
+.floral-1 {
+    left: 16px;
+    top: 22px;
+    font-size: 37px;
+}
+
+.floral-2 {
+    left: 58px;
+    top: 10px;
+    font-size: 29px;
+}
+
+.floral-3 {
+    left: 98px;
+    top: 20px;
+    font-size: 21px;
+}
+
+
+/* TOP RIGHT */
+
+.floral-4 {
+    right: 15px;
+    top: 20px;
+    font-size: 37px;
+}
+
+.floral-5 {
+    right: 58px;
+    top: 10px;
+    font-size: 29px;
+}
+
+.floral-6 {
+    right: 100px;
+    top: 25px;
+    font-size: 21px;
+}
+
+
+/* BOTTOM LEFT */
+
+.floral-7 {
+    left: 14px;
+    bottom: 22px;
+    font-size: 38px;
+}
+
+.floral-8 {
+    left: 60px;
+    bottom: 13px;
+    font-size: 30px;
+}
+
+.floral-9 {
+    left: 103px;
+    bottom: 25px;
+    font-size: 21px;
+}
+
+
+/* BOTTOM RIGHT */
+
+.floral-10 {
+    right: 14px;
+    bottom: 20px;
+    font-size: 40px;
+}
+
+.floral-11 {
+    right: 60px;
+    bottom: 13px;
+    font-size: 31px;
+}
+
+.floral-12 {
+    right: 103px;
+    bottom: 28px;
+    font-size: 22px;
+}
+
+
+/* =========================================================
+   🌿 LEAVES
+========================================================= */
+
+.floral-leaf {
+    position: absolute;
+    z-index: 45;
+    pointer-events: none;
+    font-size: 29px;
+    opacity: 0.9;
+    filter: drop-shadow( 0 2px 3px rgba(0, 0, 0, 0.4));
+}
+
+.leaf-1 {
+    left: 28px;
+    top: 63px;
+    transform: rotate(-30deg);
+}
+
+.leaf-2 {
+    left: 78px;
+    top: 42px;
+    transform: rotate(35deg);
+}
+
+.leaf-3 {
+    left: 126px;
+    top: 50px;
+    transform: rotate(-20deg);
+}
+
+.leaf-4 {
+    right: 28px;
+    top: 63px;
+    transform: rotate(30deg);
+}
+
+.leaf-5 {
+    right: 78px;
+    top: 42px;
+    transform: rotate(-35deg);
+}
+
+.leaf-6 {
+    right: 126px;
+    top: 50px;
+    transform: rotate(20deg);
+}
+
+
+/* =========================================================
+   FLOWER ANIMATION
+========================================================= */
+
+@keyframes flowerFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-3px) rotate(2deg);
+    }
+}
+
+
+/* =========================================================
+   SELECTED FILE
+========================================================= */
+
+.selected-file-info {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 13px;
+    border: 2px solid rgba(255, 217, 0, 0.35);
+    background: rgba(6, 77, 46, 0.82);
+    color: var(--goa-cream);
+    font-size: 10px;
+    border-radius: 7px;
+}
+
+.selected-file-info svg {
+    color: var(--goa-yellow);
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   FACE DETECTION
+========================================================= */
+
+.face-detection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff7d6;
+}
+
+.face-detection span {
+    color: #ff0080;
+    font-size: 14px;
+}
+
+.face-detection strong:first-of-type {
+    color: #ff0080;
+}
+
+.face-detection strong:last-of-type {
+    color: #36d9d4;
+}
+
+
+/* =========================================================
+   BUTTONS — REFERENCE STYLE
+========================================================= */
+
+.upload-bottom-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 19px;
+}
+
+.upload-primary-button,
+.upload-secondary-button {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 28px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.2s ease;
+}
+
+.upload-primary-button {
+    border: 3px solid #ffd900;
+    background: #ff0080;
+    color: white;
+    box-shadow: 6px 6px 0 #ffd900;
+}
+
+.upload-primary-button:hover {
+    transform: translate(3px, 3px);
+    box-shadow: 3px 3px 0 #ffd900;
+}
+
+.upload-secondary-button {
+    gap: 10px;
+    border: 3px solid #ffd900;
+    background: rgba(6, 77, 46, 0.85);
+    color: #ffd900;
+}
+
+.upload-secondary-button:hover {
+    background: #ffd900;
+    color: #064d2e;
+}
+
+
+/* =========================================================
+   CAMERA MODAL — SAME GOA THEME
+========================================================= */
+
+.camera-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(3, 35, 22, 0.82);
+    backdrop-filter: blur(10px);
+}
+
+.camera-modal-content {
+    position: relative;
+    width: min(100%, 560px);
+    padding: 24px;
+    border: 3px solid #ffd900;
+    border-radius: 22px;
+    background: linear-gradient( 145deg, #075c36, #064d2e);
+    box-shadow: 10px 10px 0 #ff0080, 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Modal decorative floral glow */
+
+.camera-modal-content::before {
+    content: "🌺 🌼 🌸 🌿 🌺";
+    position: absolute;
+    top: -18px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 25px;
+    pointer-events: none;
+}
+
+.camera-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 18px;
+}
+
+.camera-modal-header h2 {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 32px;
+    color: #ffd900;
+}
+
+.camera-modal-header p {
+    margin-top: 5px;
+    font-size: 11px;
+    color: #fff7d6;
+    opacity: 0.8;
+}
+
+.camera-close {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(255, 247, 214, 0.35);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    color: #fff7d6;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.camera-close:hover {
+    background: #ff0080;
+    border-color: #ff0080;
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   CAMERA PREVIEW
+========================================================= */
+
+.camera-preview {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    border: 3px solid #ff0080;
+    border-radius: 16px;
+    background: #000;
+    box-shadow: inset 0 0 25px rgba(255, 217, 0, 0.08);
+}
+
+.camera-preview video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+}
+
+.face-guide {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 230px;
+    border: 3px solid #ffd900;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 217, 0, 0.25);
+    pointer-events: none;
+}
+
+.camera-status {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 7px 14px;
+    border-radius: 20px;
+    background: rgba(6, 77, 46, 0.85);
+    border: 1px solid rgba(255, 217, 0, 0.3);
+    color: white;
+    font-size: 10px;
+}
+
+
+/* =========================================================
+   MODAL BUTTONS
+========================================================= */
+
+.camera-modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.camera-cancel,
+.camera-capture {
+    flex: 1;
+    height: 46px;
+    border: 0;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.camera-cancel {
+    background: rgba(255, 247, 214, 0.12);
+    color: #fff7d6;
+}
+
+.camera-cancel:hover {
+    background: rgba(255, 247, 214, 0.2);
+}
+
+.camera-capture {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background: #ff0080;
+    color: white;
+    border: 2px solid #ffd900;
+    box-shadow: 4px 4px 0 #ffd900;
+}
+
+.camera-capture:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0 #ffd900;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+    .goa-camera-card {
+        width: min(100%, 500px) !important;
+        height: 420px !important;
+        padding: 30px 28px 22px !important;
+    }
+    .goa-upload-area {
+        height: 245px;
+    }
+    .camera-lens {
+        width: 78px;
+        height: 78px;
+    }
+    .camera-lens-inner {
+        width: 53px;
+        height: 53px;
+    }
+    .floral-decoration {
+        transform: scale(0.8);
+    }
+    .floral-leaf {
+        transform: scale(0.75);
+    }
+}
+
+@media (max-width: 480px) {
+    .goa-camera-card {
+        height: 360px !important;
+        padding: 27px 20px 18px !important;
+        border-width: 4px !important;
+    }
+    .goa-upload-area {
+        height: 210px;
+        border-radius: 18px;
+    }
+    .goa-upload-area h3 {
+        font-size: 11px;
+    }
+    .camera-footer {
+        left: 22px;
+        right: 22px;
+        bottom: 10px;
+    }
+    .camera-use-button,
+    .camera-private {
+        min-width: auto;
+        padding: 0 10px;
+        font-size: 7px;
+    }
+    .floral-decoration {
+        font-size: 24px;
+    }
+    .floral-leaf {
+        font-size: 20px;
+    }
+    .upload-bottom-actions {
+        width: 100%;
+    }
+    .upload-primary-button,
+    .upload-secondary-button {
+        flex: 1;
+        padding: 0 10px;
+        font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   FRAME IN GOA — FINAL REFERENCE MATCH OVERRIDES
+   Keep this section at the very end of index.css.
+   It intentionally overrides the older camera/flower rules.
+========================================================= */
+
+
+/* ---------- Upload page proportions ---------- */
+
+.upload-main {
+    min-height: calc(100vh - 72px);
+    padding: 28px 20px 42px;
+}
+
+.upload-heading-wrapper {
+    margin-top: 8px;
+}
+
+.upload-main-title {
+    font-size: clamp(48px, 5.2vw, 68px);
+    line-height: .92;
+    letter-spacing: .025em;
+    text-shadow: 3px 3px 0 rgba(6, 77, 46, .78), 0 4px 14px rgba(0, 0, 0, .18);
+}
+
+.upload-main-subtitle {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+
+/* ---------- Camera card ---------- */
+
+.goa-camera-card {
+    position: relative !important;
+    width: min(100%, 570px) !important;
+    height: 470px !important;
+    margin: 0 auto !important;
+    padding: 34px 48px 24px !important;
+    background: linear-gradient(135deg, #875a2b 0%, #70471f 46%, #82562a 100%) !important;
+    border: 5px solid #d7aa52 !important;
+    border-radius: 30px !important;
+    box-shadow: 0 7px 0 #3c2514, 0 12px 0 #c48b35, 0 20px 35px rgba(0, 0, 0, .36) !important;
+    overflow: visible !important;
+    isolation: isolate;
+}
+
+
+/* double vintage border */
+
+.goa-camera-card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 2px solid rgba(255, 220, 126, .58);
+    border-radius: 22px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.goa-camera-card::after {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(70, 36, 13, .72);
+    border-radius: 18px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+/* ---------- Camera header ---------- */
+
+.camera-header {
+    position: relative;
+    z-index: 40;
+    height: 34px;
+    padding: 0 14px;
+    color: #f5d98c;
+}
+
+.camera-label {
+    font-size: 10px;
+    letter-spacing: .14em;
+}
+
+.camera-secure {
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 215, 112, .55);
+    border-radius: 20px;
+    background: rgba(40, 20, 5, .24);
+}
+
+
+/* ---------- Lens ---------- */
+
+.camera-lens {
+    z-index: 70;
+    top: -28px;
+    width: 92px;
+    height: 92px;
+    border: 5px solid #e0b85c;
+    background: linear-gradient(145deg, #1a1a1a, #050505);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .7), inset 0 0 0 3px #6d5128;
+}
+
+.camera-lens-inner {
+    width: 64px;
+    height: 64px;
+}
+
+
+/* ---------- Upload area ---------- */
+
+.goa-upload-area {
+    position: relative;
+    z-index: 15;
+    width: 100%;
+    height: 280px;
+    border: 4px solid #c8a45b;
+    border-radius: 24px;
+    background: linear-gradient(145deg, #171717, #0d0d0d);
+}
+
+.goa-upload-area:hover {
+    border-color: #ffd900;
+}
+
+
+/* ---------- Footer buttons ---------- */
+
+.camera-footer {
+    z-index: 60;
+    left: 45px;
+    right: 45px;
+    bottom: 17px;
+    gap: 18px;
+}
+
+.camera-use-button,
+.camera-private {
+    min-width: 150px;
+    height: 34px;
+    border: 2px solid #c89a43;
+    border-radius: 18px;
+    background: linear-gradient(180deg, #553719, #3c2511);
+    color: #f5d68d;
+}
+
+.camera-use-button {
+    font-size: 10px;
+}
+
+.camera-private {
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   FLOWERS
+   IMPORTANT:
+   The existing JSX contains the flower elements. CSS can
+   precisely control their size/position, but it cannot create
+   additional flower DOM nodes that do not exist.
+========================================================= */
+
+.floral-decoration {
+    position: absolute !important;
+    z-index: 80 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    line-height: 1 !important;
+    filter: drop-shadow(0 3px 3px rgba(0, 0, 0, .38));
+    animation: none !important;
+}
+
+
+/* top-left — dense reference-style cluster */
+
+.floral-1 {
+    left: 22px !important;
+    top: 20px !important;
+    font-size: 39px !important;
+}
+
+.floral-2 {
+    left: 67px !important;
+    top: 12px !important;
+    font-size: 31px !important;
+}
+
+.floral-3 {
+    left: 104px !important;
+    top: 25px !important;
+    font-size: 21px !important;
+}
+
+
+/* top-right — mirrored cluster */
+
+.floral-4 {
+    right: 22px !important;
+    top: 20px !important;
+    font-size: 40px !important;
+}
+
+.floral-5 {
+    right: 68px !important;
+    top: 12px !important;
+    font-size: 31px !important;
+}
+
+.floral-6 {
+    right: 108px !important;
+    top: 28px !important;
+    font-size: 21px !important;
+}
+
+
+/* bottom-left */
+
+.floral-7 {
+    left: 20px !important;
+    bottom: 18px !important;
+    font-size: 42px !important;
+}
+
+.floral-8 {
+    left: 68px !important;
+    bottom: 13px !important;
+    font-size: 32px !important;
+}
+
+.floral-9 {
+    left: 111px !important;
+    bottom: 25px !important;
+    font-size: 21px !important;
+}
+
+
+/* bottom-right */
+
+.floral-10 {
+    right: 20px !important;
+    bottom: 18px !important;
+    font-size: 43px !important;
+}
+
+.floral-11 {
+    right: 69px !important;
+    bottom: 13px !important;
+    font-size: 33px !important;
+}
+
+.floral-12 {
+    right: 111px !important;
+    bottom: 27px !important;
+    font-size: 22px !important;
+}
+
+
+/* leaves */
+
+.floral-leaf {
+    z-index: 75 !important;
+    font-size: 30px !important;
+    opacity: .95;
+    animation: none !important;
+}
+
+.leaf-1 {
+    left: 34px !important;
+    top: 61px !important;
+    transform: rotate(-30deg);
+}
+
+.leaf-2 {
+    left: 80px !important;
+    top: 43px !important;
+    transform: rotate(35deg);
+}
+
+.leaf-3 {
+    left: 128px !important;
+    top: 52px !important;
+    transform: rotate(-20deg);
+}
+
+.leaf-4 {
+    right: 34px !important;
+    top: 61px !important;
+    transform: rotate(30deg);
+}
+
+.leaf-5 {
+    right: 80px !important;
+    top: 43px !important;
+    transform: rotate(-35deg);
+}
+
+.leaf-6 {
+    right: 128px !important;
+    top: 52px !important;
+    transform: rotate(20deg);
+}
+
+
+/* ---------- Info line ---------- */
+
+.face-detection {
+    margin-top: 14px;
+    font-size: 10px;
+}
+
+
+/* ---------- Bottom action buttons ---------- */
+
+.upload-bottom-actions {
+    margin-top: 19px;
+    gap: 12px;
+}
+
+.upload-primary-button,
+.upload-secondary-button {
+    height: 48px;
+    padding: 0 28px;
+    font-size: 11px;
+}
+
+.upload-primary-button {
+    border: 3px solid #ffd900;
+    background: #ff0080;
+    box-shadow: 6px 6px 0 #ffd900;
+}
+
+.upload-secondary-button {
+    border: 3px solid #ffd900;
+    background: rgba(6, 77, 46, .88);
+    color: #ffd900;
+}
+
+
+/* =========================================================
+   CAMERA MODAL — MATCH THE SAME GOA / VINTAGE THEME
+========================================================= */
+
+.camera-modal {
+    background: rgba(3, 35, 22, .82);
+    backdrop-filter: blur(10px);
+}
+
+.camera-modal-content {
+    width: min(100%, 560px);
+    padding: 25px 22px 20px;
+    border: 3px solid #ffd900;
+    border-radius: 22px;
+    background: linear-gradient(145deg, #075c36, #064d2e);
+    box-shadow: 10px 10px 0 #ff0080, 0 20px 50px rgba(0, 0, 0, .5);
+}
+
+
+/* Do not use the old emoji strip above the modal. */
+
+.camera-modal-content::before {
+    content: none !important;
+}
+
+.camera-modal-header h2 {
+    font-size: 32px;
+    color: #ffd900;
+}
+
+.camera-preview {
+    border: 3px solid #ff0080;
+    border-radius: 16px;
+    background: #171717;
+}
+
+.face-guide {
+    width: 180px;
+    height: 230px;
+    border: 2px solid #ffd900;
+}
+
+.camera-capture {
+    background: #ff0080;
+    border: 2px solid #ffd900;
+    box-shadow: 4px 4px 0 #ffd900;
+}
+
+
+/* =========================================================
+   RESPONSIVE — KEEP THE SAME VISUAL PROPORTIONS
+========================================================= */
+
+@media (max-width: 700px) {
+    .goa-camera-card {
+        width: min(100%, 500px) !important;
+        height: 420px !important;
+        padding: 30px 28px 22px !important;
+    }
+    .goa-upload-area {
+        height: 245px;
+    }
+    .camera-lens {
+        width: 78px;
+        height: 78px;
+    }
+    .camera-lens-inner {
+        width: 53px;
+        height: 53px;
+    }
+}
+
+@media (max-width: 480px) {
+    .goa-camera-card {
+        width: 100% !important;
+        height: 360px !important;
+        padding: 27px 20px 18px !important;
+    }
+    .goa-upload-area {
+        height: 210px;
+    }
+    .camera-footer {
+        left: 22px;
+        right: 22px;
+        bottom: 10px;
+        gap: 7px;
+    }
+    .camera-use-button,
+    .camera-private {
+        min-width: auto;
+        padding: 0 10px;
+        font-size: 7px;
+    }
+    .floral-decoration {
+        transform: scale(.82);
+        transform-origin: center;
+    }
+    .floral-leaf {
+        font-size: 20px !important;
+    }
+}
+
+
+/* =========================================================
+   =========================================================
+   FRAME IN GOA — BUILDER DETAILS PAGE
+   RETRO GOA / BEACH / HACKER HOUSE THEME
+   =========================================================
+   ========================================================= */
+
+.details-page {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient( 180deg, #063d2d 0%, #075b3c 45%, #032f24 100%);
+    color: #fff7d6;
+}
+
+.details-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.details-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transform: scale(1.02);
+}
+
+.details-background-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient( 180deg, rgba(2, 45, 32, 0.40) 0%, rgba(2, 55, 38, 0.25) 38%, rgba(2, 35, 27, 0.52) 100%);
+    pointer-events: none;
+}
+
+.details-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient( circle at 12% 35%, rgba(255, 31, 130, 0.12), transparent 28%), radial-gradient( circle at 88% 35%, rgba(255, 214, 0, 0.10), transparent 30%);
+    mix-blend-mode: screen;
+}
+
+.details-navbar {
+    position: relative;
+    z-index: 100;
+}
+
+.details-main {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    min-height: calc(100vh - 75px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 22px 28px 70px;
+}
+
+.details-progress {
+    width: min(100%, 520px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    margin-bottom: 24px;
+}
+
+.progress-step {
+    min-width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.progress-circle {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 247, 214, 0.40);
+    border-radius: 50%;
+    background: rgba(1, 38, 29, 0.78);
+    color: rgba(255, 247, 214, 0.65);
+    font-size: 10px;
+    font-weight: 900;
+    transition: 0.25s ease;
+}
+
+.progress-step span {
+    margin-top: 6px;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    color: rgba(255, 247, 214, 0.50);
+}
+
+.progress-step.completed .progress-circle {
+    border-color: #00e0d0;
+    background: #063d31;
+    color: #00e0d0;
+    box-shadow: 0 0 10px rgba(0, 224, 208, 0.25);
+}
+
+.progress-step.completed span {
+    color: #00e0d0;
+}
+
+.progress-step.active .progress-circle {
+    border: 2px solid #ff2185;
+    background: #ff2185;
+    color: white;
+    box-shadow: 0 0 0 4px rgba(255, 33, 133, 0.12), 0 0 20px rgba(255, 33, 133, 0.65);
+}
+
+.progress-step.active span {
+    color: #ff4b9a;
+}
+
+.progress-line {
+    width: 82px;
+    height: 2px;
+    background: rgba(255, 247, 214, 0.25);
+    margin-bottom: 18px;
+}
+
+.completed-line {
+    background: linear-gradient(90deg, #00e0d0, #ff2185);
+}
+
+.details-step-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px 18px;
+    border: 2px solid #ff2185;
+    border-radius: 30px;
+    background: rgba(2, 45, 34, 0.82);
+    color: #ffe9a4;
+    box-shadow: 0 0 15px rgba(255, 33, 133, 0.28), 4px 4px 0 rgba(255, 214, 0, 0.30);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.details-step-label span {
+    color: #ffd600;
+}
+
+.details-heading {
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.details-heading h1 {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(48px, 5vw, 76px);
+    line-height: 0.90;
+    letter-spacing: 0.025em;
+    color: #fff5d1;
+    text-shadow: 4px 4px 0 #043b2c, 7px 7px 0 rgba(0, 0, 0, 0.20);
+}
+
+.details-heading h1 span {
+    color: #ff167d;
+    text-shadow: 4px 4px 0 #8e104d, 7px 7px 0 rgba(0, 0, 0, 0.18);
+}
+
+.details-heading p {
+    margin: 12px 0 0;
+    font-size: 14px;
+    font-weight: 800;
+    color: #fff4cf;
+}
+
+.details-heading small {
+    display: block;
+    margin-top: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255, 247, 214, 0.82);
+}
+
+.details-grid {
+    width: min(100%, 1040px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: 20px;
+    align-items: stretch;
+}
+
+.profile-panel,
+.preview-panel {
+    position: relative;
+    overflow: hidden;
+    border: 2px solid #d0a13c;
+    background: linear-gradient( 145deg, rgba(3, 83, 60, 0.94), rgba(1, 46, 35, 0.96));
+    box-shadow: 8px 8px 0 #ff157c, inset 0 0 40px rgba(255, 214, 0, 0.045);
+    backdrop-filter: blur(2px);
+}
+
+.profile-panel {
+    min-height: 455px;
+    border-radius: 20px;
+    padding: 24px 28px 24px;
+}
+
+.profile-panel::before {
+    content: "";
+    position: absolute;
+    inset: 9px;
+    border: 1px solid rgba(255, 214, 0, 0.28);
+    border-radius: 15px;
+    pointer-events: none;
+}
+
+.profile-panel::after {
+    content: "✦";
+    position: absolute;
+    right: 22px;
+    bottom: 15px;
+    color: #ffd600;
+    font-size: 34px;
+    opacity: 0.20;
+    transform: rotate(15deg);
+}
+
+.panel-palm {
+    position: absolute;
+    pointer-events: none;
+    opacity: 0.13;
+    color: #62c99b;
+}
+
+.palm-one {
+    right: -18px;
+    top: -18px;
+    font-size: 105px;
+    transform: rotate(-18deg);
+}
+
+.palm-two {
+    left: -30px;
+    bottom: -30px;
+    font-size: 115px;
+    transform: rotate(20deg);
+}
+
+.panel-header {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.panel-icon {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ff2a86;
+    border-radius: 12px;
+    background: rgba(255, 42, 134, 0.10);
+    color: #ff4a9c;
+    box-shadow: 0 0 15px rgba(255, 42, 134, 0.14);
+}
+
+.panel-header h2 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 900;
+    color: #fff7d6;
+}
+
+.panel-header p {
+    margin: 3px 0 0;
+    font-size: 9px;
+    color: rgba(255, 247, 214, 0.58);
+}
+
+.details-form {
+    position: relative;
+    z-index: 4;
+}
+
+.form-field {
+    margin-bottom: 14px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    color: rgba(255, 247, 214, 0.88);
+}
+
+.input-wrapper {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 0 13px;
+    border: 1px solid rgba(255, 247, 214, 0.20);
+    border-radius: 9px;
+    background: rgba(1, 27, 23, 0.72);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.input-wrapper svg {
+    flex-shrink: 0;
+    color: #ff3b92;
+}
+
+.input-wrapper input {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #fff7d6;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.input-wrapper input::placeholder {
+    color: rgba(255, 247, 214, 0.36);
+}
+
+.input-wrapper:focus-within {
+    border-color: #ff2a86;
+    box-shadow: 0 0 0 2px rgba(255, 42, 134, 0.08), 0 0 16px rgba(255, 42, 134, 0.16);
+    transform: translateY(-1px);
+}
+
+.social-fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.generate-identity-button {
+    width: 100%;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 9px;
+    border: 0;
+    border-radius: 8px;
+    background: linear-gradient( 90deg, #ff0080 0%, #ff1f8a 40%, #ff7b36 70%, #ffd600 100%);
+    color: white;
+    font-size: 11px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 7px 20px rgba(255, 0, 128, 0.30);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.generate-identity-button span {
+    font-size: 16px;
+}
+
+.generate-identity-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 11px 28px rgba(255, 0, 128, 0.42);
+}
+
+.generate-identity-button:active {
+    transform: translateY(1px);
+}
+
+.privacy-note {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+    color: rgba(255, 247, 214, 0.45);
+    font-size: 8px;
+}
+
+.privacy-note svg {
+    color: #ff3d91;
+}
+
+.preview-panel {
+    min-height: 455px;
+    border-radius: 20px;
+    padding: 20px 22px 18px;
+}
+
+.preview-header {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.preview-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff7d6;
+}
+
+.preview-title svg {
+    color: #ff2388;
+    filter: drop-shadow(0 0 5px rgba(255, 35, 136, 0.35));
+}
+
+.preview-title h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.preview-sun {
+    color: #ffd600;
+    filter: drop-shadow(0 0 9px rgba(255, 214, 0, 0.60));
+}
+
+.preview-description {
+    position: relative;
+    z-index: 2;
+    margin: 8px 0 17px;
+    text-align: center;
+    font-size: 9px;
+    color: rgba(255, 247, 214, 0.52);
+}
+
+.identity-card {
+    position: relative;
+    width: 100%;
+    max-width: 330px;
+    height: 365px;
+    margin: 0 auto;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 58px;
+    border: 2px solid #fff0c2;
+    background: linear-gradient( 145deg, #004f39 0%, #003f30 48%, #01291f 100%);
+    box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.32), 0 7px 18px rgba(0, 0, 0, 0.30);
+}
+
+.identity-card::before {
+    content: "";
+    position: absolute;
+    inset: 8px;
+    border: 1px solid rgba(255, 214, 0, 0.24);
+    pointer-events: none;
+}
+
+.card-corner {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-style: solid;
+    z-index: 5;
+}
+
+.top-left {
+    left: 0;
+    top: 0;
+    border-width: 0 2px 2px 0;
+    border-color: #ff2388;
+}
+
+.top-right {
+    right: 0;
+    top: 0;
+    border-width: 0 0 2px 2px;
+    border-color: #00d9d2;
+}
+
+.bottom-left {
+    left: 0;
+    bottom: 0;
+    border-width: 2px 2px 0 0;
+    border-color: #ff2388;
+}
+
+.bottom-right {
+    right: 0;
+    bottom: 0;
+    border-width: 2px 0 0 2px;
+    border-color: #00d9d2;
+}
+
+.identity-palm {
+    position: absolute;
+    color: #42b987;
+    opacity: 0.62;
+    z-index: 1;
+}
+
+.identity-palm-left {
+    left: 8px;
+    top: 105px;
+    transform: rotate(-14deg);
+}
+
+.identity-palm-right {
+    right: 8px;
+    top: 105px;
+    transform: scaleX(-1) rotate(-14deg);
+}
+
+.identity-birds {
+    position: absolute;
+    top: 72px;
+    color: #37b9a8;
+    font-size: 12px;
+    letter-spacing: 8px;
+    opacity: 0.85;
+    z-index: 1;
+}
+
+.identity-photo {
+    position: relative;
+    z-index: 4;
+    width: 84px;
+    height: 84px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ff2388;
+    border-radius: 50%;
+    background: rgba(0, 30, 24, 0.88);
+    color: rgba(255, 247, 214, 0.75);
+    overflow: hidden;
+    box-shadow: 0 0 0 5px rgba(255, 35, 136, 0.08), 0 0 24px rgba(255, 35, 136, 0.22);
+}
+
+.identity-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.identity-name {
+    position: relative;
+    z-index: 4;
+    margin: 17px 10px 0;
+    text-align: center;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 31px;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    color: #ff2388;
+    text-shadow: 2px 2px 0 rgba(100, 0, 40, 0.35);
+}
+
+.identity-role {
+    position: relative;
+    z-index: 4;
+    margin: 5px 10px 0;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 900;
+    color: #00d9d2;
+}
+
+.identity-college {
+    position: relative;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 13px;
+    max-width: 240px;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 800;
+    color: #fff2ca;
+}
+
+.identity-college svg {
+    flex-shrink: 0;
+    color: #ffd600;
+}
+
+.identity-divider {
+    position: relative;
+    z-index: 4;
+    width: 145px;
+    height: 1px;
+    margin-top: 18px;
+    background: linear-gradient( 90deg, transparent, rgba(255, 247, 214, 0.40), transparent);
+}
+
+.identity-brand {
+    position: relative;
+    z-index: 4;
+    margin-top: 13px;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    color: rgba(0, 217, 210, 0.88);
+}
+
+.preview-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 14px;
+    font-size: 8px;
+    color: rgba(255, 247, 214, 0.50);
+}
+
+.preview-footer svg {
+    color: #00d9d2;
+}
+
+.details-bottom-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.details-secondary-button,
+.details-yellow-button {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 25px;
+    border: 2px solid #ffd600;
+    font-size: 10px;
+    font-weight: 900;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.details-secondary-button {
+    background: #ff0b82;
+    color: white;
+    box-shadow: 5px 5px 0 #ffd600;
+}
+
+.details-yellow-button {
+    background: #ffd600;
+    color: #064d35;
+    box-shadow: 5px 5px 0 #ff1682;
+}
+
+.details-secondary-button:hover,
+.details-yellow-button:hover {
+    transform: translate(2px, 2px);
+}
+
+.details-secondary-button:hover {
+    box-shadow: 3px 3px 0 #ffd600;
+}
+
+.details-yellow-button:hover {
+    box-shadow: 3px 3px 0 #ff1682;
+}
+
+.details-bottom-space {
+    height: 50px;
+}
+
+.details-page::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: radial-gradient( rgba(255, 255, 255, 0.9) 1px, transparent 1px);
+    background-size: 7px 7px;
+    mix-blend-mode: screen;
+}
+
+@media (min-width: 1400px) {
+    .details-main {
+        padding-top: 25px;
+    }
+    .details-grid {
+        width: min(100%, 1080px);
+        grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+        gap: 22px;
+    }
+    .profile-panel,
+    .preview-panel {
+        min-height: 475px;
+    }
+    .identity-card {
+        max-width: 345px;
+        height: 380px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .details-grid {
+        width: min(100%, 850px);
+        grid-template-columns: 1fr 1fr;
+    }
+    .profile-panel,
+    .preview-panel {
+        padding: 20px;
+    }
+    .identity-card {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 850px) {
+    .details-main {
+        padding: 18px 18px 50px;
+    }
+    .details-grid {
+        width: min(100%, 650px);
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    .profile-panel,
+    .preview-panel {
+        width: 100%;
+        min-height: auto;
+    }
+    .identity-card {
+        max-width: 330px;
+    }
+}
+
+@media (max-width: 600px) {
+    .details-main {
+        padding: 15px 12px 45px;
+    }
+    .details-progress {
+        transform: scale(0.88);
+        margin-bottom: 12px;
+    }
+    .progress-line {
+        width: 42px;
+    }
+    .details-step-label {
+        font-size: 7px;
+        padding: 6px 11px;
+    }
+    .details-heading {
+        margin-top: 14px;
+        margin-bottom: 22px;
+    }
+    .details-heading h1 {
+        font-size: 43px;
+    }
+    .details-heading p {
+        font-size: 11px;
+    }
+    .details-heading small {
+        font-size: 8px;
+    }
+    .details-grid {
+        gap: 18px;
+    }
+    .profile-panel,
+    .preview-panel {
+        padding: 18px 15px;
+    }
+    .panel-header h2 {
+        font-size: 15px;
+    }
+    .panel-header p {
+        font-size: 8px;
+    }
+    .social-fields {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    .input-wrapper {
+        height: 40px;
+    }
+    .details-bottom-actions {
+        width: 100%;
+        flex-direction: column;
+        gap: 11px;
+        margin-top: 25px;
+    }
+    .details-secondary-button,
+    .details-yellow-button {
+        width: min(100%, 330px);
+    }
+}
+
+@media (max-width: 400px) {
+    .details-heading h1 {
+        font-size: 36px;
+    }
+    .details-step-label {
+        font-size: 6px;
+    }
+    .progress-line {
+        width: 32px;
+    }
+    .identity-card {
+        height: 335px;
+        max-width: 290px;
+    }
+    .identity-photo {
+        width: 72px;
+        height: 72px;
+    }
+    .identity-name {
+        font-size: 26px;
+    }
+    .identity-role {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 360px) {
+    .details-main {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+    .details-heading h1 {
+        font-size: 33px;
+    }
+    .details-step-label {
+        font-size: 5.5px;
+    }
+    .profile-panel,
+    .preview-panel {
+        padding: 15px 12px;
+    }
+    .identity-card {
+        max-width: 275px;
+        height: 325px;
+    }
+}
+
+
+/* =========================================================
+   FRAME IN GOA
+   STEP 3 — PROCESSING / AI GENERATION
+   ========================================================= */
+
+.processing-page {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #033c2b;
+    color: var(--goa-cream);
+}
+
+.processing-background {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+}
+
+.processing-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+.processing-background-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient( 180deg, rgba(2, 48, 35, 0.70), rgba(1, 42, 31, 0.82));
+    pointer-events: none;
+}
+
+.processing-page::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.055;
+    background-image: radial-gradient( rgba(255, 255, 255, 0.9) 1px, transparent 1px);
+    background-size: 8px 8px;
+    mix-blend-mode: screen;
+}
+
+.processing-navbar {
+    position: relative;
+    z-index: 100;
+}
+
+
+/* =========================================================
+   DECORATIONS
+   ========================================================= */
+
+.processing-palm {
+    position: fixed;
+    z-index: 3;
+    color: #0a8053;
+    opacity: 0.32;
+    pointer-events: none;
+}
+
+.processing-palm-left {
+    left: -35px;
+    top: 105px;
+    transform: rotate(-14deg);
+}
+
+.processing-palm-right {
+    right: -35px;
+    top: 110px;
+    transform: scaleX(-1) rotate(-14deg);
+}
+
+.processing-wave {
+    position: fixed;
+    z-index: 3;
+    color: #00d8cb;
+    opacity: 0.28;
+    pointer-events: none;
+}
+
+.processing-wave-one {
+    left: 9%;
+    bottom: 13%;
+}
+
+.processing-wave-two {
+    right: 10%;
+    bottom: 18%;
+}
+
+.processing-sun {
+    position: fixed;
+    z-index: 3;
+    right: 13%;
+    top: 22%;
+    color: var(--goa-yellow);
+    opacity: 0.38;
+    filter: drop-shadow( 0 0 18px rgba(255, 217, 0, 0.55));
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.processing-main {
+    position: relative;
+    z-index: 10;
+    width: min(100%, 720px);
+    min-height: calc(100vh - 72px);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 20px 60px;
+}
+
+
+/* =========================================================
+   STEP BADGE
+   ========================================================= */
+
+.processing-step-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin-top: 22px;
+    padding: 7px 18px;
+    border: 2px solid var(--goa-pink);
+    border-radius: 30px;
+    background: rgba(2, 45, 33, 0.82);
+    color: var(--goa-yellow);
+    box-shadow: 0 0 18px rgba(255, 0, 128, 0.25), 4px 4px 0 rgba(255, 217, 0, 0.25);
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+.processing-step-badge svg:first-child {
+    color: var(--goa-pink);
+}
+
+.processing-step-badge svg:last-child {
+    color: var(--goa-yellow);
+}
+
+
+/* =========================================================
+   HEADING
+   ========================================================= */
+
+.processing-heading {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.processing-heading h1 {
+    margin: 0;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(48px, 7vw, 78px);
+    line-height: 0.9;
+    letter-spacing: 0.025em;
+    color: var(--goa-cream);
+    text-shadow: 4px 4px 0 #064d2e, 7px 7px 0 rgba(0, 0, 0, 0.25);
+}
+
+.processing-heading h1 span {
+    color: var(--goa-pink);
+    text-shadow: 4px 4px 0 #8b0849, 7px 7px 0 rgba(0, 0, 0, 0.20);
+}
+
+.processing-heading p {
+    margin: 12px 0 0;
+    color: rgba(255, 247, 214, 0.84);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   GENERATION MACHINE
+   ========================================================= */
+
+.processing-machine {
+    position: relative;
+    width: 210px;
+    height: 210px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    margin-bottom: 8px;
+}
+
+
+/* OUTER RING */
+
+.processing-ring {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.processing-ring-outer {
+    width: 205px;
+    height: 205px;
+    border: 2px solid rgba(255, 217, 0, 0.25);
+    border-top-color: var(--goa-yellow);
+    border-right-color: var(--goa-pink);
+}
+
+
+/* INNER RING */
+
+.processing-ring-inner {
+    width: 175px;
+    height: 175px;
+    border: 2px solid rgba(0, 216, 203, 0.25);
+    border-left-color: #00d8cb;
+    border-bottom-color: var(--goa-pink);
+}
+
+
+/* DASHED */
+
+.processing-ring-dashed {
+    width: 190px;
+    height: 190px;
+    border: 2px dashed rgba(255, 247, 214, 0.30);
+}
+
+
+/* CORE */
+
+.processing-core {
+    position: relative;
+    z-index: 5;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--goa-yellow);
+    border-radius: 50%;
+    background: radial-gradient( circle at 35% 30%, #176d61, #063e34 48%, #022a22 100%);
+    color: var(--goa-yellow);
+    box-shadow: 0 0 0 7px rgba(255, 217, 0, 0.08), 0 0 45px rgba(255, 0, 128, 0.28), inset 0 0 25px rgba(0, 0, 0, 0.45);
+}
+
+.processing-core-spark {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    color: var(--goa-pink);
+    font-size: 18px;
+}
+
+
+/* ORBIT */
+
+.processing-orbit {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    display: block;
+    pointer-events: none;
+}
+
+.processing-orbit i {
+    position: absolute;
+    left: 50%;
+    top: -2px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--goa-pink);
+    box-shadow: 0 0 15px rgba(255, 0, 128, 0.8);
+}
+
+
+/* =========================================================
+   PERCENTAGE
+   ========================================================= */
+
+.processing-percentage {
+    margin-top: 4px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 62px;
+    line-height: 0.9;
+    letter-spacing: 0.03em;
+    color: var(--goa-yellow);
+    text-shadow: 3px 3px 0 #064d2e, 0 0 18px rgba(255, 217, 0, 0.25);
+}
+
+.processing-status {
+    min-height: 18px;
+    margin: 8px 0 0;
+    text-align: center;
+    color: rgba(255, 247, 214, 0.80);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   PROGRESS BAR
+   ========================================================= */
+
+.processing-progress-container {
+    width: min(100%, 520px);
+    margin-top: 17px;
+}
+
+.processing-progress-track {
+    position: relative;
+    width: 100%;
+    height: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(255, 217, 0, 0.55);
+    border-radius: 2px;
+    background: rgba(0, 25, 19, 0.80);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 0 12px rgba(255, 0, 128, 0.12);
+}
+
+.processing-progress-fill {
+    position: relative;
+    height: 100%;
+    background: linear-gradient( 90deg, var(--goa-pink), #ff4d55, var(--goa-yellow));
+    box-shadow: 0 0 14px rgba(255, 0, 128, 0.45);
+}
+
+.processing-progress-fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 45px;
+    height: 100%;
+    background: linear-gradient( 90deg, transparent, rgba(255, 255, 255, 0.75));
+    opacity: 0.35;
+}
+
+.processing-progress-labels {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+    color: rgba(255, 247, 214, 0.46);
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+}
+
+
+/* =========================================================
+   GENERATION STEPS
+   ========================================================= */
+
+.processing-steps {
+    width: min(100%, 520px);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.processing-step-card {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border: 1px solid rgba(255, 247, 214, 0.13);
+    border-radius: 8px;
+    background: rgba(1, 34, 27, 0.72);
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.processing-step-active {
+    border-color: rgba(255, 0, 128, 0.45);
+    background: rgba(255, 0, 128, 0.065);
+    box-shadow: inset 3px 0 0 var(--goa-pink);
+}
+
+.processing-step-left {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.processing-step-icon {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 217, 0, 0.30);
+    border-radius: 7px;
+    background: rgba(255, 217, 0, 0.06);
+    color: rgba(255, 247, 214, 0.38);
+}
+
+.processing-step-active .processing-step-icon {
+    border-color: rgba(0, 216, 203, 0.50);
+    background: rgba(0, 216, 203, 0.08);
+    color: #00d8cb;
+}
+
+.processing-step-left span {
+    color: rgba(255, 247, 214, 0.45);
+    font-size: 10px;
+    font-weight: 700;
+}
+
+.processing-step-active .processing-step-left span {
+    color: #fff7d6;
+}
+
+.processing-step-status {
+    width: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.processing-spinner {
+    width: 17px;
+    height: 17px;
+    border: 2px solid #00d8cb;
+    border-top-color: transparent;
+    border-radius: 50%;
+}
+
+.processing-check {
+    color: #00d8cb;
+    font-size: 17px;
+    font-weight: 900;
+    text-shadow: 0 0 8px rgba(0, 216, 203, 0.60);
+}
+
+.processing-dot {
+    color: rgba(255, 247, 214, 0.25);
+}
+
+
+/* =========================================================
+   PRIVACY
+   ========================================================= */
+
+.processing-privacy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 18px;
+    color: rgba(255, 247, 214, 0.45);
+    font-size: 8px;
+}
+
+.processing-privacy svg {
+    color: #00d8cb;
+}
+
+
+/* =========================================================
+   BRAND
+   ========================================================= */
+
+.processing-brand {
+    position: relative;
+    margin-top: 20px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    color: var(--goa-yellow);
+}
+
+.processing-brand span {
+    color: var(--goa-cream);
+}
+
+.processing-brand small {
+    display: block;
+    margin-top: -2px;
+    font-family: "DM Sans", sans-serif;
+    font-size: 6px;
+    font-weight: 900;
+    letter-spacing: 0.25em;
+    text-align: center;
+    color: var(--goa-pink);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 768px) {
+    .processing-main {
+        padding: 18px 16px 45px;
+    }
+    .processing-heading h1 {
+        font-size: 52px;
+    }
+    .processing-heading p {
+        font-size: 10px;
+    }
+    .processing-machine {
+        transform: scale(0.88);
+        margin-top: 15px;
+        margin-bottom: -5px;
+    }
+    .processing-percentage {
+        font-size: 55px;
+    }
+    .processing-palm {
+        opacity: 0.18;
+    }
+    .processing-sun {
+        right: 4%;
+        top: 18%;
+        opacity: 0.22;
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+    .processing-main {
+        padding: 15px 12px 40px;
+    }
+    .processing-step-badge {
+        margin-top: 15px;
+        padding: 6px 12px;
+        font-size: 7px;
+    }
+    .processing-heading {
+        margin-top: 14px;
+    }
+    .processing-heading h1 {
+        font-size: 43px;
+    }
+    .processing-heading p {
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 9px;
+    }
+    .processing-machine {
+        width: 180px;
+        height: 180px;
+        transform: scale(0.82);
+        margin-top: 5px;
+        margin-bottom: -10px;
+    }
+    .processing-percentage {
+        font-size: 50px;
+    }
+    .processing-progress-container,
+    .processing-steps {
+        width: 100%;
+        max-width: 360px;
+    }
+    .processing-step-card {
+        min-height: 46px;
+        padding: 7px 10px;
+    }
+    .processing-step-left span {
+        font-size: 9px;
+    }
+    .processing-palm-left {
+        left: -80px;
+    }
+    .processing-palm-right {
+        right: -80px;
+    }
+    .processing-wave-one {
+        left: -15px;
+    }
+    .processing-wave-two {
+        right: -15px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+    .processing-heading h1 {
+        font-size: 37px;
+    }
+    .processing-step-badge {
+        font-size: 6px;
+        letter-spacing: 0.04em;
+    }
+    .processing-machine {
+        transform: scale(0.72);
+        margin-top: -4px;
+        margin-bottom: -20px;
+    }
+    .processing-percentage {
+        font-size: 45px;
+    }
+    .processing-status {
+        font-size: 9px;
+    }
+    .processing-step-left span {
+        font-size: 8px;
+    }
+}
+
+
+/* =========================================================
+   FRAME IN GOA — STEP 3 FINAL FIX
+   ========================================================= */
+
+.processing-page {
+    position: relative !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    background: radial-gradient( circle at 82% 18%, rgba(255, 217, 0, 0.14) 0, rgba(255, 217, 0, 0.04) 90px, transparent 180px), linear-gradient( 135deg, #032f24 0%, #064d36 42%, #075c36 70%, #033c2b 100%) !important;
+    color: var(--goa-cream) !important;
+}
+
+
+/* The current /goa-night.png contains the repeated FRAME artwork.
+   Hide it only on Step 3. */
+
+.processing-background {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 0 !important;
+    overflow: hidden !important;
+    background: transparent !important;
+}
+
+.processing-background img {
+    display: none !important;
+}
+
+
+/* Clean Goa atmosphere */
+
+.processing-page::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient( 180deg, rgba(3, 30, 23, 0.15) 0%, rgba(3, 60, 43, 0.05) 45%, rgba(1, 25, 18, 0.30) 100%);
+}
+
+.processing-background-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+    background: radial-gradient( circle at 50% 35%, rgba(0, 216, 203, 0.06), transparent 42%), linear-gradient( 180deg, rgba(2, 48, 35, 0.12), rgba(1, 42, 31, 0.28)) !important;
+}
+
+
+/* Retro texture */
+
+.processing-page::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.045;
+    background-image: radial-gradient( rgba(255, 255, 255, 0.85) 1px, transparent 1px);
+    background-size: 9px 9px;
+    background-repeat: repeat;
+    mix-blend-mode: screen;
+}
+
+.processing-palm,
+.processing-wave,
+.processing-sun {
+    z-index: 3 !important;
+    pointer-events: none !important;
+}
+
+.processing-navbar {
+    position: relative !important;
+    z-index: 100 !important;
+}
+
+.processing-main {
+    position: relative !important;
+    z-index: 10 !important;
+}
+
+@media (min-width: 769px) {
+    .processing-main {
+        width: min(100%, 760px) !important;
+        padding-top: 22px !important;
+        padding-bottom: 55px !important;
+    }
+    .processing-machine {
+        margin-top: 24px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .processing-main {
+        width: 100% !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .processing-main {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+}
+
+.processing-page,
+.processing-main,
+.processing-background {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   HOW IT WORKS / FEATURE SECTION
+   ========================================================= */
+
+#features {
+    position: relative;
+    background: #075c36;
+    padding-top: 55px;
+    padding-bottom: 95px;
+}
+
+
+/* =========================================================
+   PINK DOTTED TOP DIVIDER
+   ========================================================= */
+
+.goa-wave {
+    width: 100%;
+    height: 12px;
+    margin: 0 auto 48px;
+    background-image: radial-gradient( circle, #ff0080 0px, #ff0080 6px, transparent 7px);
+    background-size: 36px 12px;
+    background-repeat: repeat-x;
+    opacity: 1;
+}
+
+
+/* =========================================================
+   SECTION HEADING
+   ========================================================= */
+
+.goa-small-title {
+    margin: 0 0 8px;
+    color: #ff0080;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.38em;
+    text-transform: uppercase;
+}
+
+.goa-section-title {
+    margin: 0;
+    color: #ffd900;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: clamp(42px, 4vw, 58px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   FEATURE GRID
+   ========================================================= */
+
+#features .grid {
+    align-items: stretch;
+}
+
+
+/* =========================================================
+   FEATURE CARD
+   ========================================================= */
+
+.goa-feature-card {
+    position: relative;
+    height: 285px;
+    overflow: hidden;
+    border: 3px solid #075c36;
+    background: #075c36;
+    box-shadow: 7px 7px 0 #06482c;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.goa-feature-card:hover {
+    box-shadow: 10px 10px 0 #06482c;
+}
+
+
+/* =========================================================
+   CARD IMAGE
+   ========================================================= */
+
+.goa-feature-card-image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    z-index: 0;
+    transition: transform 0.45s ease;
+}
+
+.goa-feature-card:hover .goa-feature-card-image {
+    transform: scale(1.04);
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+   ========================================================= */
+
+.goa-feature-card-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient( 180deg, rgba(255, 217, 0, 0.04) 0%, rgba(7, 92, 54, 0.02) 45%, rgba(7, 92, 54, 0.22) 100%);
+}
+
+
+/* =========================================================
+   NUMBER
+   ========================================================= */
+
+.goa-feature-number {
+    position: absolute;
+    top: 15px;
+    left: 17px;
+    z-index: 3;
+    color: #075c36;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+}
+
+
+/* =========================================================
+   NUMBER DECORATIVE LINE
+   ========================================================= */
+
+.goa-feature-number::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 7px;
+    width: 2px;
+    height: 18px;
+    background: #075c36;
+}
+
+
+/* =========================================================
+   ICON CIRCLE
+   ========================================================= */
+
+.goa-feature-icon {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 3;
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #075c36;
+    border-radius: 50%;
+    color: #075c36;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(2px);
+}
+
+.goa-feature-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.goa-feature-content {
+    position: absolute;
+    left: 17px;
+    right: 17px;
+    top: 88px;
+    z-index: 5;
+    text-align: left;
+}
+
+.goa-feature-content h3 {
+    margin: 0 0 10px;
+    color: #075c36;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: 25px;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.goa-feature-content p {
+    margin: 0;
+    max-width: 230px;
+    color: #075c36;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.35;
+}
+
+
+/* =========================================================
+   INDIVIDUAL CARD COLOR TREATMENT
+   ========================================================= */
+
+
+/* Yellow cards */
+
+.goa-feature-card:nth-child(1),
+.goa-feature-card:nth-child(3) {
+    background: #ffd900;
+}
+
+
+/* Pink cards */
+
+.goa-feature-card:nth-child(2),
+.goa-feature-card:nth-child(4) {
+    background: #ff0080;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 900px) {
+    #features {
+        padding-top: 45px;
+    }
+    .goa-feature-card {
+        height: 280px;
+    }
+    .goa-feature-content {
+        top: 82px;
+    }
+}
+
+@media (max-width: 640px) {
+    #features {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .goa-section-title {
+        font-size: 42px;
+    }
+    .goa-feature-card {
+        height: 300px;
+    }
+    .goa-feature-content {
+        top: 88px;
+        left: 16px;
+        right: 16px;
+    }
+    .goa-feature-content h3 {
+        font-size: 24px;
+    }
+    .goa-feature-content p {
+        font-size: 10px;
+        max-width: 210px;
+    }
+}
+
+
+/* =========================================================
+   FINAL FIX — UPLOAD CAMERA CARD
+   ========================================================= */
+
+
+/* Keep the camera card in one controlled layout */
+
+.goa-camera-card {
+    position: relative !important;
+    width: min(100%, 570px) !important;
+    height: 470px !important;
+    margin: 0 auto !important;
+    padding: 34px 48px 24px !important;
+    background: linear-gradient( 135deg, #875a2b 0%, #70471f 48%, #82562a 100%) !important;
+    border: 5px solid #d7aa52 !important;
+    border-radius: 30px !important;
+    box-shadow: 0 7px 0 #3c2514, 0 12px 0 #c48b35, 0 20px 35px rgba(0, 0, 0, 0.36) !important;
+    overflow: visible !important;
+    isolation: isolate;
+}
+
+
+/* =========================================================
+   INNER CAMERA BORDERS
+   ========================================================= */
+
+.goa-camera-card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 2px solid rgba(255, 220, 126, 0.58);
+    border-radius: 22px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.goa-camera-card::after {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(70, 36, 13, 0.72);
+    border-radius: 18px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+
+/* =========================================================
+   CAMERA HEADER
+   ========================================================= */
+
+.camera-header {
+    position: relative !important;
+    z-index: 40 !important;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    color: #f5d98c;
+}
+
+.camera-label {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+}
+
+.camera-secure {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border: 1px solid rgba(255, 215, 112, 0.55);
+    border-radius: 20px;
+    background: rgba(40, 20, 5, 0.24);
+    font-size: 8px;
+    font-weight: 800;
+    color: #f4d895;
+}
+
+
+/* =========================================================
+   CAMERA LENS
+   ========================================================= */
+
+.camera-lens {
+    position: absolute !important;
+    z-index: 70 !important;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92px;
+    height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 5px solid #e0b85c;
+    border-radius: 50%;
+    background: linear-gradient( 145deg, #1a1a1a, #050505);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.7), inset 0 0 0 3px #6d5128;
+}
+
+.camera-lens-inner {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 4px solid #9f7c3b;
+    background: radial-gradient( circle at 32% 25%, #d9ffff 0%, #5ea8b7 14%, #24546a 32%, #112e3b 56%, #05090c 80%);
+    box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.9), 0 0 8px rgba(255, 214, 103, 0.35);
+}
+
+.camera-lens-shine {
+    position: absolute;
+    top: 9px;
+    left: 13px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: white;
+    opacity: 0.85;
+    box-shadow: 0 0 8px white;
+}
+
+
+/* =========================================================
+   ⭐ IMPORTANT FIX:
+   SUN MEDALLIONS WERE IN NORMAL DOCUMENT FLOW
+   ========================================================= */
+
+.sun-medallion {
+    position: absolute !important;
+    width: 62px !important;
+    height: 62px !important;
+    z-index: 25 !important;
+    pointer-events: none !important;
+}
+
+
+/* LEFT SUN */
+
+.sun-medallion-left {
+    left: -34px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+
+/* RIGHT SUN */
+
+.sun-medallion-right {
+    right: -34px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+
+/* =========================================================
+   UPLOAD AREA
+   ========================================================= */
+
+.goa-upload-area {
+    position: relative !important;
+    z-index: 15 !important;
+    width: 100% !important;
+    height: 280px !important;
+    margin: 0 !important;
+    border: 4px solid #c8a45b !important;
+    border-radius: 24px !important;
+    background: linear-gradient( 145deg, #171717, #0d0d0d) !important;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.goa-upload-area:hover {
+    border-color: #ffd900 !important;
+    box-shadow: inset 0 0 35px rgba(255, 217, 0, 0.08), 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+
+
+/* =========================================================
+   UPLOAD TEXT
+   ========================================================= */
+
+.upload-cloud-icon {
+    margin-bottom: 12px;
+    color: #e4bd58;
+    filter: drop-shadow( 0 0 8px rgba(255, 213, 89, 0.3));
+}
+
+.goa-upload-area h3 {
+    margin: 0;
+    font-family: "DM Sans", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: #f4dda2;
+    text-align: center;
+}
+
+.goa-upload-area p {
+    margin: 7px 0 0;
+    font-size: 11px;
+    color: rgba( 255, 247, 214, 0.65);
+}
+
+.goa-upload-area span {
+    margin-top: 12px;
+    font-size: 8px;
+    letter-spacing: 0.03em;
+    color: rgba( 255, 247, 214, 0.42);
+}
+
+
+/* =========================================================
+   SELECTED IMAGE
+   ========================================================= */
+
+.goa-selected-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* =========================================================
+   CAMERA FOOTER
+   ========================================================= */
+
+.camera-footer {
+    position: absolute !important;
+    z-index: 60 !important;
+    left: 45px !important;
+    right: 45px !important;
+    bottom: 17px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+}
+
+.camera-use-button,
+.camera-private {
+    min-width: 150px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 2px solid #c89a43;
+    border-radius: 18px;
+    background: linear-gradient( 180deg, #553719, #3c2511);
+    color: #f5d68d;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   HIDE FLORAL DECORATIONS
+   You previously asked to remove the flowers.
+   ========================================================= */
+
+.floral-decoration {
+    display: none !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+    .goa-camera-card {
+        width: min(100%, 500px) !important;
+        height: 420px !important;
+        padding: 30px 28px 22px !important;
+    }
+    .goa-upload-area {
+        height: 245px !important;
+    }
+    .camera-lens {
+        width: 78px;
+        height: 78px;
+    }
+    .camera-lens-inner {
+        width: 53px;
+        height: 53px;
+    }
+    .sun-medallion {
+        width: 50px !important;
+        height: 50px !important;
+    }
+    .sun-medallion-left {
+        left: -27px !important;
+    }
+    .sun-medallion-right {
+        right: -27px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .goa-camera-card {
+        width: 100% !important;
+        height: 360px !important;
+        padding: 27px 20px 18px !important;
+    }
+    .goa-upload-area {
+        height: 210px !important;
+    }
+    .camera-footer {
+        left: 22px !important;
+        right: 22px !important;
+        bottom: 10px !important;
+        gap: 7px;
+    }
+    .camera-use-button,
+    .camera-private {
+        min-width: auto;
+        padding: 0 10px;
+        font-size: 7px;
+    }
+    .sun-medallion {
+        width: 42px !important;
+        height: 42px !important;
+    }
+    .sun-medallion-left {
+        left: -22px !important;
+    }
+    .sun-medallion-right {
+        right: -22px !important;
+    }
+}
+
+
+/* =========================================================
+   REMOVE WHITE INPUT BORDER / DEFAULT BROWSER STYLING
+   ========================================================= */
+
+.details-form input,
+.input-wrapper input {
+    background: transparent !important;
+    color: #fff7d6 !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+}
+
+.details-form input:focus,
+.input-wrapper input:focus {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+
+/* Placeholder */
+
+.details-form input::placeholder,
+.input-wrapper input::placeholder {
+    color: rgba(255, 247, 214, 0.42) !important;
+}
+
+
+/* Remove browser autofill white/blue background */
+
+.details-form input:-webkit-autofill,
+.details-form input:-webkit-autofill:hover,
+.details-form input:-webkit-autofill:focus,
+.input-wrapper input:-webkit-autofill,
+.input-wrapper input:-webkit-autofill:hover,
+.input-wrapper input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #fff7d6 !important;
+    -webkit-box-shadow: 0 0 0 1000px #003f2d inset !important;
+    box-shadow: 0 0 0 1000px #003f2d inset !important;
+    transition: background-color 9999s ease-in-out 0s;
 }

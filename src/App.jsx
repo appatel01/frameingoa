@@ -9,17 +9,49 @@ import Success from "./pages/Success";
 import BuilderCardPage from "./pages/BuilderCard";
 
 function App() {
-  return (
-    <Routes>
-      <Route path="/" element={<Landing />} />
-      <Route path="/upload" element={<Upload />} />
-      <Route path="/details" element={<Details />} />
-      <Route path="/processing" element={<Processing />} />
-      <Route path="/identity" element={<Identity />} />
-      <Route path="/success" element={<Success />} />
-      <Route path="/builder-card" element={<BuilderCardPage />} />
-    </Routes>
-  );
+
+    return (
+
+        <Routes>
+
+            <Route
+                path="/"
+                element={<Landing />}
+            />
+
+            <Route
+                path="/upload"
+                element={<Upload />}
+            />
+
+            <Route
+                path="/details"
+                element={<Details />}
+            />
+
+            <Route
+                path="/processing"
+                element={<Processing />}
+            />
+
+            <Route
+                path="/identity"
+                element={<Identity />}
+            />
+
+            <Route
+                path="/success"
+                element={<Success />}
+            />
+
+            <Route
+                path="/builder-card"
+                element={<BuilderCardPage />}
+            />
+
+        </Routes>
+
+    );
 }
 
 export default App;

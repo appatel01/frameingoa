@@ -1,794 +1,1011 @@
 import { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+
 import {
     UploadCloud,
     Camera,
     ShieldCheck,
     Image as ImageIcon,
-    } from "lucide-react";
+} from "lucide-react";
 
-    function UploadBox({ onFileSelect, selectedFile }) {
+
+// =========================================
+// SUN MEDALLION
+// =========================================
+
+function SunMedallion({ className = "" }) {
+    return (
+        <svg
+            viewBox="0 0 100 100"
+            className={className}
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <defs>
+
+                <radialGradient
+                    id="sunFace"
+                    cx="40%"
+                    cy="35%"
+                    r="70%"
+                >
+                    <stop
+                        offset="0%"
+                        stopColor="#ffe6a1"
+                    />
+
+                    <stop
+                        offset="55%"
+                        stopColor="#e0b85c"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stopColor="#a97a2e"
+                    />
+                </radialGradient>
+
+
+                <linearGradient
+                    id="sunRay"
+                    x1="0%"
+                    y1="0%"
+                    x2="0%"
+                    y2="100%"
+                >
+                    <stop
+                        offset="0%"
+                        stopColor="#f5d98c"
+                    />
+
+                    <stop
+                        offset="100%"
+                        stopColor="#c8963f"
+                    />
+                </linearGradient>
+
+            </defs>
+
+
+            {/* =================================
+                SUN RAYS
+            ================================= */}
+
+            <g
+                fill="url(#sunRay)"
+                stroke="#7a5220"
+                strokeWidth="0.6"
+            >
+                {[...Array(12)].map((_, i) => (
+                    <path
+                        key={i}
+                        d="M50 4 L55 20 L45 20 Z"
+                        transform={`rotate(${i * 30} 50 50)`}
+                    />
+                ))}
+            </g>
+
+
+            {/* =================================
+                SUN FACE
+            ================================= */}
+
+            <circle
+                cx="50"
+                cy="50"
+                r="26"
+                fill="url(#sunFace)"
+                stroke="#7a5220"
+                strokeWidth="1.5"
+            />
+
+
+            {/* =================================
+                CARVED FACE
+            ================================= */}
+
+            <g fill="#5c3d16">
+
+                {/* Left eye */}
+                <ellipse
+                    cx="41"
+                    cy="46"
+                    rx="2.6"
+                    ry="3.4"
+                />
+
+                {/* Right eye */}
+                <ellipse
+                    cx="59"
+                    cy="46"
+                    rx="2.6"
+                    ry="3.4"
+                />
+
+                {/* Smile */}
+                <path
+                    d="M46 58 Q50 63 54 58"
+                    stroke="#5c3d16"
+                    strokeWidth="2"
+                    fill="none"
+                    strokeLinecap="round"
+                />
+
+                {/* Nose */}
+                <path
+                    d="M50 48 L48 54 L52 54Z"
+                    opacity="0.7"
+                />
+
+            </g>
+
+        </svg>
+    );
+}
+
+
+// =========================================
+// UPLOAD BOX
+// =========================================
+
+function UploadBox({ onFileSelect, selectedFile }) {
+
     const fileInputRef = useRef(null);
     const videoRef = useRef(null);
 
     const [cameraOpen, setCameraOpen] = useState(false);
     const [cameraStream, setCameraStream] = useState(null);
 
+
     // =========================================
     // HANDLE FILE
     // =========================================
+
     const handleFile = (file) => {
+
         if (!file) return;
 
+
         const allowedTypes = [
-        "image/jpeg",
-        "image/png",
-        "image/heic",
-        "image/heif",
+            "image/jpeg",
+            "image/png",
+            "image/heic",
+            "image/heif",
         ];
 
+
+        // File type validation
         if (!allowedTypes.includes(file.type)) {
-        alert("Please upload JPG, PNG or HEIC image.");
-        return;
+
+            alert(
+                "Please upload JPG, PNG or HEIC image."
+            );
+
+            return;
         }
 
+
+        // File size validation
         if (file.size > 10 * 1024 * 1024) {
-        alert("File size must be less than 10MB.");
-        return;
+
+            alert(
+                "File size must be less than 10MB."
+            );
+
+            return;
         }
 
+
+        // Send file to parent
         onFileSelect(file);
     };
+
 
     // =========================================
     // FILE INPUT
     // =========================================
-    const handleInputChange = (e) => {
-        handleFile(e.target.files[0]);
 
-        // Allows selecting the same image again
+    const handleInputChange = (e) => {
+
+        const file = e.target.files[0];
+
+        handleFile(file);
+
+
+        // Allow selecting same image again
         e.target.value = "";
     };
+
 
     // =========================================
     // DRAG & DROP
     // =========================================
+
     const handleDrop = (e) => {
+
         e.preventDefault();
-        handleFile(e.dataTransfer.files[0]);
+
+        const file =
+            e.dataTransfer.files[0];
+
+        handleFile(file);
     };
 
+
     // =========================================
-    // OPEN REAL CAMERA
+    // OPEN CAMERA
     // =========================================
+
     const openCamera = async () => {
+
         try {
-        if (
-            !navigator.mediaDevices ||
-            !navigator.mediaDevices.getUserMedia
-        ) {
-            alert("Camera is not supported by this browser.");
-            return;
-        }
 
-        const stream =
-            await navigator.mediaDevices.getUserMedia({
-            video: {
-                facingMode: "user",
-            },
-            audio: false,
-            });
+            if (
+                !navigator.mediaDevices ||
+                !navigator.mediaDevices.getUserMedia
+            ) {
 
-        setCameraStream(stream);
-        setCameraOpen(true);
+                alert(
+                    "Camera is not supported by this browser."
+                );
+
+                return;
+            }
+
+
+            const stream =
+                await navigator.mediaDevices.getUserMedia({
+
+                    video: {
+                        facingMode: "user",
+                    },
+
+                    audio: false,
+
+                });
+
+
+            setCameraStream(stream);
+
+            setCameraOpen(true);
+
         } catch (error) {
-        console.error("Camera error:", error);
 
-        if (error.name === "NotAllowedError") {
-            alert(
-            "Camera permission was denied. Please allow camera access in your browser."
+            console.error(
+                "Camera error:",
+                error
             );
-        } else if (error.name === "NotFoundError") {
-            alert("No camera was found on this device.");
-        } else if (error.name === "NotReadableError") {
-            alert(
-            "Your camera is already being used by another application."
-            );
-        } else {
-            alert("Unable to access the camera.");
-        }
+
+
+            if (
+                error.name === "NotAllowedError"
+            ) {
+
+                alert(
+                    "Camera permission was denied. Please allow camera access."
+                );
+
+            } else if (
+                error.name === "NotFoundError"
+            ) {
+
+                alert(
+                    "No camera was found on this device."
+                );
+
+            } else if (
+                error.name === "NotReadableError"
+            ) {
+
+                alert(
+                    "Your camera is already being used by another application."
+                );
+
+            } else {
+
+                alert(
+                    "Unable to access the camera."
+                );
+            }
         }
     };
 
-    // =========================================
-    // CONNECT CAMERA STREAM TO VIDEO
-    // =========================================
-    useEffect(() => {
-        if (
-        cameraOpen &&
-        cameraStream &&
-        videoRef.current
-        ) {
-        videoRef.current.srcObject = cameraStream;
 
-        videoRef.current
-            .play()
-            .catch((error) => {
-            console.error("Video play error:", error);
-            });
+    // =========================================
+    // CONNECT CAMERA STREAM
+    // =========================================
+
+    useEffect(() => {
+
+        if (
+            cameraOpen &&
+            cameraStream &&
+            videoRef.current
+        ) {
+
+            videoRef.current.srcObject =
+                cameraStream;
+
+
+            videoRef.current
+                .play()
+                .catch((error) => {
+
+                    console.error(
+                        "Video play error:",
+                        error
+                    );
+
+                });
         }
-    }, [cameraOpen, cameraStream]);
+
+    }, [
+        cameraOpen,
+        cameraStream,
+    ]);
+
 
     // =========================================
     // TAKE PHOTO
     // =========================================
+
     const takePhoto = () => {
-        const video = videoRef.current;
+
+        const video =
+            videoRef.current;
+
 
         if (!video) {
-        alert("Camera is not ready.");
-        return;
-        }
 
-        if (
-        video.videoWidth === 0 ||
-        video.videoHeight === 0
-        ) {
-        alert("Camera is still loading. Please wait a moment.");
-        return;
-        }
-
-        const canvas = document.createElement("canvas");
-
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const ctx = canvas.getContext("2d");
-
-        if (!ctx) {
-        alert("Could not capture photo.");
-        return;
-        }
-
-        // Mirror selfie camera
-        ctx.translate(canvas.width, 0);
-        ctx.scale(-1, 1);
-
-        ctx.drawImage(
-        video,
-        0,
-        0,
-        canvas.width,
-        canvas.height
-        );
-
-        canvas.toBlob(
-        (blob) => {
-            if (!blob) {
-            alert("Could not capture photo.");
-            return;
-            }
-
-            const file = new File(
-            [blob],
-            "camera-photo.jpg",
-            {
-                type: "image/jpeg",
-            }
+            alert(
+                "Camera is not ready."
             );
 
-            handleFile(file);
+            return;
+        }
 
-            closeCamera();
-        },
-        "image/jpeg",
-        0.95
+
+        if (
+            video.videoWidth === 0 ||
+            video.videoHeight === 0
+        ) {
+
+            alert(
+                "Camera is still loading. Please wait a moment."
+            );
+
+            return;
+        }
+
+
+        // Create canvas
+        const canvas =
+            document.createElement("canvas");
+
+
+        canvas.width =
+            video.videoWidth;
+
+        canvas.height =
+            video.videoHeight;
+
+
+        const ctx =
+            canvas.getContext("2d");
+
+
+        if (!ctx) {
+
+            alert(
+                "Could not capture photo."
+            );
+
+            return;
+        }
+
+
+        // Mirror selfie
+        ctx.translate(
+            canvas.width,
+            0
+        );
+
+        ctx.scale(
+            -1,
+            1
+        );
+
+
+        // Draw video frame
+        ctx.drawImage(
+            video,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+
+
+        // Convert canvas to image
+        canvas.toBlob(
+
+            (blob) => {
+
+                if (!blob) {
+
+                    alert(
+                        "Could not capture photo."
+                    );
+
+                    return;
+                }
+
+
+                const file =
+                    new File(
+                        [blob],
+                        "camera-photo.jpg",
+                        {
+                            type: "image/jpeg",
+                        }
+                    );
+
+
+                handleFile(file);
+
+                closeCamera();
+            },
+
+            "image/jpeg",
+
+            0.95
         );
     };
+
 
     // =========================================
     // CLOSE CAMERA
     // =========================================
+
     const closeCamera = () => {
+
         if (cameraStream) {
-        cameraStream.getTracks().forEach((track) => {
-            track.stop();
-        });
+
+            cameraStream
+                .getTracks()
+                .forEach((track) => {
+
+                    track.stop();
+
+                });
         }
+
 
         if (videoRef.current) {
-        videoRef.current.srcObject = null;
+
+            videoRef.current.srcObject =
+                null;
         }
 
+
         setCameraStream(null);
+
         setCameraOpen(false);
     };
+
 
     // =========================================
     // CAMERA CLEANUP
     // =========================================
+
     useEffect(() => {
+
         return () => {
-        if (cameraStream) {
-            cameraStream.getTracks().forEach((track) => {
-            track.stop();
-            });
-        }
+
+            if (cameraStream) {
+
+                cameraStream
+                    .getTracks()
+                    .forEach((track) => {
+
+                        track.stop();
+
+                    });
+            }
         };
+
     }, [cameraStream]);
 
+
     // =========================================
-    // CLOSE CAMERA WITH ESC
+    // ESCAPE KEY
     // =========================================
+
     useEffect(() => {
+
         const handleEscape = (event) => {
-        if (event.key === "Escape" && cameraOpen) {
-            closeCamera();
-        }
+
+            if (
+                event.key === "Escape" &&
+                cameraOpen
+            ) {
+
+                closeCamera();
+            }
         };
 
-        window.addEventListener("keydown", handleEscape);
 
-        return () => {
-        window.removeEventListener(
+        window.addEventListener(
             "keydown",
             handleEscape
         );
+
+
+        return () => {
+
+            window.removeEventListener(
+                "keydown",
+                handleEscape
+            );
         };
-    }, [cameraOpen, cameraStream]);
+
+    }, [
+        cameraOpen,
+        cameraStream,
+    ]);
+
+
+    // =========================================
+    // RENDER
+    // =========================================
 
     return (
-        <div className="w-full">
 
-        {/* =========================================
-            MAIN UPLOAD CARD
-        ========================================= */}
+        <div className="upload-box-container">
 
-        <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="
-            relative
-            overflow-hidden
-            rounded-[28px]
-            border
-            border-white/10
-            bg-[#101321]/80
-            backdrop-blur-xl
-            p-5
-            sm:p-7
-            shadow-2xl
-            "
-        >
 
-            {/* PURPLE GLOW */}
-
-            <div
-            className="
-                absolute
-                -top-32
-                -left-32
-                w-72
-                h-72
-                bg-fuchsia-600/10
-                blur-[100px]
-                rounded-full
-                pointer-events-none
-            "
-            />
-
-            {/* CYAN GLOW */}
-
-            <div
-            className="
-                absolute
-                -bottom-32
-                -right-32
-                w-72
-                h-72
-                bg-cyan-500/10
-                blur-[100px]
-                rounded-full
-                pointer-events-none
-            "
-            />
-
-            {/* =========================================
-                SECURE BADGE
-            ========================================= */}
-
-            <div className="relative flex justify-end mb-4">
-
-            <div
-                className="
-                inline-flex
-                items-center
-                gap-2
-                px-4
-                py-2
-                rounded-full
-                bg-white/[0.04]
-                border
-                border-white/10
-                text-gray-300
-                text-xs
-                font-medium
-                "
-            >
-                <ShieldCheck
-                size={15}
-                className="text-cyan-400"
-                />
-
-                Secure & Private
-            </div>
-
-            </div>
-
-            {/* =========================================
-                DRAG & DROP AREA
-            ========================================= */}
+            {/* =====================================
+                CAMERA CARD
+            ===================================== */}
 
             <motion.div
-            whileHover={{ scale: 1.005 }}
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={handleDrop}
-            onClick={() =>
-                fileInputRef.current?.click()
-            }
-            className="
-                relative
-                min-h-[300px]
-                sm:min-h-[340px]
-                rounded-[22px]
-                border
-                border-dashed
-                border-fuchsia-500/70
-                bg-[#0b0f1d]/70
-                flex
-                flex-col
-                items-center
-                justify-center
-                cursor-pointer
-                transition-all
-                duration-300
-                hover:border-cyan-400
-                hover:bg-white/[0.025]
-                group
-            "
-            >
 
-            {/* Inner Glow */}
-
-            <div
-                className="
-                absolute
-                inset-0
-                rounded-[22px]
-                opacity-0
-                group-hover:opacity-100
-                transition-opacity
-                pointer-events-none
-                shadow-[inset_0_0_40px_rgba(217,70,239,0.08)]
-                "
-            />
-
-            {/* Upload Icon */}
-
-            <motion.div
-                whileHover={{ y: -5 }}
-                className="
-                relative
-                w-20
-                h-20
-                rounded-full
-                flex
-                items-center
-                justify-center
-                bg-gradient-to-br
-                from-fuchsia-500/20
-                to-cyan-500/20
-                border
-                border-white/10
-                mb-7
-                "
-            >
-
-                <UploadCloud
-                size={38}
-                strokeWidth={1.7}
-                className="
-                    text-fuchsia-400
-                    group-hover:text-cyan-400
-                    transition-colors
-                "
-                />
-
-                <div
-                className="
-                    absolute
-                    inset-0
-                    rounded-full
-                    bg-fuchsia-500/10
-                    blur-xl
-                    -z-10
-                "
-                />
-
-            </motion.div>
-
-            {/* Drop Text */}
-
-            <h3 className="text-xl sm:text-2xl font-bold text-white text-center">
-
-                <span className="text-fuchsia-400">
-                Drag & Drop
-                </span>{" "}
-
-                your photo here
-
-            </h3>
-
-            <p className="mt-2 text-sm text-gray-400">
-                or click to browse
-            </p>
-
-            {/* File Types */}
-
-            <div
-                className="
-                flex
-                items-center
-                gap-3
-                mt-5
-                text-xs
-                text-gray-500
-                "
-            >
-                <span>JPG</span>
-                <span>•</span>
-                <span>PNG</span>
-                <span>•</span>
-                <span>HEIC</span>
-                <span>•</span>
-                <span>Max 10MB</span>
-            </div>
-
-            {/* Normal File Input */}
-
-            <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/jpeg,image/png,image/heic,image/heif"
-                onChange={handleInputChange}
-                className="hidden"
-            />
-
-            </motion.div>
-
-            {/* =========================================
-                SELECTED FILE
-            ========================================= */}
-
-            {selectedFile && (
-            <motion.div
                 initial={{
-                opacity: 0,
-                y: 10,
+                    opacity: 0,
+                    y: 25,
+                    scale: 0.96,
                 }}
+
                 animate={{
-                opacity: 1,
-                y: 0,
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
                 }}
-                className="
-                mt-4
-                flex
-                items-center
-                gap-3
-                px-4
-                py-3
-                rounded-xl
-                bg-cyan-500/5
-                border
-                border-cyan-500/20
-                "
+
+                transition={{
+                    duration: 0.6,
+                }}
+
+                className="goa-camera-card"
             >
 
-                <ImageIcon
-                size={18}
-                className="text-cyan-400 shrink-0"
+
+                {/* =================================
+                    SUN MEDALLION LEFT
+                ================================= */}
+
+                <SunMedallion
+                    className="
+                        sun-medallion
+                        sun-medallion-left
+                    "
                 />
 
-                <p className="text-sm text-gray-300 truncate">
-                {selectedFile.name}
-                </p>
 
-            </motion.div>
-            )}
+                {/* =================================
+                    SUN MEDALLION RIGHT
+                ================================= */}
 
-            {/* =========================================
-                REAL CAMERA BUTTON
-            ========================================= */}
-
-            <button
-            type="button"
-            onClick={openCamera}
-            className="
-                w-full
-                mt-5
-                h-14
-                rounded-xl
-                border
-                border-white/10
-                bg-white/[0.02]
-                hover:bg-white/[0.05]
-                hover:border-fuchsia-500/40
-                text-white
-                font-semibold
-                flex
-                items-center
-                justify-center
-                gap-3
-                transition-all
-            "
-            >
-
-            <Camera size={19} />
-
-            Use Camera
-
-            </button>
-
-            {/* =========================================
-                AI FACE DETECTION
-            ========================================= */}
-
-            <div
-            className="
-                mt-5
-                flex
-                flex-wrap
-                items-center
-                justify-center
-                gap-2
-                text-xs
-                sm:text-sm
-                text-gray-400
-                text-center
-            "
-            >
-
-            <span className="text-fuchsia-400">
-                ✦
-            </span>
-
-            <span>
-                Face auto-detection is enabled for
-            </span>
-
-            <span className="text-fuchsia-400 font-medium">
-                Builder Cards
-            </span>
-
-            <span>
-                and
-            </span>
-
-            <span className="text-cyan-400 font-medium">
-                PFP Frames
-            </span>
-
-            </div>
-
-        </motion.div>
-
-
-        {/* =========================================
-            CAMERA MODAL
-        ========================================= */}
-
-        {cameraOpen && (
-            <div
-            className="
-                fixed
-                inset-0
-                z-[9999]
-                flex
-                items-center
-                justify-center
-                bg-black/80
-                backdrop-blur-md
-                p-5
-            "
-            >
-
-            <div
-                className="
-                w-full
-                max-w-lg
-                rounded-3xl
-                border
-                border-white/10
-                bg-[#101321]
-                p-5
-                shadow-2xl
-                "
-            >
-
-                {/* CAMERA HEADER */}
-
-                <div className="flex items-center justify-between mb-4">
-
-                <div>
-                    <h2 className="text-xl font-bold text-white">
-                    Take Your Photo
-                    </h2>
-
-                    <p className="text-sm text-gray-400 mt-1">
-                    Position your face inside the frame
-                    </p>
-                </div>
-
-                <button
-                    type="button"
-                    onClick={closeCamera}
+                <SunMedallion
                     className="
-                    w-9
-                    h-9
-                    rounded-full
-                    bg-white/5
-                    border
-                    border-white/10
-                    text-gray-300
-                    hover:bg-white/10
-                    transition
+                        sun-medallion
+                        sun-medallion-right
                     "
-                >
-                    ✕
-                </button>
+                />
+
+
+                {/* =================================
+                    CAMERA HEADER
+                ================================= */}
+
+                <div className="camera-header">
+
+                    <span className="camera-label">
+                        PHOTO BOOTH
+                    </span>
+
+
+                    <span className="camera-secure">
+
+                        <ShieldCheck
+                            size={11}
+                        />
+
+                        Secure & Private
+
+                    </span>
 
                 </div>
 
 
-                {/* =========================================
-                    CAMERA PREVIEW
-                ========================================= */}
+                {/* =================================
+                    CAMERA LENS
+                ================================= */}
 
-                <div
-                className="
-                    relative
-                    overflow-hidden
-                    rounded-2xl
-                    border
-                    border-fuchsia-500/40
-                    bg-black
-                    aspect-[4/3]
-                "
+                <div className="camera-lens">
+
+                    <div className="camera-lens-inner">
+
+                        <div
+                            className="
+                                camera-lens-shine
+                            "
+                        />
+
+                    </div>
+
+                </div>
+
+
+                {/* =================================
+                    UPLOAD AREA
+                ================================= */}
+
+                <motion.div
+
+                    whileHover={{
+                        scale: 1.01,
+                    }}
+
+                    onDragOver={(e) =>
+                        e.preventDefault()
+                    }
+
+                    onDrop={handleDrop}
+
+                    onClick={() =>
+                        fileInputRef.current?.click()
+                    }
+
+                    className="goa-upload-area"
                 >
 
-                <video
-                    ref={videoRef}
-                    autoPlay
-                    playsInline
-                    muted
-                    className="
-                    w-full
-                    h-full
-                    object-cover
-                    scale-x-[-1]
-                    "
-                />
 
-                {/* Face Guide */}
+                    {/* =================================
+                        SELECTED IMAGE
+                    ================================= */}
 
-                <div
-                    className="
-                    absolute
-                    inset-0
-                    flex
-                    items-center
-                    justify-center
-                    pointer-events-none
-                    "
-                >
+                    {selectedFile ? (
 
-                    <div
-                    className="
-                        w-52
-                        h-64
-                        rounded-[50%]
-                        border-2
-                        border-cyan-400/70
-                        shadow-[0_0_30px_rgba(34,211,238,0.25)]
-                    "
+                        <img
+                            src={URL.createObjectURL(
+                                selectedFile
+                            )}
+                            alt="Selected"
+                            className="goa-selected-image"
+                        />
+
+                    ) : (
+
+                        <>
+
+                            {/* Upload Icon */}
+
+                            <UploadCloud
+                                size={38}
+                                strokeWidth={1.5}
+                                className="
+                                    upload-cloud-icon
+                                "
+                            />
+
+
+                            {/* Main text */}
+
+                            <h3>
+                                Drag & Drop your photo here
+                            </h3>
+
+
+                            {/* Browse text */}
+
+                            <p>
+                                or click to browse
+                            </p>
+
+
+                            {/* File information */}
+
+                            <span>
+                                JPG • PNG • HEIC • Max 10MB
+                            </span>
+
+                        </>
+
+                    )}
+
+
+                    {/* =================================
+                        HIDDEN FILE INPUT
+                    ================================= */}
+
+                    <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="
+                            image/jpeg,
+                            image/png,
+                            image/heic,
+                            image/heif
+                        "
+                        onChange={handleInputChange}
+                        hidden
                     />
 
+                </motion.div>
+
+
+                {/* =================================
+                    CAMERA FOOTER
+                ================================= */}
+
+                <div className="camera-footer">
+
+
+                    {/* Use Camera */}
+
+                    <button
+                        type="button"
+                        onClick={openCamera}
+                        className="camera-use-button"
+                    >
+
+                        <Camera
+                            size={13}
+                        />
+
+                        Use Camera
+
+                    </button>
+
+
+                    {/* Secure */}
+
+                    <span className="camera-private">
+
+                        <ShieldCheck
+                            size={10}
+                        />
+
+                        Secure & Private
+
+                    </span>
+
                 </div>
 
-                {/* Camera Status */}
-
-                <div
-                    className="
-                    absolute
-                    bottom-4
-                    left-1/2
-                    -translate-x-1/2
-                    px-4
-                    py-2
-                    rounded-full
-                    bg-black/50
-                    backdrop-blur-md
-                    border
-                    border-white/10
-                    text-xs
-                    text-white
-                    "
-                >
-                    Camera is active
-                </div>
-
-                </div>
+            </motion.div>
 
 
-                {/* =========================================
-                    CAMERA BUTTONS
-                ========================================= */}
+            {/* =====================================
+                SELECTED FILE INFO
+            ===================================== */}
 
-                <div className="flex gap-3 mt-5">
+            {selectedFile && (
 
-                <button
-                    type="button"
-                    onClick={closeCamera}
-                    className="
-                    flex-1
-                    h-12
-                    rounded-xl
-                    border
-                    border-white/10
-                    bg-white/5
-                    text-gray-300
-                    font-semibold
-                    hover:bg-white/10
-                    transition
-                    "
-                >
-                    Cancel
-                </button>
+                <motion.div
 
-                <button
-                    type="button"
-                    onClick={takePhoto}
-                    className="
-                    flex-1
-                    h-12
-                    rounded-xl
-                    bg-gradient-to-r
-                    from-fuchsia-500
-                    to-cyan-400
-                    text-white
-                    font-bold
-                    hover:scale-[1.02]
-                    transition
-                    flex
-                    items-center
-                    justify-center
-                    gap-2
-                    "
+                    initial={{
+                        opacity: 0,
+                        y: 10,
+                    }}
+
+                    animate={{
+                        opacity: 1,
+                        y: 0,
+                    }}
+
+                    className="selected-file-info"
                 >
 
-                    <Camera size={18} />
+                    <ImageIcon
+                        size={16}
+                    />
 
-                    Take Photo
 
-                </button>
+                    <span>
+                        {selectedFile.name}
+                    </span>
 
-                </div>
+                </motion.div>
+
+            )}
+
+
+            {/* =====================================
+                FACE DETECTION
+            ===================================== */}
+
+            <div className="face-detection">
+
+                <span>
+                    ✦
+                </span>
+
+
+                Face auto-detection is enabled for{" "}
+
+
+                <strong>
+                    Builder Cards
+                </strong>
+
+
+                {" "}and{" "}
+
+
+                <strong>
+                    PFP Frames
+                </strong>
 
             </div>
 
-            </div>
-        )}
+
+            {/* =====================================
+                CAMERA MODAL
+            ===================================== */}
+
+            {cameraOpen && (
+
+                <div className="camera-modal">
+
+
+                    <div className="camera-modal-content">
+
+
+                        {/* =================================
+                            MODAL HEADER
+                        ================================= */}
+
+                        <div className="camera-modal-header">
+
+                            <div>
+
+                                <h2>
+                                    Take Your Photo
+                                </h2>
+
+
+                                <p>
+                                    Position your face inside the frame
+                                </p>
+
+                            </div>
+
+
+                            <button
+
+                                type="button"
+
+                                onClick={
+                                    closeCamera
+                                }
+
+                                className="camera-close"
+                            >
+
+                                ✕
+
+                            </button>
+
+                        </div>
+
+
+                        {/* =================================
+                            CAMERA PREVIEW
+                        ================================= */}
+
+                        <div className="camera-preview">
+
+
+                            <video
+
+                                ref={videoRef}
+
+                                autoPlay
+
+                                playsInline
+
+                                muted
+
+                            />
+
+
+                            {/* Face guide */}
+
+                            <div
+                                className="
+                                    face-guide
+                                "
+                            />
+
+
+                            {/* Camera status */}
+
+                            <div
+                                className="
+                                    camera-status
+                                "
+                            >
+                                Camera is active
+                            </div>
+
+                        </div>
+
+
+                        {/* =================================
+                            CAMERA BUTTONS
+                        ================================= */}
+
+                        <div className="camera-modal-buttons">
+
+
+                            {/* Cancel */}
+
+                            <button
+
+                                type="button"
+
+                                onClick={
+                                    closeCamera
+                                }
+
+                                className="
+                                    camera-cancel
+                                "
+                            >
+                                Cancel
+                            </button>
+
+
+                            {/* Take Photo */}
+
+                            <button
+
+                                type="button"
+
+                                onClick={
+                                    takePhoto
+                                }
+
+                                className="
+                                    camera-capture
+                                "
+                            >
+
+                                <Camera
+                                    size={17}
+                                />
+
+                                Take Photo
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            )}
 
         </div>
     );

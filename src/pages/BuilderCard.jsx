@@ -1,403 +1,546 @@
+import { useEffect, useMemo } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+
+import "./BuilderCard.css";
+
 import {
+    Download,
+    Sparkles,
+    Share2,
+    ArrowRight,
     Zap,
     PawPrint,
-    Laptop,
-    } from "lucide-react";
-    import { useContext, useEffect, useState } from "react";
-    import { AppContext } from "../context/AppContext";
+    Trophy,
+    Palmtree,
+} from "lucide-react";
 
-    function BuilderCard() {
-    const { photo, user } = useContext(AppContext);
 
-    const {
-        fullName = "",
-        role = "",
-        college = "",
-    } = user || {};
+function BuilderCardPage() {
 
-    // =====================================
-    // CREATE PHOTO URL
-    // =====================================
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const [photoUrl, setPhotoUrl] = useState(null);
+    // =========================================
+    // GET DATA
+    // =========================================
 
-    useEffect(() => {
+    const formData = location.state?.formData || {};
+    const photo = location.state?.photo || null;
+
+    const fullName =
+        formData.fullName?.trim() || "YOUR NAME";
+
+    const role =
+        formData.role?.trim() || "Your Role / Stack";
+
+    const college =
+        formData.college?.trim() || "Your College";
+
+
+    // =========================================
+    // PHOTO URL
+    // =========================================
+
+    const photoUrl = useMemo(() => {
+
         if (!photo) {
-        setPhotoUrl(null);
-        return;
+            return null;
         }
 
-        // If photo is already a URL/string
-        if (typeof photo === "string") {
-        setPhotoUrl(photo);
-        return;
-        }
+        return URL.createObjectURL(photo);
 
-        // If photo is a File object
-        const url = URL.createObjectURL(photo);
-
-        setPhotoUrl(url);
-
-        // Cleanup old URL
-        return () => {
-        URL.revokeObjectURL(url);
-        };
     }, [photo]);
 
+
+    // =========================================
+    // CLEAN PHOTO URL
+    // =========================================
+
+    useEffect(() => {
+
+        return () => {
+
+            if (photoUrl) {
+                URL.revokeObjectURL(photoUrl);
+            }
+
+        };
+
+    }, [photoUrl]);
+
+
+    // =========================================
+    // DOWNLOAD BUILDER CARD
+    // =========================================
+
+    const handleDownloadCard = () => {
+
+        alert("Builder Card download will be connected next.");
+
+    };
+
+
+    // =========================================
+    // DOWNLOAD PFP
+    // =========================================
+
+    const handleDownloadPFP = () => {
+
+        alert("PFP Frame download will be connected next.");
+
+    };
+
+
+    // =========================================
+    // SHARE ON X
+    // =========================================
+
+    const handleShare = () => {
+
+        const text =
+            "I just created my Goa Builder Identity 🌴🔥 #FrameInGoa";
+
+        const url =
+            `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+
+        window.open(
+            url,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    };
+
+
+    // =========================================
+    // FINISH
+    // =========================================
+
+    const handleFinish = () => {
+
+        navigate("/");
+
+    };
+
+
     return (
-        <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-        className="w-full"
-        >
 
-        {/* =====================================
-            BUILDER CARD
-        ===================================== */}
-
-        <div
-            id="builder-card"
-            className="
-            relative
-            overflow-hidden
-            rounded-[28px]
-            border
-            border-cyan-400/30
-            bg-gradient-to-br
-            from-[#171329]
-            via-[#101321]
-            to-[#071923]
-            p-7
-            sm:p-9
-            shadow-[0_0_60px_rgba(34,211,238,0.08)]
-            "
-        >
+        <div className="builder-goa-page">
 
             {/* =====================================
-                BACKGROUND GLOW
+                FULL GOA BACKGROUND
             ===================================== */}
 
-            <div
-            className="
-                absolute
-                -top-32
-                -right-32
-                w-72
-                h-72
-                rounded-full
-                bg-fuchsia-500/10
-                blur-[100px]
-                pointer-events-none
-            "
-            />
+            <div className="builder-goa-background">
 
-            <div
-            className="
-                absolute
-                -bottom-32
-                -left-32
-                w-72
-                h-72
-                rounded-full
-                bg-cyan-500/10
-                blur-[100px]
-                pointer-events-none
-            "
-            />
-
-            {/* =====================================
-                HEADER
-            ===================================== */}
-
-            <div className="relative flex items-center justify-between gap-4">
-
-            <div>
-
-                <p
-                className="
-                    text-xs
-                    font-bold
-                    tracking-[0.2em]
-                    text-cyan-400
-                "
-                >
-                HACKER HOUSE GOA
-                </p>
-
-                <h2
-                className="
-                    mt-1
-                    text-2xl
-                    sm:text-3xl
-                    font-extrabold
-                    text-white
-                "
-                >
-                Builder Card
-                </h2>
+                <img
+                    src="/goa-sunset.png"
+                    alt="Goa sunset"
+                />
 
             </div>
 
-            <div
-                className="
-                shrink-0
-                px-4
-                py-2
-                rounded-full
-                border
-                border-cyan-400/30
-                bg-cyan-400/10
-                text-cyan-300
-                text-xs
-                font-semibold
-                "
-            >
-                #FrameInGoa
-            </div>
 
-            </div>
+            {/* DARK OVERLAY */}
+            <div className="builder-goa-overlay" />
+
 
             {/* =====================================
-                PROFILE
+                MAIN CONTENT
             ===================================== */}
 
-            <div className="relative mt-8 text-center">
+            <main className="builder-goa-main">
 
-            {/* PHOTO */}
 
-            <div
-                className="
-                mx-auto
-                w-32
-                h-32
-                rounded-full
-                p-[2px]
-                bg-gradient-to-br
-                from-fuchsia-400
-                via-purple-400
-                to-cyan-400
-                shadow-[0_0_35px_rgba(217,70,239,0.25)]
-                "
-            >
+                {/* =================================
+                    PAGE TITLE
+                ================================= */}
 
-                <div
-                className="
-                    w-full
-                    h-full
-                    rounded-full
-                    overflow-hidden
-                    bg-[#101321]
-                    flex
-                    items-center
-                    justify-center
-                "
+                <motion.div
+                    className="builder-goa-title"
+
+                    initial={{
+                        opacity: 0,
+                        y: -30
+                    }}
+
+                    animate={{
+                        opacity: 1,
+                        y: 0
+                    }}
+
+                    transition={{
+                        duration: 0.7
+                    }}
                 >
 
-                {photoUrl ? (
+                    <div className="builder-title-top">
 
-                    <img
-                    src={photoUrl}
-                    alt={fullName || "Builder"}
-                    className="
-                        w-full
-                        h-full
-                        object-cover
-                    "
-                    />
+                        <span>🌴</span>
 
-                ) : (
+                        <span className="title-bird">
+                            ✦
+                        </span>
 
-                    <div className="text-gray-500 text-sm">
-                    No Photo
+                        <h1>
+                            Your Identity
+                        </h1>
+
+                        <span className="title-bird">
+                            ✦
+                        </span>
+
+                        <span>🌴</span>
+
                     </div>
 
-                )}
 
-                </div>
+                    <div className="builder-progress">
 
-            </div>
+                        <span className="active" />
 
-            {/* NAME */}
+                        <span />
 
-            <h3
-                className="
-                mt-4
-                text-2xl
-                font-bold
-                text-white
-                "
-            >
-                {fullName || "Your Name"}
-            </h3>
+                        <span />
 
-            {/* ROLE */}
+                        <span />
 
-            <p
-                className="
-                mt-1
-                font-semibold
-                text-cyan-400
-                "
-            >
-                {role || "Your Role / Stack"}
-            </p>
+                    </div>
 
-            {/* COLLEGE */}
+                </motion.div>
 
-            <p
-                className="
-                mt-1
-                text-sm
-                text-gray-400
-                "
-            >
-                {college || "Your College"}
-            </p>
 
-            </div>
+                {/* =================================
+                    MAIN RETRO CARD
+                ================================= */}
 
-            {/* =====================================
-                STATS
-            ===================================== */}
+                <motion.section
+                    className="retro-builder-card"
 
-            <div
-            className="
-                relative
-                grid
-                grid-cols-3
-                gap-3
-                mt-8
-            "
-            >
+                    initial={{
+                        opacity: 0,
+                        scale: 0.9,
+                        y: 40
+                    }}
 
-            {/* BUILDER SCORE */}
+                    animate={{
+                        opacity: 1,
+                        scale: 1,
+                        y: 0
+                    }}
 
-            <div
-                className="
-                rounded-2xl
-                border
-                border-white/10
-                bg-white/[0.04]
-                p-4
-                text-center
-                hover:border-yellow-400/30
-                transition
-                "
-            >
+                    transition={{
+                        duration: 0.8
+                    }}
+                >
 
-                <Zap
-                size={20}
-                className="mx-auto text-yellow-400"
-                />
 
-                <p className="mt-2 text-[11px] text-gray-400">
-                Builder Score
-                </p>
+                    {/* =================================
+                        CARD TOP
+                    ================================= */}
 
-                <p className="mt-1 text-xl font-bold text-white">
-                93
-                </p>
+                    <div className="retro-card-header">
 
-            </div>
+                        <div>
 
-            {/* SPIRIT ANIMAL */}
+                            <p className="retro-eyebrow">
+                                HACKER HOUSE GOA
+                            </p>
 
-            <div
-                className="
-                rounded-2xl
-                border
-                border-white/10
-                bg-white/[0.04]
-                p-4
-                text-center
-                hover:border-orange-400/30
-                transition
-                "
-            >
+                            <h2>
+                                BUILDER CARD
+                            </h2>
 
-                <PawPrint
-                size={20}
-                className="mx-auto text-orange-400"
-                />
+                        </div>
 
-                <p className="mt-2 text-[11px] text-gray-400">
-                Spirit Animal
-                </p>
 
-                <p className="mt-1 text-xl font-bold text-white">
-                Fox
-                </p>
+                        {/* STAMP */}
 
-            </div>
+                        <div className="retro-stamp">
 
-            {/* BUILDER TITLE */}
+                            <Palmtree size={32} />
 
-            <div
-                className="
-                rounded-2xl
-                border
-                border-white/10
-                bg-white/[0.04]
-                p-4
-                text-center
-                hover:border-cyan-400/30
-                transition
-                "
-            >
+                            <strong>
+                                #FrameInGoa
+                            </strong>
 
-                <Laptop
-                size={20}
-                className="mx-auto text-cyan-400"
-                />
+                        </div>
 
-                <p className="mt-2 text-[11px] text-gray-400">
-                Builder Title
-                </p>
+                    </div>
 
-                <p className="mt-1 text-sm font-bold text-white">
-                Prompt Wizard
-                </p>
 
-            </div>
+                    {/* =================================
+                        SUNSET DECORATION
+                    ================================= */}
 
-            </div>
+                    <div className="retro-sunset">
 
-            {/* =====================================
-                DIVIDER
-            ===================================== */}
+                        <div className="retro-sun" />
 
-            <div className="relative h-px bg-white/10 my-7" />
+                        <div className="retro-hills">
 
-            {/* =====================================
-                FOOTER
-            ===================================== */}
+                            🌴
+                            <span>🌴</span>
+                            🌴
 
-            <div
-            className="
-                relative
-                flex
-                items-center
-                justify-between
-                text-xs
-            "
-            >
+                        </div>
 
-            <span className="text-gray-400">
-                Built with 💗 at Hacker House Goa
-            </span>
+                    </div>
 
-            <span className="text-cyan-400 font-semibold">
-                #FrameInGoa
-            </span>
 
-            </div>
+                    {/* =================================
+                        PROFILE PHOTO
+                    ================================= */}
+
+                    <div className="retro-profile-section">
+
+                        <div className="retro-photo-ring">
+
+                            {photoUrl ? (
+
+                                <img
+                                    src={photoUrl}
+                                    alt={fullName}
+                                />
+
+                            ) : (
+
+                                <div className="retro-photo-placeholder">
+
+                                    <div className="placeholder-sunset">
+
+                                        <span />
+                                        <span />
+
+                                    </div>
+
+                                </div>
+
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    {/* =================================
+                        IDENTITY
+                    ================================= */}
+
+                    <div className="retro-identity-text">
+
+                        <div className="retro-name-decoration">
+
+                            <span>✦</span>
+
+                            <div />
+
+                            <span>✦</span>
+
+                        </div>
+
+
+                        <h3>
+                            {fullName}
+                        </h3>
+
+
+                        <div className="retro-role">
+
+                            <span>〰</span>
+
+                            <strong>
+                                {role}
+                            </strong>
+
+                            <span>〰</span>
+
+                        </div>
+
+
+                        <p className="retro-college">
+                            {college}
+                        </p>
+
+                    </div>
+
+
+                    {/* =================================
+                        STAT CARDS
+                    ================================= */}
+
+                    <div className="retro-stats">
+
+
+                        {/* SCORE */}
+
+                        <div className="retro-stat">
+
+                            <Zap size={34} />
+
+                            <span>
+                                BUILDER SCORE
+                            </span>
+
+                            <strong>
+                                93
+                            </strong>
+
+                        </div>
+
+
+                        {/* SPIRIT */}
+
+                        <div className="retro-stat">
+
+                            <PawPrint size={34} />
+
+                            <span>
+                                SPIRIT ANIMAL
+                            </span>
+
+                            <strong>
+                                Fox
+                            </strong>
+
+                        </div>
+
+
+                        {/* TITLE */}
+
+                        <div className="retro-stat">
+
+                            <Trophy size={34} />
+
+                            <span>
+                                BUILDER TITLE
+                            </span>
+
+                            <strong>
+                                Prompt Wizard
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* =================================
+                        CARD FOOTER
+                    ================================= */}
+
+                    <div className="retro-card-footer">
+
+                        <span>
+
+                            🌴 Built with
+                            <b> ♥ </b>
+                            at Hacker House Goa
+
+                        </span>
+
+
+                        <strong>
+                            #FrameInGoa
+                        </strong>
+
+                    </div>
+
+                </motion.section>
+
+
+                {/* =================================
+                    ACTION BUTTONS
+                ================================= */}
+
+                <motion.div
+                    className="builder-actions"
+
+                    initial={{
+                        opacity: 0,
+                        y: 30
+                    }}
+
+                    animate={{
+                        opacity: 1,
+                        y: 0
+                    }}
+
+                    transition={{
+                        delay: 0.3,
+                        duration: 0.6
+                    }}
+                >
+
+
+                    {/* DOWNLOAD */}
+
+                    <button
+                        className="builder-action yellow"
+                        onClick={handleDownloadCard}
+                    >
+
+                        <Download size={22} />
+
+                        DOWNLOAD BUILDER CARD
+
+                    </button>
+
+
+                    {/* PFP */}
+
+                    <button
+                        className="builder-action pink"
+                        onClick={handleDownloadPFP}
+                    >
+
+                        <Sparkles size={22} />
+
+                        DOWNLOAD PFP FRAME
+
+                    </button>
+
+
+                    {/* SHARE */}
+
+                    <button
+                        className="builder-share"
+                        onClick={handleShare}
+                    >
+
+                        <span className="share-x">
+                            X
+                        </span>
+
+                        SHARE ON X
+
+                    </button>
+
+
+                    {/* FINISH */}
+
+                    <button
+                        className="builder-finish"
+                        onClick={handleFinish}
+                    >
+
+                        FINISH & CONTINUE
+
+                        <ArrowRight size={22} />
+
+                    </button>
+
+                </motion.div>
+
+
+            </main>
 
         </div>
 
-        </motion.div>
     );
+
 }
 
-export default BuilderCard;
+
+export default BuilderCardPage;

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import ProgressBar from "../components/ProgressBar/ProgressBar";
 import BuilderCard from "../components/BuilderCard/BuilderCard";
+import TropicalBackground from "../components/TropicalBackground/TropicalBackground";
 
 import { domToPng } from "modern-screenshot";
 
@@ -17,75 +18,65 @@ function Identity() {
   // ==========================================
 
   const downloadBuilderCard = async () => {
-  const card = document.getElementById("builder-card");
+    const card = document.getElementById("builder-card");
 
-  if (!card) {
-    alert("Builder Card not found.");
-    return;
-  }
+    if (!card) {
+      alert("Builder Card not found.");
+      return;
+    }
 
-  try {
-    console.log("Preparing Builder Card...");
+    try {
+      console.log("Preparing Builder Card...");
 
-    // Wait for React rendering
-    await new Promise((resolve) => {
-      requestAnimationFrame(() => {
-        requestAnimationFrame(resolve);
-      });
-    });
-
-    // Wait for images
-    const images = card.querySelectorAll("img");
-
-    await Promise.all(
-      Array.from(images).map((img) => {
-        if (img.complete) {
-          return Promise.resolve();
-        }
-
-        return new Promise((resolve) => {
-          img.onload = resolve;
-          img.onerror = resolve;
+      // Wait for rendering
+      await new Promise((resolve) => {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(resolve);
         });
-      })
-    );
+      });
 
-    // Small delay
-    await new Promise((resolve) =>
-      setTimeout(resolve, 500)
-    );
+      // Wait for images
+      const images = card.querySelectorAll("img");
 
-    console.log("Generating Builder Card PNG...");
+      await Promise.all(
+        Array.from(images).map((img) => {
+          if (img.complete) {
+            return Promise.resolve();
+          }
 
-    const dataUrl = await domToPng(card, {
-      scale: 2,
-      backgroundColor: "#101321",
-      debug: true,
-    });
+          return new Promise((resolve) => {
+            img.onload = resolve;
+            img.onerror = resolve;
+          });
+        })
+      );
 
-    console.log("PNG generated successfully.");
+      // Small delay
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-    const link = document.createElement("a");
+      console.log("Generating Builder Card PNG...");
 
-    link.download = "frameingoa-builder-card.png";
-    link.href = dataUrl;
+      const dataUrl = await domToPng(card, {
+        scale: 2,
+        backgroundColor: "#101321",
+      });
 
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      const link = document.createElement("a");
 
-    console.log("Builder Card downloaded successfully!");
-  } catch (error) {
-    console.error(
-      "BUILDER CARD DOWNLOAD ERROR:",
-      error
-    );
+      link.download = "frameingoa-builder-card.png";
+      link.href = dataUrl;
 
-    alert(
-      "Unable to download the Builder Card. Please check the browser console."
-    );
-  }
-};
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      console.log("Builder Card downloaded successfully!");
+    } catch (error) {
+      console.error("BUILDER CARD DOWNLOAD ERROR:", error);
+
+      alert("Unable to download the Builder Card. Please try again.");
+    }
+  };
 
   // ==========================================
   // DOWNLOAD PFP FRAME
@@ -96,6 +87,8 @@ function Identity() {
       alert("Please upload a photo first.");
       return;
     }
+
+    let photoUrl = null;
 
     try {
       const canvas = document.createElement("canvas");
@@ -111,23 +104,26 @@ function Identity() {
         throw new Error("Canvas is not supported.");
       }
 
+      // Background
       ctx.fillStyle = "#050816";
       ctx.fillRect(0, 0, size, size);
 
-      const photoUrl =
+      // Photo URL
+      photoUrl =
         typeof photo === "string"
           ? photo
           : URL.createObjectURL(photo);
 
       const image = new Image();
 
-      image.crossOrigin = "anonymous";
-
       image.onload = () => {
         const center = size / 2;
         const radius = 360;
 
-        // Circular photo
+        // ==================================
+        // CIRCULAR PHOTO
+        // ==================================
+
         ctx.save();
 
         ctx.beginPath();
@@ -144,7 +140,8 @@ function Identity() {
         ctx.clip();
 
         // Cover image
-        const imageRatio = image.width / image.height;
+        const imageRatio =
+          image.width / image.height;
 
         let drawWidth;
         let drawHeight;
@@ -155,14 +152,20 @@ function Identity() {
           drawHeight = radius * 2;
           drawWidth = drawHeight * imageRatio;
 
-          offsetX = center - drawWidth / 2;
-          offsetY = center - drawHeight / 2;
+          offsetX =
+            center - drawWidth / 2;
+
+          offsetY =
+            center - drawHeight / 2;
         } else {
           drawWidth = radius * 2;
           drawHeight = drawWidth / imageRatio;
 
-          offsetX = center - drawWidth / 2;
-          offsetY = center - drawHeight / 2;
+          offsetX =
+            center - drawWidth / 2;
+
+          offsetY =
+            center - drawHeight / 2;
         }
 
         ctx.drawImage(
@@ -175,7 +178,10 @@ function Identity() {
 
         ctx.restore();
 
-        // Cyan frame
+        // ==================================
+        // CYAN FRAME
+        // ==================================
+
         ctx.beginPath();
 
         ctx.arc(
@@ -190,7 +196,10 @@ function Identity() {
         ctx.strokeStyle = "#22D3EE";
         ctx.stroke();
 
-        // Purple frame
+        // ==================================
+        // PURPLE FRAME
+        // ==================================
+
         ctx.beginPath();
 
         ctx.arc(
@@ -205,7 +214,10 @@ function Identity() {
         ctx.strokeStyle = "#A855F7";
         ctx.stroke();
 
-        // Text
+        // ==================================
+        // FRAMEINGOA TEXT
+        // ==================================
+
         ctx.font = "bold 55px Arial";
         ctx.textAlign = "center";
         ctx.fillStyle = "#FFFFFF";
@@ -216,51 +228,53 @@ function Identity() {
           900
         );
 
-        // Download
+        // ==================================
+        // DOWNLOAD
+        // ==================================
+
         canvas.toBlob((blob) => {
           if (!blob) {
             alert("Could not create PFP frame.");
             return;
           }
 
-          const url = URL.createObjectURL(blob);
+          const url =
+            URL.createObjectURL(blob);
 
-          const link = document.createElement("a");
+          const link =
+            document.createElement("a");
 
           link.href = url;
-          link.download = "frameingoa-pfp-frame.png";
+          link.download =
+            "frameingoa-pfp-frame.png";
 
           document.body.appendChild(link);
+
           link.click();
+
           document.body.removeChild(link);
 
           setTimeout(() => {
             URL.revokeObjectURL(url);
           }, 1000);
         }, "image/png");
-
-        // Cleanup temporary File URL
-        if (typeof photo !== "string") {
-          URL.revokeObjectURL(photoUrl);
-        }
       };
 
       image.onerror = () => {
         alert("Could not load profile image.");
-
-        if (typeof photo !== "string") {
-          URL.revokeObjectURL(photoUrl);
-        }
       };
 
       image.src = photoUrl;
+
     } catch (error) {
       console.error(
         "PFP Frame download failed:",
         error
       );
 
-      alert("Unable to download the PFP Frame.");
+      alert(
+        "Unable to download the PFP Frame."
+      );
     }
   };
 
@@ -295,43 +309,23 @@ I'm ${user?.fullName || "a builder"} — ${
   // ==========================================
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#050816]">
+    <div className="relative min-h-screen overflow-hidden bg-[#07140f]">
 
-      {/* Background Glow */}
+      {/* ======================================
+          TROPICAL BACKGROUND
+      ====================================== */}
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          top-0
-          left-0
-          w-[450px]
-          h-[450px]
-          bg-purple-600/20
-          blur-[170px]
-          rounded-full
-        "
-      />
+      <TropicalBackground />
 
-      <div
-        className="
-          pointer-events-none
-          absolute
-          bottom-0
-          right-0
-          w-[450px]
-          h-[450px]
-          bg-cyan-500/20
-          blur-[170px]
-          rounded-full
-        "
-      />
-
-      {/* Navbar */}
+      {/* ======================================
+          NAVBAR
+      ====================================== */}
 
       <Navbar />
 
-      {/* Main Content */}
+      {/* ======================================
+          MAIN CONTENT
+      ====================================== */}
 
       <main
         className="
@@ -342,14 +336,18 @@ I'm ${user?.fullName || "a builder"} — ${
         "
       >
 
-        {/* Progress */}
+        {/* ==================================
+            PROGRESS
+        ================================== */}
 
         <ProgressBar
           step={4}
           title="Your Identity"
         />
 
-        {/* Builder Card */}
+        {/* ==================================
+            BUILDER CARD
+        ================================== */}
 
         <div
           className="
@@ -362,7 +360,9 @@ I'm ${user?.fullName || "a builder"} — ${
 
           <BuilderCard />
 
-          {/* Action Buttons */}
+          {/* ==================================
+              ACTION BUTTONS
+          ================================== */}
 
           <div
             className="
@@ -375,7 +375,7 @@ I'm ${user?.fullName || "a builder"} — ${
             "
           >
 
-            {/* Download Builder Card */}
+            {/* DOWNLOAD BUILDER CARD */}
 
             <button
               type="button"
@@ -396,7 +396,7 @@ I'm ${user?.fullName || "a builder"} — ${
               ↓ Download Builder Card
             </button>
 
-            {/* Download PFP Frame */}
+            {/* DOWNLOAD PFP FRAME */}
 
             <button
               type="button"
@@ -419,7 +419,9 @@ I'm ${user?.fullName || "a builder"} — ${
 
           </div>
 
-          {/* Share */}
+          {/* ==================================
+              SHARE
+          ================================== */}
 
           <button
             type="button"
@@ -440,7 +442,9 @@ I'm ${user?.fullName || "a builder"} — ${
             ↗ Share on X
           </button>
 
-          {/* Finish */}
+          {/* ==================================
+              FINISH
+          ================================== */}
 
           <div className="flex justify-center mt-4">
 

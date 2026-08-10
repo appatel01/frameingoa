@@ -1,100 +1,164 @@
 import { Link } from "react-router-dom";
-import { Menu } from "lucide-react";
 
 function Navbar() {
-
     return (
+        <nav className="relative border-b-4 border-[#FF0080] bg-[#064D2E]">
 
-        <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#050816]/60 border-b border-white/5">
+        <div
+            className="
+            mx-auto
+            flex
+            h-[76px]
+            max-w-7xl
+            items-center
+            justify-between
+            px-5
+            sm:px-8
+            "
+        >
 
-            <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
+            {/* ================= LOGO ================= */}
 
-                <div className="flex items-center gap-3">
+            <Link
+            to="/"
+            className="flex items-center gap-3 group"
+            >
 
-                    <div
-                    className="
-                    w-11
-                    h-11
-                    rounded-xl
-                    bg-gradient-to-r
-                    from-fuchsia-500
-                    to-cyan-500
-                    flex
-                    items-center
-                    justify-center
-                    text-white
+            <div
+                className="
+                flex
+                h-12
+                w-12
+                items-center
+                justify-center
+                rounded-full
+                border-2
+                border-[#064D2E]
+                bg-[#FFD900]
+                font-black
+                text-[#064D2E]
+                shadow-[4px_4px_0_#FF0080]
+                transition-transform
+                group-hover:rotate-6
+                "
+            >
+                HH
+            </div>
+
+            <div>
+
+                <span
+                className="
+                    block
+                    text-xl
+                    font-black
+                    uppercase
+                    tracking-tight
+                    text-[#FFD900]
+                    sm:text-2xl
+                "
+                >
+                FrameInगोवा
+                </span>
+
+                <span
+                className="
+                    hidden
+                    text-[9px]
                     font-bold
-                    ">
-
-                        HH
-
-                    </div>
-
-                    <div>
-
-                        <h1 className="text-white text-xl font-bold">
-
-                            FrameInGoa
-
-                        </h1>
-
-                    </div>
-
-                </div>
-
-                <ul className="hidden md:flex items-center gap-10 text-gray-300 font-medium">
-
-                    <li>
-                        <Link
-                        to="/"
-                        className="hover:text-cyan-400 transition duration-300"
-                        >
-                        Home
-                        </Link>
-                    </li>
-                    <li>
-                        <a
-                        href="#features"
-                        className="hover:text-cyan-400 transition duration-300"
-                        >
-                        Features
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                        href="#builder"
-                        className="hover:text-cyan-400 transition duration-300"
-                        >
-                        Builder Card
-                        </a>
-                    </li>
-
-                    <li>
-                        <a
-                        href="https://github.com/"
-                        target="_blank"
-                        rel="noreferrer"
-                        className="hover:text-cyan-400 transition duration-300"
-                        >
-                        GitHub
-                        </a>
-                    </li>
-
-                    </ul>
-
-                <button className="md:hidden text-white">
-
-                    <Menu />
-
-                </button>
+                    tracking-[0.25em]
+                    text-[#FFF7D6]
+                    sm:block
+                "
+                >
+                BUILD • BEACH • CREATE
+                </span>
 
             </div>
 
+            </Link>
+
+
+            {/* ================= DESKTOP NAV ================= */}
+
+            <div className="hidden items-center gap-8 md:flex">
+
+            <Link
+                to="/"
+                className="goa-nav-link active"
+            >
+                HOME
+            </Link>
+
+            <a
+                href="/#features"
+                className="goa-nav-link"
+            >
+                FEATURES
+            </a>
+
+            <Link
+                to="/identity"
+                className="goa-nav-link"
+            >
+                BUILDER CARD
+            </Link>
+
+            <a
+                href="https://github.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="goa-nav-link"
+            >
+                GITHUB
+            </a>
+
+            <div
+                className="
+                border-2
+                border-[#064D2E]
+                bg-[#FFD900]
+                px-5
+                py-2.5
+                text-xs
+                font-black
+                tracking-wide
+                text-[#064D2E]
+                shadow-[4px_4px_0_#FF0080]
+                "
+            >
+                🌴 गोवा 2026
+            </div>
+
+            </div>
+
+
+            {/* ================= MOBILE ================= */}
+
+            <button
+            type="button"
+            className="
+                flex
+                h-11
+                w-11
+                items-center
+                justify-center
+                border-2
+                border-[#FFD900]
+                bg-[#FF0080]
+                text-xl
+                font-bold
+                text-[#FFF7D6]
+                md:hidden
+            "
+            >
+            ☰
+            </button>
+
+        </div>
+
         </nav>
-
     );
-
 }
 
 export default Navbar;

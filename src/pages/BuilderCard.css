@@ -1,0 +1,693 @@
+/* =========================================================
+   FRAME IN GOA
+   BUILDER CARD - RETRO GOA DESIGN
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.builder-goa-page {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #075c36;
+    color: #075c36;
+}
+
+
+/* =========================================================
+   FULL SCREEN GOA BACKGROUND
+   ========================================================= */
+
+.builder-goa-background {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.builder-goa-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+
+/* =========================================================
+   BACKGROUND OVERLAY
+   ========================================================= */
+
+.builder-goa-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient( to bottom, rgba(7, 92, 54, 0.05) 0%, rgba(7, 92, 54, 0.03) 35%, rgba(2, 47, 31, 0.72) 72%, rgba(2, 47, 31, 0.95) 100%);
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.builder-goa-main {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.builder-goa-title {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+
+/* TITLE ROW */
+
+.builder-title-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+
+/* PALMS */
+
+.builder-title-top>span {
+    font-size: 28px;
+}
+
+
+/* MAIN TITLE */
+
+.builder-title-top h1 {
+    margin: 0;
+    color: #075c36;
+    font-family: Georgia, serif;
+    font-size: clamp( 38px, 5vw, 64px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    text-shadow: 2px 2px 0 #ffd900;
+}
+
+
+/* LITTLE BIRDS */
+
+.title-bird {
+    color: #075c36;
+    font-size: 26px;
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+.builder-progress {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 70px;
+    margin-top: 12px;
+}
+
+.builder-progress::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    right: 5px;
+    top: 50%;
+    height: 4px;
+    transform: translateY(-50%);
+    background: #075c36;
+    z-index: -1;
+}
+
+.builder-progress span {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #f7df87;
+    border: 4px solid #075c36;
+}
+
+.builder-progress span.active {
+    background: #ff2385;
+    border-color: #ff2385;
+}
+
+
+/* =========================================================
+   RETRO BUILDER CARD
+   ========================================================= */
+
+.retro-builder-card {
+    position: relative;
+    width: min( 850px, 94vw);
+    min-height: 760px;
+    overflow: hidden;
+    border-radius: 32px;
+    border: 8px solid #075c36;
+    background: #f4df9a;
+    box-shadow: 12px 12px 0 #ff2385, 0 30px 70px rgba( 0, 0, 0, 0.45);
+}
+
+
+/* =========================================================
+   PAPER TEXTURE
+   ========================================================= */
+
+.retro-builder-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.25;
+    background-image: radial-gradient( rgba(7, 92, 54, 0.4) 1px, transparent 1px);
+    background-size: 8px 8px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.retro-card-header {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 45px 50px 10px;
+}
+
+
+/* EYEBROW */
+
+.retro-eyebrow {
+    margin: 0 0 6px;
+    color: #e52578;
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+}
+
+
+/* BUILDER CARD TITLE */
+
+.retro-card-header h2 {
+    margin: 0;
+    color: #075c36;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: clamp( 48px, 6vw, 72px);
+    line-height: 0.95;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   STAMP
+   ========================================================= */
+
+.retro-stamp {
+    width: 105px;
+    height: 105px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: #075c36;
+    background: #f8e6a8;
+    border: 4px dashed #075c36;
+    transform: rotate(4deg);
+}
+
+.retro-stamp strong {
+    color: #e52578;
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   SUNSET
+   ========================================================= */
+
+.retro-sunset {
+    position: relative;
+    height: 205px;
+    margin-top: 5px;
+    overflow: hidden;
+    background: linear-gradient( to bottom, #ffd36b 0%, #ffb34c 40%, #075c36 100%);
+}
+
+
+/* SUN */
+
+.retro-sun {
+    position: absolute;
+    left: 50%;
+    top: 35px;
+    width: 135px;
+    height: 135px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: #ff2385;
+    box-shadow: 0 0 0 8px #075c36, 0 0 0 12px #ffd900;
+}
+
+
+/* SUN HIGHLIGHT */
+
+.retro-sun::after {
+    content: "";
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    width: 65px;
+    height: 35px;
+    transform: translateX(-50%);
+    border-radius: 50% 50% 0 0;
+    background: #ffd900;
+}
+
+
+/* =========================================================
+   HILLS / PALMS
+   ========================================================= */
+
+.retro-hills {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -15px;
+    height: 105px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 0 50px;
+    color: #075c36;
+    font-size: 90px;
+    line-height: 1;
+}
+
+.retro-hills span {
+    font-size: 65px;
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.retro-profile-section {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    margin-top: -75px;
+}
+
+
+/* PHOTO */
+
+.retro-photo-ring {
+    width: 190px;
+    height: 190px;
+    padding: 7px;
+    border-radius: 50%;
+    background: #ff2385;
+    border: 7px solid #075c36;
+    box-shadow: 0 0 0 7px #ffd900;
+    overflow: hidden;
+}
+
+
+/* ACTUAL PHOTO */
+
+.retro-photo-ring img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+
+/* PLACEHOLDER */
+
+.retro-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient( to bottom, #ff2385 0%, #ff2385 65%, #ffd900 66%, #ff8c35 100%);
+}
+
+
+/* =========================================================
+   IDENTITY
+   ========================================================= */
+
+.retro-identity-text {
+    position: relative;
+    z-index: 20;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.retro-name-decoration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: #ff2385;
+}
+
+.retro-name-decoration div {
+    width: 95px;
+    height: 3px;
+    background: #ff2385;
+}
+
+.retro-name-decoration span {
+    font-size: 22px;
+}
+
+.retro-identity-text h3 {
+    margin: 5px 0 8px;
+    color: #fff7d6;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: clamp( 36px, 5vw, 52px);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 3px 3px 0 #075c36;
+}
+
+
+/* ROLE */
+
+.retro-role {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #ffd900;
+}
+
+.retro-role span {
+    font-size: 22px;
+}
+
+.retro-role strong {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.retro-college {
+    margin: 7px 0 0;
+    color: #fff7d6;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   STATS
+   ========================================================= */
+
+.retro-stats {
+    position: relative;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 35px 50px;
+}
+
+.retro-stat {
+    min-height: 135px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 15px;
+    background: #075c36;
+    color: #fff7d6;
+    border: 4px solid #ff2385;
+    border-radius: 20px;
+    box-shadow: 5px 5px 0 #ffd900;
+}
+
+.retro-stat svg {
+    color: #ffd900;
+    margin-bottom: 5px;
+}
+
+.retro-stat:nth-child(2) svg {
+    color: #ff2385;
+}
+
+.retro-stat span {
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.retro-stat strong {
+    margin-top: 5px;
+    color: #ffd900;
+    font-size: 29px;
+    font-weight: 1000;
+}
+
+.retro-stat:nth-child(2) strong {
+    color: #ff2385;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+   ========================================================= */
+
+.retro-card-footer {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 50px 35px;
+    padding-top: 18px;
+    border-top: 3px solid rgba( 7, 92, 54, 0.4);
+    color: #fff7d6;
+    font-size: 16px;
+    font-weight: 800;
+}
+
+.retro-card-footer b {
+    color: #ff2385;
+}
+
+.retro-card-footer strong {
+    color: #ff2385;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.builder-actions {
+    position: relative;
+    z-index: 20;
+    width: min( 850px, 94vw);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 35px;
+}
+
+
+/* ALL BUTTONS */
+
+.builder-action,
+.builder-share,
+.builder-finish {
+    min-height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 20px;
+    border: 4px solid #075c36;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: 19px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+
+/* HOVER */
+
+.builder-action:hover,
+.builder-share:hover,
+.builder-finish:hover {
+    transform: translate( 4px, 4px);
+}
+
+
+/* =========================================================
+   YELLOW BUTTON
+   ========================================================= */
+
+.builder-action.yellow {
+    background: #ffd900;
+    color: #075c36;
+    box-shadow: 7px 7px 0 #ff2385;
+}
+
+
+/* =========================================================
+   PINK BUTTON
+   ========================================================= */
+
+.builder-action.pink {
+    background: #ff2385;
+    color: #fff7d6;
+    box-shadow: 7px 7px 0 #ffd900;
+}
+
+
+/* =========================================================
+   SHARE
+   ========================================================= */
+
+.builder-share {
+    grid-column: 1 / -1;
+    background: #075c36;
+    color: #fff7d6;
+    border-color: #ffd900;
+    box-shadow: 7px 7px 0 #ff2385;
+}
+
+.share-x {
+    font-size: 25px;
+}
+
+
+/* =========================================================
+   FINISH
+   ========================================================= */
+
+.builder-finish {
+    grid-column: 1 / -1;
+    width: 390px;
+    justify-self: center;
+    margin-top: 5px;
+    background: #ffd900;
+    color: #075c36;
+    border-color: #ff2385;
+    box-shadow: 8px 8px 0 #ff2385;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 750px) {
+    .builder-goa-main {
+        padding: 25px 12px 60px;
+    }
+    .builder-title-top h1 {
+        font-size: 38px;
+    }
+    .builder-title-top>span {
+        font-size: 20px;
+    }
+    .builder-progress {
+        gap: 35px;
+    }
+    .retro-card-header {
+        padding: 35px 25px 10px;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+    .retro-card-header h2 {
+        font-size: 45px;
+    }
+    .retro-stats {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+    .retro-card-footer {
+        margin: 0 25px 30px;
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    .builder-actions {
+        grid-template-columns: 1fr;
+    }
+    .builder-action {
+        grid-column: 1 / -1;
+    }
+    .builder-finish {
+        width: 100%;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 450px) {
+    .retro-builder-card {
+        border-width: 5px;
+        box-shadow: 7px 7px 0 #ff2385;
+    }
+    .retro-card-header h2 {
+        font-size: 36px;
+    }
+    .retro-photo-ring {
+        width: 145px;
+        height: 145px;
+    }
+    .retro-identity-text h3 {
+        font-size: 32px;
+    }
+    .retro-role strong {
+        font-size: 18px;
+    }
+    .builder-action,
+    .builder-share,
+    .builder-finish {
+        font-size: 15px;
+    }
+}

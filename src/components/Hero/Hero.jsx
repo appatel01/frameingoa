@@ -1,140 +1,228 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import Button from "../Button/Button";
+import {
+    UploadCloud,
+    ArrowRight,
+} from "lucide-react";
 
 function Hero() {
+
     const navigate = useNavigate();
 
     return (
         <section
             className="
                 relative
-                min-h-[75vh]
+                min-h-[520px]
                 flex
                 items-center
                 justify-center
                 overflow-hidden
-                pt-28
-                pb-16
+                px-5
+                pt-20
+                pb-4
             "
         >
 
-            {/* Background Glow */}
-            <div
-                className="
-                    absolute
-                    top-0
-                    left-0
-                    w-[500px]
-                    h-[500px]
-                    bg-purple-700/20
-                    blur-[160px]
-                    rounded-full
-                "
-            ></div>
-
-            <div
-                className="
-                    absolute
-                    bottom-0
-                    right-0
-                    w-[450px]
-                    h-[450px]
-                    bg-cyan-500/10
-                    blur-[160px]
-                    rounded-full
-                "
-            ></div>
+            {/* =====================================
+                HERO CONTENT
+            ===================================== */}
 
             <motion.div
-                initial={{ opacity: 0, y: 60 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{
+                    opacity: 0,
+                    y: 30,
+                }}
+                animate={{
+                    opacity: 1,
+                    y: 0,
+                }}
                 transition={{
-                    duration: 1,
+                    duration: 0.8,
                     ease: "easeOut",
                 }}
                 className="
                     relative
-                    z-10
+                    z-20
+                    w-full
+                    max-w-5xl
                     text-center
-                    max-w-3xl
-                    px-6
                 "
             >
 
-                {/* Badge */}
+                {/* =====================================
+                    BADGE
+                ===================================== */}
+
                 <div
                     className="
                         inline-flex
                         items-center
                         gap-2
+                        bg-[#FFD900]
+                        border-[3px]
+                        border-[#064D2E]
                         px-5
                         py-2
-                        rounded-full
-                        border
-                        border-purple-500
-                        bg-purple-500/10
-                        text-purple-300
+                        text-[#064D2E]
                         text-xs
-                        font-semibold
-                        tracking-wider
+                        font-black
+                        shadow-[5px_5px_0_#FF0080]
                     "
                 >
-                    🌴 HACKER HOUSE GOA 2026 PRESENTS
+                    🌴 HACKER HOUSE गोवा 2026 PRESENTS
                 </div>
 
-                {/* Heading */}
+
+                {/* =====================================
+                    HEADING
+                ===================================== */}
+
                 <h1
                     className="
                         mt-8
-                        text-4xl
-                        sm:text-5xl
-                        md:text-6xl
-                        font-extrabold
-                        leading-tight
-                        text-white
+                        uppercase
+                        font-black
+                        leading-[0.82]
+                        tracking-tight
                     "
                 >
-                    Create Your Hacker House Goa Identity
+
+                    <span
+                        className="
+                            block
+                            text-[#FFD900]
+                            text-5xl
+                            sm:text-6xl
+                            md:text-7xl
+                        "
+                    >
+                        CREATE YOUR
+                    </span>
+
+
+                    <span
+                        className="
+                            block
+                            text-[#FFF7D6]
+                            text-5xl
+                            sm:text-6xl
+                            md:text-7xl
+                        "
+                    >
+                        HACKER HOUSE
+                    </span>
+
+
+                    <span
+                        className="
+                            block
+                            text-[#FF0080]
+                            text-5xl
+                            sm:text-6xl
+                            md:text-7xl
+                            [text-shadow:5px_5px_0_#FFD900]
+                        "
+                    >
+                        गोवा IDENTITY
+                    </span>
+
                 </h1>
 
-                {/* Description */}
+
+                {/* =====================================
+                    DESCRIPTION
+                ===================================== */}
+
                 <p
                     className="
-                        mt-6
-                        text-gray-400
-                        text-base
-                        sm:text-lg
-                        leading-8
-                        max-w-2xl
                         mx-auto
+                        mt-7
+                        max-w-2xl
+                        text-[#FFF7D6]
+                        text-sm
+                        sm:text-base
+                        font-semibold
+                        leading-7
                     "
                 >
-                    Upload your photo and generate an AI-powered Builder Card
-                    or Profile Frame in seconds. Claim your place in the
-                    tropics.
+                    Upload your photo and generate an AI-powered
+                    Builder Card or Profile Frame in seconds.
+                    Claim your place in the tropics.
                 </p>
 
-                {/* Button */}
-                <div className="mt-10">
-                    <Button onClick={() => navigate("/upload")}>
-                        Upload Photo
-                    </Button>
-                </div>
 
-                {/* Divider */}
+                {/* =====================================
+                    BUTTONS
+                ===================================== */}
+
                 <div
                     className="
-                        w-40
-                        h-[2px]
-                        bg-gradient-to-r
-                        from-transparent
-                        via-cyan-400
-                        to-transparent
-                        mx-auto
-                        mt-10
+                        mt-8
+                        flex
+                        flex-wrap
+                        justify-center
+                        gap-4
                     "
-                ></div>
+                >
+
+                    {/* UPLOAD */}
+
+                    <button
+                        onClick={() => navigate("/upload")}
+                        className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            bg-[#FF0080]
+                            border-[3px]
+                            border-[#064D2E]
+                            px-7
+                            py-4
+                            text-[#FFF7D6]
+                            text-sm
+                            font-black
+                            shadow-[6px_6px_0_#FFD900]
+                            transition-all
+                            hover:translate-x-[3px]
+                            hover:translate-y-[3px]
+                            hover:shadow-[3px_3px_0_#FFD900]
+                        "
+                    >
+                        <UploadCloud size={19} />
+
+                        UPLOAD PHOTO
+                    </button>
+
+
+                    {/* FEATURES */}
+
+                    <a
+                        href="#features"
+                        className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            bg-[#075C36]/80
+                            border-2
+                            border-[#FFD900]
+                            px-7
+                            py-4
+                            text-[#FFD900]
+                            text-sm
+                            font-black
+                            transition
+                            hover:bg-[#FFD900]
+                            hover:text-[#064D2E]
+                        "
+                    >
+                        VIEW FEATURES
+
+                        <ArrowRight size={18} />
+
+                    </a>
+
+                </div>
 
             </motion.div>
 
