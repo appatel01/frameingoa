@@ -54,28 +54,28 @@ function Details() {
 
     const handleGenerate = () => {
 
-        if (!formData.fullName.trim()) {
-            alert("Please enter your full name.");
-            return;
-        }
+    if (!formData.fullName.trim()) {
+        alert("Please enter your full name.");
+        return;
+    }
 
-        if (!formData.role.trim()) {
-            alert("Please enter your role / stack.");
-            return;
-        }
+    if (!formData.role.trim()) {
+        alert("Please enter your role / stack.");
+        return;
+    }
 
-        if (!formData.college.trim()) {
-            alert("Please enter your college or organization.");
-            return;
-        }
+    if (!formData.college.trim()) {
+        alert("Please enter your college or organization.");
+        return;
+    }
 
-        navigate("/processing", {
-            state: {
-                formData,
-                photo,
-            },
-        });
-    };
+    navigate("/processing", {
+        state: {
+            formData,
+            photo,
+        },
+    });
+};
 
 
     return (

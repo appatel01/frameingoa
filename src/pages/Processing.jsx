@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import {
+    useNavigate,
+    useLocation,
+} from "react-router-dom";
+
 import { motion } from "framer-motion";
 
 import {
@@ -15,11 +18,18 @@ import ProgressBar from "../components/ProgressBar/ProgressBar";
 
 
 function Processing() {
+
+    const navigate = useNavigate();
     const location = useLocation();
+
+
+    // =========================================
+    // GET DATA FROM DETAILS PAGE
+    // =========================================
 
     const formData = location.state?.formData || {};
     const photo = location.state?.photo || null;
-    const navigate = useNavigate();
+
 
     const [progress, setProgress] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
@@ -55,35 +65,51 @@ function Processing() {
 
 
     // =========================================
-    // UPDATE CURRENT STEP
+    // UPDATE GENERATION STEP
     // =========================================
 
     useEffect(() => {
 
-        if (progress >= 35 && progress < 65) {
+        if (progress < 35) {
+
+            setCurrentStep(0);
+
+        } else if (progress < 65) {
+
             setCurrentStep(1);
-        }
 
-        if (progress >= 65 && progress < 100) {
+        } else if (progress < 100) {
+
             setCurrentStep(2);
-        }
 
-        if (progress >= 100) {
+        } else {
 
             setCurrentStep(3);
+
+
+            // =================================
+            // GO TO BUILDER CARD
+            // =================================
 
             const timer = setTimeout(() => {
 
                 navigate("/builder-card", {
-                  state: {
-                      formData,
-                      photo,
-                  },
-              });
+
+                    state: {
+
+                        formData: formData,
+
+                        photo: photo,
+
+                    },
+
+                });
 
             }, 1000);
 
+
             return () => clearTimeout(timer);
+
         }
 
     }, [progress, navigate]);
@@ -120,29 +146,43 @@ function Processing() {
     const getStatusMessage = () => {
 
         if (progress < 20) {
+
             return "Scanning your profile...";
+
         }
 
         if (progress < 40) {
+
             return "Finding your Goa vibe...";
+
         }
 
         if (progress < 65) {
+
             return "Building your builder identity...";
+
         }
 
         if (progress < 85) {
+
             return "Adding beach vibes & neon energy...";
+
         }
 
         if (progress < 100) {
+
             return "Crafting your Builder Card...";
+
         }
 
         return "Your Goa identity is ready!";
 
     };
 
+
+    // =========================================
+    // UI
+    // =========================================
 
     return (
 
@@ -275,7 +315,6 @@ function Processing() {
 
                     </h1>
 
-
                     <p>
                         Turning your profile into a beach-ready builder identity.
                     </p>
@@ -290,7 +329,7 @@ function Processing() {
                 <div className="processing-machine">
 
 
-                    {/* OUTER ROTATING RING */}
+                    {/* OUTER RING */}
 
                     <motion.div
                         animate={{
@@ -305,7 +344,7 @@ function Processing() {
                     />
 
 
-                    {/* INNER ROTATING RING */}
+                    {/* INNER RING */}
 
                     <motion.div
                         animate={{
@@ -335,7 +374,7 @@ function Processing() {
                     />
 
 
-                    {/* MAIN CIRCLE */}
+                    {/* CORE */}
 
                     <div className="processing-core">
 
@@ -358,7 +397,7 @@ function Processing() {
                         </motion.div>
 
 
-                        {/* CENTER SPARK */}
+                        {/* SPARK */}
 
                         <motion.div
                             animate={{
@@ -397,7 +436,6 @@ function Processing() {
                         <i />
 
                     </motion.span>
-
 
                 </div>
 
@@ -480,7 +518,6 @@ function Processing() {
 
                 <div className="processing-steps">
 
-
                     {steps.map((item, index) => {
 
                         const active =
@@ -505,26 +542,23 @@ function Processing() {
 
                                 <div className="processing-step-left">
 
-
                                     <div className="processing-step-icon">
 
                                         {item.icon}
 
                                     </div>
 
-
                                     <span>
-
                                         {item.title}
-
                                     </span>
-
 
                                 </div>
 
 
                                 <div className="processing-step-status">
 
+
+                                    {/* CURRENT STEP */}
 
                                     {index === currentStep &&
                                     progress < 100 ? (
@@ -556,16 +590,13 @@ function Processing() {
 
                                     )}
 
-
                                 </div>
-
 
                             </motion.div>
 
                         );
 
                     })}
-
 
                 </div>
 
@@ -607,7 +638,6 @@ function Processing() {
         </div>
 
     );
+
 }
-
-
 export default Processing;

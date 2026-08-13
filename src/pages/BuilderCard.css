@@ -1,7 +1,11 @@
 /* =========================================================
    FRAME IN GOA
-   BUILDER CARD - RETRO GOA DESIGN
+   BUILDER CARD — RETRO GOA EDITION
    ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
 
 
 /* =========================================================
@@ -10,16 +14,16 @@
 
 .builder-goa-page {
     position: relative;
-    width: 100%;
     min-height: 100vh;
+    width: 100%;
     overflow-x: hidden;
-    background: #075c36;
-    color: #075c36;
+    background: linear-gradient( to bottom, rgba(255, 187, 72, 0.05), rgba(3, 55, 38, 0.96)), #063d2b;
+    color: #f8e7b0;
 }
 
 
 /* =========================================================
-   FULL SCREEN GOA BACKGROUND
+   FULL GOA BACKGROUND
    ========================================================= */
 
 .builder-goa-background {
@@ -28,27 +32,26 @@
     width: 100%;
     height: 100%;
     z-index: 0;
+    overflow: hidden;
 }
 
 .builder-goa-background img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center;
+    object-position: center center;
     display: block;
 }
 
 
-/* =========================================================
-   BACKGROUND OVERLAY
-   ========================================================= */
+/* Dark lower fade */
 
 .builder-goa-overlay {
     position: fixed;
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    background: linear-gradient( to bottom, rgba(7, 92, 54, 0.05) 0%, rgba(7, 92, 54, 0.03) 35%, rgba(2, 47, 31, 0.72) 72%, rgba(2, 47, 31, 0.95) 100%);
+    background: linear-gradient( to bottom, rgba(255, 170, 45, 0.02) 0%, rgba(255, 170, 45, 0.02) 35%, rgba(3, 45, 31, 0.45) 58%, rgba(2, 38, 27, 0.96) 78%, #02301f 100%);
 }
 
 
@@ -61,10 +64,33 @@
     z-index: 10;
     width: 100%;
     min-height: 100vh;
-    padding: 40px 20px 80px;
+    padding: 35px 20px 90px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+
+/* =========================================================
+   DECORATIVE PALMS
+   ========================================================= */
+
+.builder-palm {
+    position: fixed;
+    z-index: 5;
+    font-size: 80px;
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+.builder-palm-left {
+    left: 20px;
+    bottom: 25px;
+}
+
+.builder-palm-right {
+    right: 20px;
+    bottom: 25px;
 }
 
 
@@ -73,46 +99,62 @@
    ========================================================= */
 
 .builder-goa-title {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 35px;
+    color: #064d35;
 }
 
 
-/* TITLE ROW */
+/* STEP */
 
-.builder-title-top {
+.builder-goa-title>p {
+    margin: 0 0 7px;
+    color: #ed2780;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+
+/* YOUR IDENTITY */
+
+.builder-goa-title h1 {
+    margin: 0;
+    color: #07583c;
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+    font-size: clamp(42px, 5vw, 68px);
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-shadow: 3px 3px 0 #f5d53b;
+}
+
+
+/* =========================================================
+   TITLE DECORATION
+   ========================================================= */
+
+.builder-title-decoration {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
+    margin-bottom: 8px;
 }
 
-
-/* PALMS */
-
-.builder-title-top>span {
-    font-size: 28px;
+.builder-title-decoration span {
+    color: #07583c;
+    font-size: 24px;
 }
 
-
-/* MAIN TITLE */
-
-.builder-title-top h1 {
-    margin: 0;
-    color: #075c36;
-    font-family: Georgia, serif;
-    font-size: clamp( 38px, 5vw, 64px);
-    font-weight: 900;
-    letter-spacing: -2px;
-    text-shadow: 2px 2px 0 #ffd900;
-}
-
-
-/* LITTLE BIRDS */
-
-.title-bird {
-    color: #075c36;
-    font-size: 26px;
+.builder-title-line {
+    width: 70px;
+    height: 3px;
+    background: #07583c;
+    display: block;
 }
 
 
@@ -122,57 +164,67 @@
 
 .builder-progress {
     position: relative;
+    width: 320px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 70px;
-    margin-top: 12px;
+    justify-content: space-between;
+    margin: 16px auto 0;
 }
+
+
+/* LINE */
 
 .builder-progress::before {
     content: "";
     position: absolute;
-    left: 5px;
-    right: 5px;
+    left: 8px;
+    right: 8px;
     top: 50%;
     height: 4px;
     transform: translateY(-50%);
-    background: #075c36;
+    background: #07583c;
     z-index: -1;
 }
 
+
+/* DOTS */
+
 .builder-progress span {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: #f7df87;
-    border: 4px solid #075c36;
+    background: #f8d77b;
+    border: 4px solid #07583c;
 }
 
+
+/* ACTIVE */
+
 .builder-progress span.active {
-    background: #ff2385;
-    border-color: #ff2385;
+    background: #ed2780;
+    border-color: #ed2780;
+    box-shadow: 0 0 0 4px rgba(237, 39, 128, 0.15);
 }
 
 
 /* =========================================================
-   RETRO BUILDER CARD
+   MAIN BUILDER CARD
    ========================================================= */
 
 .retro-builder-card {
     position: relative;
-    width: min( 850px, 94vw);
-    min-height: 760px;
+    width: min(820px, 92vw);
+    min-height: 900px;
     overflow: hidden;
-    border-radius: 32px;
-    border: 8px solid #075c36;
-    background: #f4df9a;
-    box-shadow: 12px 12px 0 #ff2385, 0 30px 70px rgba( 0, 0, 0, 0.45);
+    border-radius: 38px;
+    border: 7px solid #075c36;
+    background: linear-gradient( to bottom, rgba(244, 223, 163, 0.96) 0%, rgba(244, 223, 163, 0.96) 52%, #075c36 52%, #075c36 100%);
+    box-shadow: 12px 12px 0 #ff2385, 0 30px 70px rgba(0, 0, 0, 0.55);
 }
 
 
 /* =========================================================
-   PAPER TEXTURE
+    PAPER TEXTURE
    ========================================================= */
 
 .retro-builder-card::before {
@@ -180,53 +232,74 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.25;
-    background-image: radial-gradient( rgba(7, 92, 54, 0.4) 1px, transparent 1px);
+    opacity: 0.22;
+    background-image: radial-gradient( rgba(7, 88, 60, 0.5) 1px, transparent 1px);
     background-size: 8px 8px;
+    z-index: 2;
 }
 
 
 /* =========================================================
-   HEADER
+    SUNSET DECORATIVE AREA
+   ========================================================= */
+
+.retro-builder-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52%;
+    background: linear-gradient( to bottom, rgba(255, 183, 70, 0.10), rgba(255, 183, 70, 0.05)), url("/goa-sunset.png");
+    background-size: cover;
+    background-position: center center;
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+/* =========================================================
+    HEADER
    ========================================================= */
 
 .retro-card-header {
     position: relative;
-    z-index: 5;
+    z-index: 10;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    padding: 45px 50px 10px;
+    padding: 48px 50px 0;
+    min-height: 170px;
 }
 
 
 /* EYEBROW */
 
 .retro-eyebrow {
-    margin: 0 0 6px;
-    color: #e52578;
-    font-family: Arial, sans-serif;
+    margin: 0 0 8px;
+    color: #df2676;
     font-size: 17px;
     font-weight: 900;
-    letter-spacing: 0.08em;
+    letter-spacing: 2px;
 }
 
 
-/* BUILDER CARD TITLE */
+/* BUILDER CARD */
 
 .retro-card-header h2 {
     margin: 0;
     color: #075c36;
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    font-size: clamp( 48px, 6vw, 72px);
+    font-size: clamp(48px, 6vw, 76px);
     line-height: 0.95;
     letter-spacing: 1px;
     text-transform: uppercase;
+    text-shadow: 2px 2px 0 rgba(255, 217, 0, 0.5);
 }
 
 
 /* =========================================================
-   STAMP
+    STAMP
    ========================================================= */
 
 .retro-stamp {
@@ -236,120 +309,59 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3px;
-    color: #075c36;
-    background: #f8e6a8;
-    border: 4px dashed #075c36;
+    gap: 4px;
+    background: #f4dfa3;
+    color: #07583c;
+    border: 4px dashed #07583c;
     transform: rotate(4deg);
 }
 
+.retro-stamp svg {
+    color: #07583c;
+}
+
 .retro-stamp strong {
-    color: #e52578;
+    color: #df2676;
     font-size: 11px;
+    letter-spacing: 1px;
 }
 
 
 /* =========================================================
-   SUNSET
-   ========================================================= */
-
-.retro-sunset {
-    position: relative;
-    height: 205px;
-    margin-top: 5px;
-    overflow: hidden;
-    background: linear-gradient( to bottom, #ffd36b 0%, #ffb34c 40%, #075c36 100%);
-}
-
-
-/* SUN */
-
-.retro-sun {
-    position: absolute;
-    left: 50%;
-    top: 35px;
-    width: 135px;
-    height: 135px;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    background: #ff2385;
-    box-shadow: 0 0 0 8px #075c36, 0 0 0 12px #ffd900;
-}
-
-
-/* SUN HIGHLIGHT */
-
-.retro-sun::after {
-    content: "";
-    position: absolute;
-    bottom: 12px;
-    left: 50%;
-    width: 65px;
-    height: 35px;
-    transform: translateX(-50%);
-    border-radius: 50% 50% 0 0;
-    background: #ffd900;
-}
-
-
-/* =========================================================
-   HILLS / PALMS
-   ========================================================= */
-
-.retro-hills {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -15px;
-    height: 105px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding: 0 50px;
-    color: #075c36;
-    font-size: 90px;
-    line-height: 1;
-}
-
-.retro-hills span {
-    font-size: 65px;
-}
-
-
-/* =========================================================
-   PROFILE
+    PROFILE PHOTO
    ========================================================= */
 
 .retro-profile-section {
     position: relative;
-    z-index: 20;
+    z-index: 15;
     display: flex;
     justify-content: center;
-    margin-top: -75px;
+    margin-top: 70px;
+}
+
+
+/* PHOTO RING */
+
+.retro-photo-ring {
+    width: 190px;
+    height: 190px;
+    padding: 6px;
+    border-radius: 50%;
+    background: #ff2385;
+    border: 6px solid #075c36;
+    box-shadow: 0 0 0 6px #ffd900, 0 8px 25px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    position: relative;
 }
 
 
 /* PHOTO */
 
-.retro-photo-ring {
-    width: 190px;
-    height: 190px;
-    padding: 7px;
-    border-radius: 50%;
-    background: #ff2385;
-    border: 7px solid #075c36;
-    box-shadow: 0 0 0 7px #ffd900;
-    overflow: hidden;
-}
-
-
-/* ACTUAL PHOTO */
-
 .retro-photo-ring img {
     width: 100%;
     height: 100%;
-    display: block;
     object-fit: cover;
+    display: block;
     border-radius: 50%;
 }
 
@@ -363,58 +375,68 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: linear-gradient( to bottom, #ff2385 0%, #ff2385 65%, #ffd900 66%, #ff8c35 100%);
+    background: linear-gradient( to bottom, #ed2780 0%, #ed2780 58%, #f4d52d 59%, #ff9c31 100%);
+    color: #07583c;
 }
 
 
 /* =========================================================
-   IDENTITY
+    IDENTITY TEXT
    ========================================================= */
 
 .retro-identity-text {
     position: relative;
     z-index: 20;
     text-align: center;
-    margin-top: 30px;
+    margin-top: 25px;
+    padding: 0 30px;
 }
+
+
+/* DECORATION */
 
 .retro-name-decoration {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 14px;
-    color: #ff2385;
+    gap: 12px;
 }
 
 .retro-name-decoration div {
-    width: 95px;
+    width: 55px;
     height: 3px;
-    background: #ff2385;
+    background: #ed2780;
 }
 
 .retro-name-decoration span {
+    color: #ed2780;
     font-size: 22px;
 }
+
+
+/* NAME */
 
 .retro-identity-text h3 {
     margin: 5px 0 8px;
     color: #fff7d6;
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    font-size: clamp( 36px, 5vw, 52px);
-    text-transform: uppercase;
+    font-size: clamp(36px, 5vw, 58px);
     letter-spacing: 1px;
+    text-transform: uppercase;
     text-shadow: 3px 3px 0 #075c36;
 }
 
 
-/* ROLE */
+/* =========================================================
+    ROLE
+   ========================================================= */
 
 .retro-role {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
-    color: #ffd900;
+    color: #ffd21c;
 }
 
 .retro-role span {
@@ -422,20 +444,20 @@
 }
 
 .retro-role strong {
-    font-size: 24px;
+    font-size: 23px;
     font-weight: 900;
 }
 
 .retro-college {
     margin: 7px 0 0;
-    color: #fff7d6;
-    font-size: 18px;
+    color: #fff1c9;
+    font-size: 17px;
     font-weight: 700;
 }
 
 
 /* =========================================================
-   STATS
+    STATISTICS
    ========================================================= */
 
 .retro-stats {
@@ -443,158 +465,164 @@
     z-index: 20;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding: 35px 50px;
+    gap: 18px;
+    padding: 40px 50px 30px;
 }
 
+
+/* STAT */
+
 .retro-stat {
-    min-height: 135px;
+    min-height: 145px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 15px;
-    background: #075c36;
+    padding: 18px;
+    background: rgba(7, 92, 54, 0.96);
     color: #fff7d6;
-    border: 4px solid #ff2385;
-    border-radius: 20px;
+    border: 3px solid #ff2385;
+    border-radius: 18px;
     box-shadow: 5px 5px 0 #ffd900;
 }
 
+
+/* ICON */
+
 .retro-stat svg {
-    color: #ffd900;
-    margin-bottom: 5px;
+    color: #ffd21c;
+    margin-bottom: 6px;
 }
 
 .retro-stat:nth-child(2) svg {
-    color: #ff2385;
+    color: #ed2780;
 }
 
-.retro-stat span {
-    font-size: 13px;
-    font-weight: 900;
+.retro-stat:nth-child(3) svg {
+    color: #ffd21c;
 }
+
+
+/* LABEL */
+
+.retro-stat span {
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+
+/* VALUE */
 
 .retro-stat strong {
     margin-top: 5px;
-    color: #ffd900;
-    font-size: 29px;
+    color: #ffd21c;
+    font-size: 28px;
     font-weight: 1000;
 }
 
 .retro-stat:nth-child(2) strong {
-    color: #ff2385;
+    color: #ed2780;
 }
 
 
 /* =========================================================
-   CARD FOOTER
+    FOOTER
    ========================================================= */
 
 .retro-card-footer {
     position: relative;
-    z-index: 20;
+    z-index: 6;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 50px 35px;
+    margin: 0 45px 35px;
     padding-top: 18px;
-    border-top: 3px solid rgba( 7, 92, 54, 0.4);
-    color: #fff7d6;
-    font-size: 16px;
-    font-weight: 800;
+    border-top: 2px solid rgba(244, 223, 163, 0.35);
+    color: #fff1c9;
+    font-size: 15px;
+    font-weight: 700;
 }
 
 .retro-card-footer b {
-    color: #ff2385;
+    color: #ed2780;
 }
 
 .retro-card-footer strong {
-    color: #ff2385;
+    color: #ed2780;
 }
 
 
 /* =========================================================
-   BUTTONS
+    ACTION BUTTONS
    ========================================================= */
 
 .builder-actions {
     position: relative;
     z-index: 20;
-    width: min( 850px, 94vw);
+    width: min(820px, 92vw);
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 35px;
+    gap: 18px;
+    margin-top: 45px;
 }
 
 
-/* ALL BUTTONS */
+/* COMMON */
 
 .builder-action,
 .builder-share,
 .builder-finish {
-    min-height: 65px;
+    min-height: 70px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 14px 20px;
-    border: 4px solid #075c36;
+    padding: 16px 25px;
+    border-radius: 8px;
     font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-    font-size: 19px;
+    font-size: 20px;
     letter-spacing: 1px;
     cursor: pointer;
-    transition: 0.2s ease;
-}
-
-
-/* HOVER */
-
-.builder-action:hover,
-.builder-share:hover,
-.builder-finish:hover {
-    transform: translate( 4px, 4px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 
 /* =========================================================
-   YELLOW BUTTON
+    YELLOW
    ========================================================= */
 
 .builder-action.yellow {
-    background: #ffd900;
-    color: #075c36;
-    box-shadow: 7px 7px 0 #ff2385;
+    background: #ffd21c;
+    color: #07583c;
+    border: 4px solid #07583c;
+    box-shadow: 7px 7px 0 #ed2780;
 }
 
 
 /* =========================================================
-   PINK BUTTON
+    PINK
    ========================================================= */
 
 .builder-action.pink {
-    background: #ff2385;
-    color: #fff7d6;
-    box-shadow: 7px 7px 0 #ffd900;
+    background: #ed2780;
+    color: #fff1c9;
+    border: 4px solid #07583c;
+    box-shadow: 7px 7px 0 #ffd21c;
 }
 
 
 /* =========================================================
-   SHARE
+    SHARE
    ========================================================= */
 
 .builder-share {
     grid-column: 1 / -1;
-    background: #075c36;
-    color: #fff7d6;
-    border-color: #ffd900;
-    box-shadow: 7px 7px 0 #ff2385;
-}
-
-.share-x {
-    font-size: 25px;
+    background: #07583c;
+    color: #fff1c9;
+    border: 3px solid #ffd21c;
+    box-shadow: 7px 7px 0 #ed2780;
 }
 
 
@@ -604,49 +632,79 @@
 
 .builder-finish {
     grid-column: 1 / -1;
-    width: 390px;
+    width: 420px;
+    min-height: 75px;
     justify-self: center;
-    margin-top: 5px;
+    margin-top: 8px;
     background: #ffd900;
     color: #075c36;
-    border-color: #ff2385;
+    border: 5px solid #ff2385;
     box-shadow: 8px 8px 0 #ff2385;
+    font-size: 22px;
 }
 
 
 /* =========================================================
-   RESPONSIVE
+    HOVER
+   ========================================================= */
+
+.builder-action:hover,
+.builder-share:hover,
+.builder-finish:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 10px 10px 0 #ed2780;
+}
+
+
+/* =========================================================
+    RESPONSIVE
    ========================================================= */
 
 @media (max-width: 750px) {
     .builder-goa-main {
-        padding: 25px 12px 60px;
+        padding: 25px 12px 70px;
     }
-    .builder-title-top h1 {
-        font-size: 38px;
+    .builder-goa-title h1 {
+        font-size: 40px;
     }
-    .builder-title-top>span {
-        font-size: 20px;
+    .builder-title-line {
+        width: 40px;
     }
     .builder-progress {
-        gap: 35px;
+        width: 260px;
+    }
+    .retro-builder-card {
+        width: 96vw;
+        min-height: auto;
+        border-width: 5px;
     }
     .retro-card-header {
-        padding: 35px 25px 10px;
+        padding: 30px 25px 0;
         flex-direction: column;
         align-items: center;
         text-align: center;
         gap: 20px;
     }
     .retro-card-header h2 {
-        font-size: 45px;
+        font-size: 44px;
+    }
+    .retro-stamp {
+        width: 85px;
+        height: 85px;
+    }
+    .retro-profile-section {
+        margin-top: 80px;
+    }
+    .retro-photo-ring {
+        width: 145px;
+        height: 145px;
     }
     .retro-stats {
         grid-template-columns: 1fr;
         padding: 25px;
     }
     .retro-card-footer {
-        margin: 0 25px 30px;
+        margin: 0 25px 25px;
         flex-direction: column;
         gap: 10px;
         text-align: center;
@@ -654,11 +712,16 @@
     .builder-actions {
         grid-template-columns: 1fr;
     }
-    .builder-action {
+    .builder-action,
+    .builder-share,
+    .builder-finish {
         grid-column: 1 / -1;
     }
     .builder-finish {
         width: 100%;
+    }
+    .builder-palm {
+        display: none;
     }
 }
 
@@ -668,26 +731,22 @@
    ========================================================= */
 
 @media (max-width: 450px) {
-    .retro-builder-card {
-        border-width: 5px;
-        box-shadow: 7px 7px 0 #ff2385;
-    }
     .retro-card-header h2 {
         font-size: 36px;
     }
     .retro-photo-ring {
-        width: 145px;
-        height: 145px;
+        width: 125px;
+        height: 125px;
     }
     .retro-identity-text h3 {
-        font-size: 32px;
+        font-size: 30px;
     }
     .retro-role strong {
-        font-size: 18px;
+        font-size: 17px;
     }
     .builder-action,
     .builder-share,
     .builder-finish {
-        font-size: 15px;
+        font-size: 14px;
     }
 }

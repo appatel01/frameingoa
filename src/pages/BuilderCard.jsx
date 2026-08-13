@@ -1,41 +1,61 @@
-import { useEffect, useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {
+    useEffect,
+    useMemo,
+    useRef,
+} from "react";
+
+import {
+    useLocation,
+    useNavigate,
+} from "react-router-dom";
+
 import { motion } from "framer-motion";
 
-import "./BuilderCard.css";
+import html2canvas from "html2canvas";
 
 import {
     Download,
     Sparkles,
     Share2,
     ArrowRight,
-    Zap,
-    PawPrint,
-    Trophy,
-    Palmtree,
 } from "lucide-react";
+
+import BuilderCard from "../components/BuilderCard/BuilderCard";
+
+import "./BuilderCard.css";
 
 
 function BuilderCardPage() {
 
     const navigate = useNavigate();
+
     const location = useLocation();
+
+    const cardRef = useRef(null);
+
 
     // =========================================
     // GET DATA
     // =========================================
 
-    const formData = location.state?.formData || {};
-    const photo = location.state?.photo || null;
+    const formData =
+        location.state?.formData || {};
+
+    const photo =
+        location.state?.photo || null;
+
 
     const fullName =
-        formData.fullName?.trim() || "YOUR NAME";
+        formData.fullName?.trim() ||
+        "YOUR NAME";
 
     const role =
-        formData.role?.trim() || "Your Role / Stack";
+        formData.role?.trim() ||
+        "Your Role / Stack";
 
     const college =
-        formData.college?.trim() || "Your College";
+        formData.college?.trim() ||
+        "Your College";
 
 
     // =========================================
@@ -48,6 +68,21 @@ function BuilderCardPage() {
             return null;
         }
 
+        /*
+         * If photo is already a URL,
+         * use it directly.
+         */
+
+        if (typeof photo === "string") {
+            return photo;
+        }
+
+
+        /*
+         * If photo is a File object,
+         * create a temporary URL.
+         */
+
         return URL.createObjectURL(photo);
 
     }, [photo]);
@@ -59,24 +94,176 @@ function BuilderCardPage() {
 
     useEffect(() => {
 
-        return () => {
+        if (
+            photo &&
+            typeof photo !== "string" &&
+            photoUrl
+        ) {
 
-            if (photoUrl) {
+            return () => {
                 URL.revokeObjectURL(photoUrl);
-            }
+            };
 
-        };
+        }
 
-    }, [photoUrl]);
+    }, [photo, photoUrl]);
 
 
     // =========================================
     // DOWNLOAD BUILDER CARD
     // =========================================
 
-    const handleDownloadCard = () => {
+    const handleDownloadCard = async () => {
 
-        alert("Builder Card download will be connected next.");
+        const card = cardRef.current;
+
+
+        if (!card) {
+
+            console.error(
+                "Builder card not found."
+            );
+
+            alert(
+                "Builder Card could not be found."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            /*
+             * Wait for fonts.
+             */
+
+            if (document.fonts?.ready) {
+                await document.fonts.ready;
+            }
+
+
+            /*
+             * Wait for images.
+             */
+
+            const images =
+                card.querySelectorAll("img");
+
+
+            await Promise.all(
+
+                Array.from(images).map((img) => {
+
+                    if (img.complete) {
+                        return Promise.resolve();
+                    }
+
+
+                    return new Promise((resolve) => {
+
+                        img.onload = resolve;
+
+                        img.onerror = resolve;
+
+                    });
+
+                })
+
+            );
+
+
+            /*
+             * Give browser a moment to
+             * finish painting the card.
+             */
+
+            await new Promise((resolve) => {
+
+                setTimeout(
+                    resolve,
+                    200
+                );
+
+            });
+
+
+            /*
+             * Capture Builder Card.
+             */
+
+            const canvas =
+                await html2canvas(
+                    card,
+                    {
+                        scale: 3,
+
+                        useCORS: true,
+
+                        allowTaint: false,
+
+                        backgroundColor: null,
+
+                        logging: false,
+
+                        imageTimeout: 15000,
+
+                        removeContainer: true,
+
+                        scrollX: 0,
+
+                        scrollY:
+                            -window.scrollY,
+                    }
+                );
+
+
+            /*
+             * Convert to PNG.
+             */
+
+            const image =
+                canvas.toDataURL(
+                    "image/png",
+                    1.0
+                );
+
+
+            /*
+             * Create download link.
+             */
+
+            const link =
+                document.createElement("a");
+
+
+            link.download =
+                "FrameInGoa-Builder-Card.png";
+
+
+            link.href = image;
+
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+
+
+        } catch (error) {
+
+            console.error(
+                "Builder Card download failed:",
+                error
+            );
+
+
+            alert(
+                "Download failed. Please try again."
+            );
+
+        }
 
     };
 
@@ -87,7 +274,9 @@ function BuilderCardPage() {
 
     const handleDownloadPFP = () => {
 
-        alert("PFP Frame download will be connected next.");
+        alert(
+            "PFP Frame download will be connected next."
+        );
 
     };
 
@@ -101,8 +290,12 @@ function BuilderCardPage() {
         const text =
             "I just created my Goa Builder Identity 🌴🔥 #FrameInGoa";
 
+
         const url =
-            `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+            `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                text
+            )}`;
+
 
         window.open(
             url,
@@ -128,6 +321,7 @@ function BuilderCardPage() {
 
         <div className="builder-goa-page">
 
+
             {/* =====================================
                 FULL GOA BACKGROUND
             ===================================== */}
@@ -142,7 +336,10 @@ function BuilderCardPage() {
             </div>
 
 
-            {/* DARK OVERLAY */}
+            {/* =====================================
+                DARK OVERLAY
+            ===================================== */}
+
             <div className="builder-goa-overlay" />
 
 
@@ -162,39 +359,49 @@ function BuilderCardPage() {
 
                     initial={{
                         opacity: 0,
-                        y: -30
+                        y: -30,
                     }}
 
                     animate={{
                         opacity: 1,
-                        y: 0
+                        y: 0,
                     }}
 
                     transition={{
-                        duration: 0.7
+                        duration: 0.7,
                     }}
                 >
 
                     <div className="builder-title-top">
 
-                        <span>🌴</span>
+                        <span>
+                            🌴
+                        </span>
+
 
                         <span className="title-bird">
                             ✦
                         </span>
+
 
                         <h1>
                             Your Identity
                         </h1>
 
+
                         <span className="title-bird">
                             ✦
                         </span>
 
-                        <span>🌴</span>
+
+                        <span>
+                            🌴
+                        </span>
 
                     </div>
 
+
+                    {/* PROGRESS */}
 
                     <div className="builder-progress">
 
@@ -212,242 +419,39 @@ function BuilderCardPage() {
 
 
                 {/* =================================
-                    MAIN RETRO CARD
+                    BUILDER CARD
                 ================================= */}
 
-                <motion.section
-                    className="retro-builder-card"
+                <motion.div
 
                     initial={{
                         opacity: 0,
                         scale: 0.9,
-                        y: 40
+                        y: 40,
                     }}
 
                     animate={{
                         opacity: 1,
                         scale: 1,
-                        y: 0
+                        y: 0,
                     }}
 
                     transition={{
-                        duration: 0.8
+                        duration: 0.8,
                     }}
+
+                    className="w-full flex justify-center"
                 >
 
-
-                    {/* =================================
-                        CARD TOP
-                    ================================= */}
-
-                    <div className="retro-card-header">
-
-                        <div>
-
-                            <p className="retro-eyebrow">
-                                HACKER HOUSE GOA
-                            </p>
-
-                            <h2>
-                                BUILDER CARD
-                            </h2>
-
-                        </div>
-
-
-                        {/* STAMP */}
-
-                        <div className="retro-stamp">
-
-                            <Palmtree size={32} />
-
-                            <strong>
-                                #FrameInGoa
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    {/* =================================
-                        SUNSET DECORATION
-                    ================================= */}
-
-                    <div className="retro-sunset">
-
-                        <div className="retro-sun" />
-
-                        <div className="retro-hills">
-
-                            🌴
-                            <span>🌴</span>
-                            🌴
-
-                        </div>
-
-                    </div>
-
-
-                    {/* =================================
-                        PROFILE PHOTO
-                    ================================= */}
-
-                    <div className="retro-profile-section">
-
-                        <div className="retro-photo-ring">
-
-                            {photoUrl ? (
-
-                                <img
-                                    src={photoUrl}
-                                    alt={fullName}
-                                />
-
-                            ) : (
-
-                                <div className="retro-photo-placeholder">
-
-                                    <div className="placeholder-sunset">
-
-                                        <span />
-                                        <span />
-
-                                    </div>
-
-                                </div>
-
-                            )}
-
-                        </div>
-
-                    </div>
-
-
-                    {/* =================================
-                        IDENTITY
-                    ================================= */}
-
-                    <div className="retro-identity-text">
-
-                        <div className="retro-name-decoration">
-
-                            <span>✦</span>
-
-                            <div />
-
-                            <span>✦</span>
-
-                        </div>
-
-
-                        <h3>
-                            {fullName}
-                        </h3>
-
-
-                        <div className="retro-role">
-
-                            <span>〰</span>
-
-                            <strong>
-                                {role}
-                            </strong>
-
-                            <span>〰</span>
-
-                        </div>
-
-
-                        <p className="retro-college">
-                            {college}
-                        </p>
-
-                    </div>
-
-
-                    {/* =================================
-                        STAT CARDS
-                    ================================= */}
-
-                    <div className="retro-stats">
-
-
-                        {/* SCORE */}
-
-                        <div className="retro-stat">
-
-                            <Zap size={34} />
-
-                            <span>
-                                BUILDER SCORE
-                            </span>
-
-                            <strong>
-                                93
-                            </strong>
-
-                        </div>
-
-
-                        {/* SPIRIT */}
-
-                        <div className="retro-stat">
-
-                            <PawPrint size={34} />
-
-                            <span>
-                                SPIRIT ANIMAL
-                            </span>
-
-                            <strong>
-                                Fox
-                            </strong>
-
-                        </div>
-
-
-                        {/* TITLE */}
-
-                        <div className="retro-stat">
-
-                            <Trophy size={34} />
-
-                            <span>
-                                BUILDER TITLE
-                            </span>
-
-                            <strong>
-                                Prompt Wizard
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    {/* =================================
-                        CARD FOOTER
-                    ================================= */}
-
-                    <div className="retro-card-footer">
-
-                        <span>
-
-                            🌴 Built with
-                            <b> ♥ </b>
-                            at Hacker House Goa
-
-                        </span>
-
-
-                        <strong>
-                            #FrameInGoa
-                        </strong>
-
-                    </div>
-
-                </motion.section>
+                    <BuilderCard
+                        cardRef={cardRef}
+                        photoUrl={photoUrl}
+                        fullName={fullName}
+                        role={role}
+                        college={college}
+                    />
+
+                </motion.div>
 
 
                 {/* =================================
@@ -459,24 +463,27 @@ function BuilderCardPage() {
 
                     initial={{
                         opacity: 0,
-                        y: 30
+                        y: 30,
                     }}
 
                     animate={{
                         opacity: 1,
-                        y: 0
+                        y: 0,
                     }}
 
                     transition={{
                         delay: 0.3,
-                        duration: 0.6
+                        duration: 0.6,
                     }}
                 >
 
 
-                    {/* DOWNLOAD */}
+                    {/* =================================
+                        DOWNLOAD BUILDER CARD
+                    ================================= */}
 
                     <button
+                        type="button"
                         className="builder-action yellow"
                         onClick={handleDownloadCard}
                     >
@@ -488,9 +495,12 @@ function BuilderCardPage() {
                     </button>
 
 
-                    {/* PFP */}
+                    {/* =================================
+                        DOWNLOAD PFP
+                    ================================= */}
 
                     <button
+                        type="button"
                         className="builder-action pink"
                         onClick={handleDownloadPFP}
                     >
@@ -502,9 +512,12 @@ function BuilderCardPage() {
                     </button>
 
 
-                    {/* SHARE */}
+                    {/* =================================
+                        SHARE ON X
+                    ================================= */}
 
                     <button
+                        type="button"
                         className="builder-share"
                         onClick={handleShare}
                     >
@@ -518,9 +531,12 @@ function BuilderCardPage() {
                     </button>
 
 
-                    {/* FINISH */}
+                    {/* =================================
+                        FINISH
+                    ================================= */}
 
                     <button
+                        type="button"
                         className="builder-finish"
                         onClick={handleFinish}
                     >
@@ -539,7 +555,6 @@ function BuilderCardPage() {
         </div>
 
     );
-
 }
 
 
