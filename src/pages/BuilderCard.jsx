@@ -16,7 +16,6 @@ import html2canvas from "html2canvas";
 import {
     Download,
     Sparkles,
-    Share2,
     ArrowRight,
 } from "lucide-react";
 
@@ -28,7 +27,6 @@ import "./BuilderCard.css";
 function BuilderCardPage() {
 
     const navigate = useNavigate();
-
     const location = useLocation();
 
     const cardRef = useRef(null);
@@ -59,7 +57,7 @@ function BuilderCardPage() {
 
 
     // =========================================
-    // PHOTO URL
+    // CREATE PHOTO URL
     // =========================================
 
     const photoUrl = useMemo(() => {
@@ -68,21 +66,12 @@ function BuilderCardPage() {
             return null;
         }
 
-        /*
-         * If photo is already a URL,
-         * use it directly.
-         */
-
+        // If already a URL / data URL
         if (typeof photo === "string") {
             return photo;
         }
 
-
-        /*
-         * If photo is a File object,
-         * create a temporary URL.
-         */
-
+        // If File / Blob
         return URL.createObjectURL(photo);
 
     }, [photo]);
@@ -117,7 +106,6 @@ function BuilderCardPage() {
 
         const card = cardRef.current;
 
-
         if (!card) {
 
             console.error(
@@ -134,50 +122,36 @@ function BuilderCardPage() {
 
         try {
 
-            /*
-             * Wait for fonts.
-             */
-
+            // Wait for fonts
             if (document.fonts?.ready) {
                 await document.fonts.ready;
             }
 
 
-            /*
-             * Wait for images.
-             */
-
+            // Wait for card images
             const images =
                 card.querySelectorAll("img");
 
 
             await Promise.all(
-
                 Array.from(images).map((img) => {
 
                     if (img.complete) {
                         return Promise.resolve();
                     }
 
-
                     return new Promise((resolve) => {
 
                         img.onload = resolve;
-
                         img.onerror = resolve;
 
                     });
 
                 })
-
             );
 
 
-            /*
-             * Give browser a moment to
-             * finish painting the card.
-             */
-
+            // Give browser time to render
             await new Promise((resolve) => {
 
                 setTimeout(
@@ -188,10 +162,7 @@ function BuilderCardPage() {
             });
 
 
-            /*
-             * Capture Builder Card.
-             */
-
+            // Capture card
             const canvas =
                 await html2canvas(
                     card,
@@ -212,16 +183,12 @@ function BuilderCardPage() {
 
                         scrollX: 0,
 
-                        scrollY:
-                            -window.scrollY,
+                        scrollY: -window.scrollY,
                     }
                 );
 
 
-            /*
-             * Convert to PNG.
-             */
-
+            // Convert to PNG
             const image =
                 canvas.toDataURL(
                     "image/png",
@@ -229,19 +196,573 @@ function BuilderCardPage() {
                 );
 
 
-            /*
-             * Create download link.
-             */
+            // Download
+            const link =
+                document.createElement("a");
+
+            link.download =
+                "FrameInGoa-Builder-Card.png";
+
+            link.href = image;
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+
+        } catch (error) {
+
+            console.error(
+                "Builder Card download failed:",
+                error
+            );
+
+            alert(
+                "Download failed. Please try again."
+            );
+
+        }
+
+    };
+
+
+    // =========================================
+    // CONVERT PHOTO TO DATA URL
+    // =========================================
+
+    const getPhotoDataUrl = async () => {
+
+        if (!photo) {
+            return null;
+        }
+
+
+        // -----------------------------------------
+        // File / Blob
+        // -----------------------------------------
+
+        if (photo instanceof Blob) {
+
+            return new Promise(
+                (resolve, reject) => {
+
+                    const reader =
+                        new FileReader();
+
+
+                    reader.onload = () => {
+
+                        resolve(
+                            reader.result
+                        );
+
+                    };
+
+
+                    reader.onerror = () => {
+
+                        reject(
+                            new Error(
+                                "Unable to read uploaded photo."
+                            )
+                        );
+
+                    };
+
+
+                    reader.readAsDataURL(photo);
+
+                }
+            );
+
+        }
+
+
+        // -----------------------------------------
+        // Already data URL
+        // -----------------------------------------
+
+        if (
+            typeof photo === "string" &&
+            photo.startsWith("data:")
+        ) {
+
+            return photo;
+
+        }
+
+
+        // -----------------------------------------
+        // Photo URL
+        // -----------------------------------------
+
+        if (
+            typeof photo === "string"
+        ) {
+
+            return photo;
+
+        }
+
+
+        return photoUrl;
+
+    };
+
+
+    // =========================================
+    // DOWNLOAD PFP FRAME
+    // =========================================
+
+    const handleDownloadPFP = async () => {
+
+        if (!photo) {
+
+            alert(
+                "Please upload your photo first."
+            );
+
+            return;
+        }
+
+
+        try {
+
+            // Get safe image source
+            const safePhoto =
+                await getPhotoDataUrl();
+
+
+            if (!safePhoto) {
+
+                alert(
+                    "Photo could not be loaded."
+                );
+
+                return;
+            }
+
+
+            // =====================================
+            // CREATE CANVAS
+            // =====================================
+
+            const SIZE = 1080;
+
+            const canvas =
+                document.createElement("canvas");
+
+            canvas.width = SIZE;
+            canvas.height = SIZE;
+
+
+            const ctx =
+                canvas.getContext("2d");
+
+
+            if (!ctx) {
+
+                throw new Error(
+                    "Canvas context could not be created."
+                );
+
+            }
+
+
+            // =====================================
+            // BACKGROUND
+            // =====================================
+
+            ctx.fillStyle =
+                "#075c36";
+
+            ctx.fillRect(
+                0,
+                0,
+                SIZE,
+                SIZE
+            );
+
+
+            // =====================================
+            // RETRO SUNSET BACKGROUND
+            // =====================================
+
+            const gradient =
+                ctx.createLinearGradient(
+                    0,
+                    0,
+                    0,
+                    SIZE
+                );
+
+
+            gradient.addColorStop(
+                0,
+                "#ffb746"
+            );
+
+            gradient.addColorStop(
+                0.40,
+                "#f4dfa3"
+            );
+
+            gradient.addColorStop(
+                0.47,
+                "#075c36"
+            );
+
+            gradient.addColorStop(
+                1,
+                "#075c36"
+            );
+
+
+            ctx.fillStyle =
+                gradient;
+
+            ctx.fillRect(
+                0,
+                0,
+                SIZE,
+                SIZE
+            );
+
+
+            // =====================================
+            // SUN
+            // =====================================
+
+            ctx.beginPath();
+
+            ctx.arc(
+                SIZE / 2,
+                175,
+                105,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "#ffd900";
+
+            ctx.globalAlpha =
+                0.65;
+
+            ctx.fill();
+
+            ctx.globalAlpha =
+                1;
+
+
+            // =====================================
+            // PALMS
+            // =====================================
+
+            ctx.textAlign =
+                "center";
+
+            ctx.font =
+                "100px Arial";
+
+            ctx.fillStyle =
+                "#075c36";
+
+            ctx.fillText(
+                "🌴",
+                110,
+                250
+            );
+
+            ctx.fillText(
+                "🌴",
+                970,
+                250
+            );
+
+
+            // =====================================
+            // LOAD USER PHOTO
+            // =====================================
+
+            const image =
+                new Image();
+
+
+            // Data URLs don't require CORS
+            if (
+                typeof safePhoto === "string" &&
+                !safePhoto.startsWith("data:")
+            ) {
+
+                image.crossOrigin =
+                    "anonymous";
+
+            }
+
+
+            image.src =
+                safePhoto;
+
+
+            await new Promise(
+                (resolve, reject) => {
+
+                    image.onload = () => {
+                        resolve();
+                    };
+
+
+                    image.onerror = () => {
+
+                        reject(
+                            new Error(
+                                "Unable to load photo."
+                            )
+                        );
+
+                    };
+
+                }
+            );
+
+
+            // =====================================
+            // PHOTO SETTINGS
+            // =====================================
+
+            const photoSize =
+                700;
+
+            const centerX =
+                SIZE / 2;
+
+            const centerY =
+                525;
+
+
+            // =====================================
+            // OUTER PINK RING
+            // =====================================
+
+            ctx.beginPath();
+
+            ctx.arc(
+                centerX,
+                centerY,
+                photoSize / 2 + 48,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "#ff2385";
+
+            ctx.fill();
+
+
+            // =====================================
+            // YELLOW RING
+            // =====================================
+
+            ctx.beginPath();
+
+            ctx.arc(
+                centerX,
+                centerY,
+                photoSize / 2 + 30,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "#ffd900";
+
+            ctx.fill();
+
+
+            // =====================================
+            // GREEN INNER RING
+            // =====================================
+
+            ctx.beginPath();
+
+            ctx.arc(
+                centerX,
+                centerY,
+                photoSize / 2 + 10,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fillStyle =
+                "#075c36";
+
+            ctx.fill();
+
+
+            // =====================================
+            // CLIP PHOTO
+            // =====================================
+
+            ctx.save();
+
+            ctx.beginPath();
+
+            ctx.arc(
+                centerX,
+                centerY,
+                photoSize / 2,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.clip();
+
+
+            // =====================================
+            // OBJECT COVER
+            // =====================================
+
+            const scale =
+                Math.max(
+                    photoSize / image.width,
+                    photoSize / image.height
+                );
+
+
+            const drawWidth =
+                image.width * scale;
+
+            const drawHeight =
+                image.height * scale;
+
+
+            const drawX =
+                centerX -
+                drawWidth / 2;
+
+
+            const drawY =
+                centerY -
+                drawHeight / 2;
+
+
+            ctx.drawImage(
+                image,
+                drawX,
+                drawY,
+                drawWidth,
+                drawHeight
+            );
+
+
+            ctx.restore();
+
+
+            // =====================================
+            // TOP BRAND
+            // =====================================
+
+            ctx.textAlign =
+                "center";
+
+            ctx.fillStyle =
+                "#075c36";
+
+            ctx.font =
+                "900 42px Arial";
+
+            ctx.fillText(
+                "HACKER HOUSE GOA",
+                SIZE / 2,
+                65
+            );
+
+
+            // =====================================
+            // FRAMEINGOA
+            // =====================================
+
+            ctx.fillStyle =
+                "#fff7d6";
+
+            ctx.font =
+                "900 64px Arial";
+
+            ctx.fillText(
+                "FRAMEINGOA",
+                SIZE / 2,
+                965
+            );
+
+
+            // =====================================
+            // HASHTAG
+            // =====================================
+
+            ctx.fillStyle =
+                "#ffd900";
+
+            ctx.font =
+                "bold 32px Arial";
+
+            ctx.fillText(
+                "#FrameInGoa",
+                SIZE / 2,
+                1020
+            );
+
+
+            // =====================================
+            // DECORATIVE STARS
+            // =====================================
+
+            ctx.fillStyle =
+                "#ff2385";
+
+            ctx.font =
+                "55px Arial";
+
+            ctx.fillText(
+                "✦",
+                80,
+                105
+            );
+
+            ctx.fillText(
+                "✦",
+                1000,
+                105
+            );
+
+
+            // =====================================
+            // GENERATE PNG
+            // =====================================
+
+            const imageData =
+                canvas.toDataURL(
+                    "image/png",
+                    1.0
+                );
+
+
+            // =====================================
+            // DOWNLOAD
+            // =====================================
 
             const link =
                 document.createElement("a");
 
 
             link.download =
-                "FrameInGoa-Builder-Card.png";
+                "FrameInGoa-PFP-Frame.png";
 
 
-            link.href = image;
+            link.href =
+                imageData;
 
 
             document.body.appendChild(link);
@@ -254,29 +775,16 @@ function BuilderCardPage() {
         } catch (error) {
 
             console.error(
-                "Builder Card download failed:",
+                "PFP FRAME ERROR:",
                 error
             );
 
 
             alert(
-                "Download failed. Please try again."
+                "Unable to download PFP frame. Please try again."
             );
 
         }
-
-    };
-
-
-    // =========================================
-    // DOWNLOAD PFP
-    // =========================================
-
-    const handleDownloadPFP = () => {
-
-        alert(
-            "PFP Frame download will be connected next."
-        );
 
     };
 
@@ -316,6 +824,10 @@ function BuilderCardPage() {
 
     };
 
+
+    // =========================================
+    // UI
+    // =========================================
 
     return (
 
@@ -378,21 +890,17 @@ function BuilderCardPage() {
                             🌴
                         </span>
 
-
                         <span className="title-bird">
                             ✦
                         </span>
-
 
                         <h1>
                             Your Identity
                         </h1>
 
-
                         <span className="title-bird">
                             ✦
                         </span>
-
 
                         <span>
                             🌴
@@ -423,7 +931,6 @@ function BuilderCardPage() {
                 ================================= */}
 
                 <motion.div
-
                     initial={{
                         opacity: 0,
                         scale: 0.9,
@@ -478,9 +985,7 @@ function BuilderCardPage() {
                 >
 
 
-                    {/* =================================
-                        DOWNLOAD BUILDER CARD
-                    ================================= */}
+                    {/* DOWNLOAD BUILDER CARD */}
 
                     <button
                         type="button"
@@ -495,9 +1000,7 @@ function BuilderCardPage() {
                     </button>
 
 
-                    {/* =================================
-                        DOWNLOAD PFP
-                    ================================= */}
+                    {/* DOWNLOAD PFP FRAME */}
 
                     <button
                         type="button"
@@ -512,9 +1015,7 @@ function BuilderCardPage() {
                     </button>
 
 
-                    {/* =================================
-                        SHARE ON X
-                    ================================= */}
+                    {/* SHARE ON X */}
 
                     <button
                         type="button"
@@ -531,9 +1032,7 @@ function BuilderCardPage() {
                     </button>
 
 
-                    {/* =================================
-                        FINISH
-                    ================================= */}
+                    {/* FINISH */}
 
                     <button
                         type="button"
@@ -548,7 +1047,6 @@ function BuilderCardPage() {
                     </button>
 
                 </motion.div>
-
 
             </main>
 
